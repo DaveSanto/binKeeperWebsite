@@ -1,0 +1,1084 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>BinKeeper — Find It. Every Time.</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:       #F5A623;
+    --amber-deep:  #E8920A;
+    --amber-dark:  #7B4A00;
+    --amber-light: #FDF3E0;
+    --brown-dark:  #4A2800;
+    --brown-mid:   #8B5E3C;
+    --black:       #1A1208;
+    --off-white:   #FEFBF5;
+    --gray-warm:   #9E8E7A;
+    --gray-light:  #F2EDE4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: var(--font-body);
+    background: var(--off-white);
+    color: var(--black);
+    overflow-x: hidden;
+  }
+
+  /* ─── NAV ─── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(254,251,245,0.92);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.2);
+  }
+
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
+  }
+
+  .nav-logo svg { width: 36px; height: 36px; }
+
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a {
+    font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em;
+    color: var(--brown-mid); text-decoration: none; transition: color 0.2s;
+  }
+  .nav-links a:hover { color: var(--amber-deep); }
+
+  .nav-cta {
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 500; font-size: 0.88rem;
+    padding: 0.6rem 1.4rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  /* ─── HERO ─── */
+  .hero {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    align-items: center;
+    padding: 7rem 3rem 4rem;
+    gap: 4rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .hero::before {
+    content: '';
+    position: absolute; top: -80px; right: -80px;
+    width: 600px; height: 600px;
+    background: radial-gradient(circle, rgba(245,166,35,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Honeycomb bg pattern */
+  .hero::after {
+    content: '';
+    position: absolute; top: 0; right: 0; bottom: 0; width: 50%;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.12)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.12)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none; opacity: 0.6;
+  }
+
+  .hero-text { position: relative; z-index: 1; }
+
+  .hero-eyebrow {
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--amber-deep);
+    background: rgba(245,166,35,0.12);
+    padding: 0.35rem 0.9rem; border-radius: 100px;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    width: 6px; height: 6px; border-radius: 50%;
+    background: var(--amber); display: block;
+  }
+
+  .hero-headline {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 5.5vw, 5.2rem);
+    font-weight: 900; line-height: 1.02;
+    color: var(--brown-dark);
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-headline em {
+    font-style: italic; color: var(--amber-deep);
+    display: block;
+  }
+
+  .hero-sub {
+    font-size: 1.15rem; line-height: 1.7; color: var(--brown-mid);
+    max-width: 480px; margin-bottom: 2.5rem; font-weight: 300;
+  }
+
+  .hero-sub strong { color: var(--black); font-weight: 500; }
+
+  .hero-actions { display: flex; align-items: center; gap: 1.2rem; flex-wrap: wrap; }
+
+  .btn-primary {
+    background: var(--amber-deep); color: white;
+    font-family: var(--font-body); font-weight: 500; font-size: 1rem;
+    padding: 0.9rem 2.2rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s, box-shadow 0.2s;
+    box-shadow: 0 4px 20px rgba(232,146,10,0.35);
+  }
+  .btn-primary:hover { background: var(--brown-dark); transform: translateY(-2px); box-shadow: 0 8px 28px rgba(74,40,0,0.3); }
+
+  .btn-ghost {
+    font-family: var(--font-body); font-size: 0.95rem; font-weight: 500;
+    color: var(--brown-mid); text-decoration: none;
+    display: flex; align-items: center; gap: 0.4rem;
+    transition: color 0.2s;
+  }
+  .btn-ghost:hover { color: var(--brown-dark); }
+  .btn-ghost::after { content: '→'; transition: transform 0.2s; }
+  .btn-ghost:hover::after { transform: translateX(3px); }
+
+  /* hero image side */
+  .hero-visual {
+    position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .photo-stack {
+    position: relative;
+    width: 100%; max-width: 480px; margin: 0 auto;
+  }
+
+  .photo-main {
+    width: 100%; aspect-ratio: 4/3;
+    border-radius: 20px;
+    object-fit: cover;
+    display: block;
+  }
+
+  /* Placeholder for messy basement photo */
+  .photo-placeholder {
+    width: 100%; aspect-ratio: 4/3;
+    border-radius: 20px;
+    background: linear-gradient(135deg, #2C2018 0%, #3D2C1A 40%, #1A1208 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 0.8rem; border: 2px dashed rgba(245,166,35,0.3);
+    position: relative; overflow: hidden;
+  }
+
+  .photo-placeholder::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: repeating-linear-gradient(
+      45deg,
+      transparent, transparent 10px,
+      rgba(255,255,255,0.015) 10px, rgba(255,255,255,0.015) 20px
+    );
+  }
+
+  /* simulate clutter with shapes */
+  .clutter-box {
+    position: absolute;
+    border-radius: 4px;
+    opacity: 0.6;
+  }
+
+  .photo-label {
+    position: absolute; bottom: 16px; left: 16px;
+    background: rgba(26,18,8,0.85); color: rgba(255,255,255,0.8);
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
+    padding: 0.4rem 0.75rem; border-radius: 8px;
+    backdrop-filter: blur(8px);
+  }
+
+  .floating-badge {
+    position: absolute; top: -16px; right: -16px;
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-display); font-style: italic; font-weight: 700;
+    font-size: 0.9rem; padding: 0.6rem 1rem; border-radius: 12px;
+    transform: rotate(4deg);
+    box-shadow: 0 4px 16px rgba(245,166,35,0.4);
+  }
+
+  .floating-stat {
+    position: absolute; bottom: -16px; left: -16px;
+    background: white; border-radius: 14px;
+    padding: 0.8rem 1.1rem;
+    box-shadow: 0 8px 32px rgba(0,0,0,0.12);
+    display: flex; flex-direction: column; gap: 0.15rem;
+  }
+
+  .stat-number {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.6rem;
+    color: var(--amber-deep); line-height: 1;
+  }
+
+  .stat-label {
+    font-size: 0.72rem; font-weight: 500; color: var(--gray-warm);
+    letter-spacing: 0.05em; text-transform: uppercase;
+  }
+
+  /* ─── STORY SECTION ─── */
+  .story {
+    padding: 7rem 3rem;
+    background: var(--brown-dark);
+    color: white;
+    position: relative; overflow: hidden;
+  }
+
+  .story::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; bottom: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .story-inner {
+    max-width: 820px; margin: 0 auto; position: relative;
+  }
+
+  .story-quote-mark {
+    font-family: var(--font-display); font-size: 8rem; line-height: 0.6;
+    color: var(--amber); opacity: 0.4; margin-bottom: 1rem;
+    display: block;
+  }
+
+  .story-text {
+    font-family: var(--font-display); font-style: italic;
+    font-size: clamp(1.4rem, 2.8vw, 2.1rem); line-height: 1.55;
+    color: rgba(255,255,255,0.92); margin-bottom: 2.5rem;
+  }
+
+  .story-text em {
+    color: var(--amber); font-style: normal;
+  }
+
+  .story-byline {
+    font-size: 0.88rem; color: rgba(255,255,255,0.45); letter-spacing: 0.06em;
+    text-transform: uppercase; font-weight: 500;
+  }
+
+  /* ─── HOW IT WORKS ─── */
+  .how {
+    padding: 8rem 3rem;
+    background: var(--off-white);
+  }
+
+  .section-header {
+    text-align: center; margin-bottom: 5rem;
+  }
+
+  .section-tag {
+    font-family: var(--font-mono); font-size: 0.75rem;
+    letter-spacing: 0.14em; text-transform: uppercase;
+    color: var(--amber-deep); margin-bottom: 1rem; display: block;
+  }
+
+  .section-title {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(2.2rem, 4vw, 3.6rem);
+    color: var(--brown-dark); line-height: 1.1;
+  }
+
+  .section-title em { font-style: italic; color: var(--amber-deep); }
+
+  .steps {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    max-width: 1100px; margin: 0 auto;
+    background: var(--gray-light);
+    border-radius: 24px; overflow: hidden;
+    border: 2px solid var(--gray-light);
+  }
+
+  .step {
+    background: var(--off-white);
+    padding: 3rem 2.5rem;
+    position: relative;
+    transition: background 0.25s;
+  }
+
+  .step:hover { background: var(--amber-light); }
+
+  .step-num {
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 4rem; line-height: 1;
+    color: rgba(245,166,35,0.2);
+    position: absolute; top: 1.5rem; right: 2rem;
+  }
+
+  .step-icon {
+    width: 52px; height: 52px; margin-bottom: 1.5rem;
+    background: var(--amber); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .step-icon svg { width: 26px; height: 26px; }
+
+  .step h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.4rem;
+    color: var(--brown-dark); margin-bottom: 0.75rem;
+  }
+
+  .step p {
+    font-size: 0.97rem; line-height: 1.7; color: var(--brown-mid); font-weight: 300;
+  }
+
+  /* ─── HOLIDAY SECTION ─── */
+  .holidays {
+    padding: 8rem 3rem;
+    background: var(--amber-light);
+    position: relative; overflow: hidden;
+  }
+
+  .holidays::after {
+    content: '';
+    position: absolute; bottom: -60px; right: -60px;
+    width: 400px; height: 400px;
+    background: radial-gradient(circle, rgba(245,166,35,0.25) 0%, transparent 65%);
+    pointer-events: none;
+  }
+
+  .holidays-inner {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 6rem; align-items: center;
+  }
+
+  .holidays-text .section-header { text-align: left; margin-bottom: 2.5rem; }
+
+  .holidays-text p {
+    font-size: 1.05rem; line-height: 1.8; color: var(--brown-mid);
+    font-weight: 300; margin-bottom: 1.5rem;
+  }
+
+  .holiday-list {
+    display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 2rem;
+  }
+
+  .holiday-tag {
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+    padding: 0.45rem 1rem; border-radius: 100px;
+    border: 1.5px solid var(--amber);
+    color: var(--amber-dark);
+    background: white;
+    letter-spacing: 0.04em;
+    transition: all 0.2s;
+  }
+
+  .holiday-tag:hover, .holiday-tag.active {
+    background: var(--amber); color: var(--brown-dark);
+  }
+
+  .bins-visual {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 1rem;
+  }
+
+  .bin-card {
+    background: white; border-radius: 16px;
+    padding: 1.25rem; border: 1.5px solid rgba(245,166,35,0.25);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+
+  .bin-card:hover { transform: translateY(-4px); box-shadow: 0 12px 32px rgba(74,40,0,0.1); }
+
+  .bin-card:first-child { grid-column: span 2; }
+
+  .bin-header {
+    display: flex; align-items: center; gap: 0.6rem; margin-bottom: 0.8rem;
+  }
+
+  .bin-icon-wrap {
+    width: 36px; height: 36px;
+    background: var(--amber); border-radius: 8px;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .bin-name {
+    font-family: var(--font-display); font-weight: 700; font-size: 1rem;
+    color: var(--brown-dark);
+  }
+
+  .bin-count {
+    margin-left: auto; font-family: var(--font-mono); font-size: 0.72rem;
+    color: var(--amber-deep); font-weight: 500;
+  }
+
+  .bin-items {
+    display: flex; flex-wrap: wrap; gap: 0.4rem;
+  }
+
+  .bin-item {
+    font-size: 0.74rem; color: var(--brown-mid);
+    background: var(--gray-light); padding: 0.2rem 0.55rem;
+    border-radius: 100px; font-weight: 400;
+  }
+
+  /* ─── FEATURES ─── */
+  .features {
+    padding: 8rem 3rem;
+    background: var(--off-white);
+  }
+
+  .features-grid {
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem; margin-top: 0;
+  }
+
+  .feature-card {
+    background: white; border-radius: 20px;
+    padding: 2.5rem; border: 1px solid var(--gray-light);
+    transition: border-color 0.2s, transform 0.2s;
+    position: relative; overflow: hidden;
+  }
+
+  .feature-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: var(--amber);
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.3s;
+  }
+
+  .feature-card:hover { border-color: rgba(245,166,35,0.4); transform: translateY(-3px); }
+  .feature-card:hover::before { transform: scaleX(1); }
+
+  .feature-card.featured {
+    grid-column: span 2;
+    background: var(--brown-dark); color: white;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem; align-items: center;
+  }
+
+  .feature-card.featured::before { background: var(--amber); }
+
+  .feature-icon {
+    width: 48px; height: 48px; margin-bottom: 1.25rem;
+    background: var(--amber-light); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .feature-card.featured .feature-icon { background: rgba(245,166,35,0.15); }
+
+  .feature-icon svg { width: 24px; height: 24px; }
+
+  .feature-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.3rem;
+    color: var(--brown-dark); margin-bottom: 0.6rem;
+  }
+
+  .feature-card.featured h3 { color: white; }
+
+  .feature-card p {
+    font-size: 0.95rem; line-height: 1.7; color: var(--brown-mid); font-weight: 300;
+  }
+
+  .feature-card.featured p { color: rgba(255,255,255,0.65); }
+
+  .qr-demo {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+  }
+
+  .qr-code-mock {
+    width: 140px; height: 140px;
+    background: white; border-radius: 12px; padding: 12px;
+    display: grid; grid-template-columns: repeat(7, 1fr);
+    grid-template-rows: repeat(7, 1fr); gap: 2px;
+  }
+
+  .qr-cell { border-radius: 1px; }
+  .qr-cell.on { background: var(--brown-dark); }
+  .qr-cell.off { background: transparent; }
+
+  .qr-label {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.5); text-align: center;
+  }
+
+  /* ─── TESTIMONIALS placeholder ─── */
+  .testimonials {
+    padding: 8rem 3rem;
+    background: var(--gray-light);
+  }
+
+  .testimonials-grid {
+    max-width: 1100px; margin: 3rem auto 0;
+    display: grid; grid-template-columns: repeat(3, 1fr);
+    gap: 1.5rem;
+  }
+
+  .testimonial-card {
+    background: white; border-radius: 20px;
+    padding: 2rem; border: 1px solid rgba(245,166,35,0.15);
+    position: relative;
+  }
+
+  .testimonial-placeholder {
+    display: flex; flex-direction: column; align-items: center;
+    justify-content: center; gap: 1rem; min-height: 200px;
+    border: 2px dashed rgba(245,166,35,0.3); border-radius: 16px;
+    padding: 2rem;
+  }
+
+  .testimonial-placeholder p {
+    font-family: var(--font-mono); font-size: 0.78rem;
+    color: var(--gray-warm); letter-spacing: 0.06em; text-align: center;
+    line-height: 1.6;
+  }
+
+  .placeholder-stars {
+    display: flex; gap: 4px;
+  }
+
+  .placeholder-stars span {
+    width: 16px; height: 16px; border-radius: 3px;
+    background: rgba(245,166,35,0.2);
+  }
+
+  /* ─── CTA ─── */
+  .cta-section {
+    padding: 8rem 3rem;
+    background: var(--brown-dark);
+    text-align: center; position: relative; overflow: hidden;
+  }
+
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.1)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.1)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .cta-section .section-title { color: white; margin-bottom: 1rem; }
+  .cta-section .section-title em { color: var(--amber); }
+
+  .cta-sub {
+    font-size: 1.1rem; color: rgba(255,255,255,0.6);
+    font-weight: 300; max-width: 480px; margin: 0 auto 3rem;
+    line-height: 1.7;
+  }
+
+  .cta-buttons {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+  }
+
+  .btn-amber {
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 500; font-size: 1rem;
+    padding: 1rem 2.4rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 24px rgba(245,166,35,0.4);
+  }
+
+  .btn-amber:hover { background: #FFB830; transform: translateY(-2px); }
+
+  .btn-outline-white {
+    background: transparent; color: white;
+    font-family: var(--font-body); font-weight: 500; font-size: 1rem;
+    padding: 1rem 2.4rem; border-radius: 100px;
+    border: 1.5px solid rgba(255,255,255,0.3);
+    cursor: pointer; text-decoration: none; letter-spacing: 0.02em;
+    transition: border-color 0.2s, background 0.2s, transform 0.15s;
+  }
+
+  .btn-outline-white:hover {
+    border-color: white; background: rgba(255,255,255,0.08);
+    transform: translateY(-2px);
+  }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: var(--black); padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+
+  .footer-logo {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.2rem;
+    color: var(--amber); text-decoration: none;
+  }
+
+  .footer-copy {
+    font-size: 0.82rem; color: rgba(255,255,255,0.3);
+    font-family: var(--font-mono); letter-spacing: 0.04em;
+  }
+
+  .footer-links {
+    display: flex; gap: 1.5rem; list-style: none;
+  }
+
+  .footer-links a {
+    font-size: 0.82rem; color: rgba(255,255,255,0.4);
+    text-decoration: none; transition: color 0.2s;
+  }
+
+  .footer-links a:hover { color: var(--amber); }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50%       { transform: translateY(-8px); }
+  }
+
+  .hero-text > * {
+    animation: fadeUp 0.7s ease both;
+  }
+
+  .hero-eyebrow  { animation-delay: 0.1s; }
+  .hero-headline { animation-delay: 0.22s; }
+  .hero-sub      { animation-delay: 0.36s; }
+  .hero-actions  { animation-delay: 0.5s; }
+
+  .hero-visual {
+    animation: fadeIn 0.9s ease 0.4s both;
+  }
+
+  .floating-badge { animation: float 4s ease-in-out infinite; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 3rem; }
+    .hero::after { display: none; }
+    .story { padding: 5rem 1.5rem; }
+    .how, .holidays, .features, .testimonials, .cta-section { padding: 5rem 1.5rem; }
+    .steps { grid-template-columns: 1fr; }
+    .holidays-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .features-grid { grid-template-columns: 1fr; }
+    .feature-card.featured { grid-column: span 1; grid-template-columns: 1fr; }
+    .testimonials-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ─── NAV ─── -->
+<nav>
+  <a class="nav-logo" href="#">
+    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <polygon points="18,2 32,10 32,26 18,34 4,26 4,10" fill="#F5A623" stroke="#C47A08" stroke-width="1.5"/>
+      <rect x="10" y="17" width="16" height="13" rx="1.5" fill="#8B5E3C"/>
+      <polygon points="4,19 18,7 32,19" fill="#4A2800"/>
+      <rect x="8" y="8" width="5" height="10" rx="1" fill="#3A1E00"/>
+      <rect x="7" y="7" width="7" height="2" rx="0.5" fill="#2C1500"/>
+      <rect x="13" y="20" width="10" height="10" rx="1" fill="#1C1C1C"/>
+      <rect x="11" y="17" width="14" height="4" rx="1" fill="#F5C800"/>
+    </svg>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="#how">How it Works</a></li>
+    <li><a href="#holidays">Holiday Ready</a></li>
+    <li><a href="#features">Features</a></li>
+  </ul>
+  <a class="nav-cta" href="#cta">Get Early Access</a>
+</nav>
+
+<!-- ─── HERO ─── -->
+<section class="hero">
+  <div class="hero-text">
+    <div class="hero-eyebrow">Finally — a smarter way to store</div>
+    <h1 class="hero-headline">
+      Your stuff is in there.
+      <em>Somewhere.</em>
+    </h1>
+    <p class="hero-sub">
+      You bought the bins. You filled the bins. Now you can't find anything.
+      <strong>BinKeeper</strong> turns your storage chaos into a searchable, scannable system — without unpacking a single box.
+    </p>
+    <div class="hero-actions">
+      <a href="#cta" class="btn-primary">Get Early Access</a>
+      <a href="#how" class="btn-ghost">See how it works</a>
+    </div>
+  </div>
+
+  <div class="hero-visual">
+    <div class="photo-stack">
+      <!-- Messy basement placeholder — replace with real photo -->
+      <div class="photo-placeholder">
+        <!-- simulated clutter -->
+        <div class="clutter-box" style="width:80px;height:50px;background:#3D2C1A;top:20px;left:30px;transform:rotate(-8deg);"></div>
+        <div class="clutter-box" style="width:55px;height:70px;background:#2C2018;top:15px;left:120px;transform:rotate(5deg);"></div>
+        <div class="clutter-box" style="width:100px;height:40px;background:#4A3020;top:80px;left:50px;transform:rotate(3deg);"></div>
+        <div class="clutter-box" style="width:60px;height:60px;background:#251A10;top:60px;right:40px;transform:rotate(-12deg);"></div>
+        <div class="clutter-box" style="width:90px;height:30px;background:#5A3D22;bottom:60px;left:20px;transform:rotate(7deg);"></div>
+        <div class="clutter-box" style="width:40px;height:80px;background:#3A2718;bottom:40px;right:60px;transform:rotate(-5deg);"></div>
+        <div class="clutter-box" style="width:120px;height:35px;background:#4D3425;bottom:20px;left:60px;transform:rotate(-2deg);"></div>
+        <svg style="position:relative;z-index:1;opacity:0.5" width="48" height="48" viewBox="0 0 48 48" fill="none">
+          <circle cx="24" cy="24" r="22" stroke="rgba(245,166,35,0.6)" stroke-width="2" stroke-dasharray="5 3"/>
+          <path d="M16 32 L24 16 L32 32" stroke="rgba(245,166,35,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+          <path d="M19 26 h10" stroke="rgba(245,166,35,0.6)" stroke-width="2" stroke-linecap="round"/>
+        </svg>
+        <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(245,166,35,0.7);letter-spacing:0.08em;z-index:1">
+          → Add your basement photo here
+        </span>
+        <div class="photo-label">Sound familiar?</div>
+      </div>
+
+      <div class="floating-badge">We've all been there.</div>
+
+      <div class="floating-stat">
+        <span class="stat-number">10+</span>
+        <span class="stat-label">bins, zero clue</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── STORY ─── -->
+<section class="story">
+  <div class="story-inner">
+    <span class="story-quote-mark">"</span>
+    <p class="story-text">
+      I ran out to the box store, grabbed ten bins, and threw <em>everything</em> in there.
+      Problem solved — except now I have no idea where anything is.
+      I don't want to unpack every bin every time I need to find something.
+      I just wish there was a way to <em>organize my stuff, hide it away,
+      and remember where I put it all.</em>
+    </p>
+    <p class="story-byline">— Every homeowner, ever</p>
+  </div>
+</section>
+
+<!-- ─── HOW IT WORKS ─── -->
+<section class="how" id="how">
+  <div class="section-header">
+    <span class="section-tag">How it works</span>
+    <h2 class="section-title">Scan it. Bin it. <em>Find it.</em></h2>
+  </div>
+
+  <div class="steps">
+    <div class="step">
+      <span class="step-num">01</span>
+      <div class="step-icon">
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="9" height="9" rx="1.5"/>
+          <rect x="14" y="3" width="9" height="9" rx="1.5"/>
+          <rect x="3" y="14" width="9" height="9" rx="1.5"/>
+          <rect x="16" y="16" width="5" height="5" rx="0.5"/>
+        </svg>
+      </div>
+      <h3>Label your bins</h3>
+      <p>BinKeeper generates a unique QR code for each bin you own. Print it, stick it on, and you're set — one scan away from the full contents list.</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">02</span>
+      <div class="step-icon">
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 3 L13 3 C8.03 3 4 7.03 4 12 C4 17 8 22 13 23 C18 22 22 17 22 12 C22 7.03 17.97 3 13 3Z"/>
+          <circle cx="13" cy="12" r="3"/>
+          <line x1="13" y1="3" x2="13" y2="6"/>
+        </svg>
+      </div>
+      <h3>Photograph your items</h3>
+      <p>Snap a photo of each item as you pack. BinKeeper uses AI to identify it automatically. Barcode on the box? Even better — we'll look it up for you.</p>
+    </div>
+
+    <div class="step">
+      <span class="step-num">03</span>
+      <div class="step-icon">
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="7"/>
+          <line x1="16.5" y1="16.5" x2="23" y2="23"/>
+        </svg>
+      </div>
+      <h3>Find anything, instantly</h3>
+      <p>Need something? Search the app by item name, room, or bin number. Or scan a bin's QR code to see its full contents — photo and list, right there.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── HOLIDAY SECTION ─── -->
+<section class="holidays" id="holidays">
+  <div class="holidays-inner">
+    <div class="holidays-text">
+      <div class="section-header">
+        <span class="section-tag">Built for every season</span>
+        <h2 class="section-title">Holiday-ready <em>storage.</em></h2>
+      </div>
+      <p>Every holiday brings a new round of digging through bins. Where are the good Halloween decorations? Which bin has the Hanukkah menorah? Is the star for the Christmas tree in Bin 3 or Bin 7?</p>
+      <p>With BinKeeper, your seasonal storage is organized by holiday, by room, and by bin. The right stuff is one search away — every time.</p>
+      <div class="holiday-list">
+        <span class="holiday-tag active">🎃 Halloween</span>
+        <span class="holiday-tag">🍂 Thanksgiving</span>
+        <span class="holiday-tag">🎄 Christmas</span>
+        <span class="holiday-tag">🕎 Hanukkah</span>
+        <span class="holiday-tag">🎉 New Year's</span>
+        <span class="holiday-tag">+ any occasion</span>
+      </div>
+    </div>
+
+    <div class="bins-visual">
+      <div class="bin-card">
+        <div class="bin-header">
+          <div class="bin-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="8" width="16" height="11" rx="1.5" fill="#1C1C1C"/>
+              <rect x="1" y="5" width="18" height="5" rx="1.5" fill="#F5C800"/>
+              <rect x="7" y="3" width="6" height="3" rx="1" fill="#F5C800"/>
+            </svg>
+          </div>
+          <span class="bin-name">🎃 Halloween — Bin 1</span>
+          <span class="bin-count">14 items</span>
+        </div>
+        <div class="bin-items">
+          <span class="bin-item">Jack-o-lantern lights</span>
+          <span class="bin-item">Skeleton door decor</span>
+          <span class="bin-item">Orange string lights</span>
+          <span class="bin-item">Fog machine</span>
+          <span class="bin-item">Candy bowls (x3)</span>
+          <span class="bin-item">Witch hat</span>
+          <span class="bin-item">Cauldron prop</span>
+        </div>
+      </div>
+
+      <div class="bin-card">
+        <div class="bin-header">
+          <div class="bin-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="8" width="16" height="11" rx="1.5" fill="#1C1C1C"/>
+              <rect x="1" y="5" width="18" height="5" rx="1.5" fill="#F5C800"/>
+              <rect x="7" y="3" width="6" height="3" rx="1" fill="#F5C800"/>
+            </svg>
+          </div>
+          <span class="bin-name">🎄 Xmas — Bin 2</span>
+          <span class="bin-count">22 items</span>
+        </div>
+        <div class="bin-items">
+          <span class="bin-item">Tree topper star</span>
+          <span class="bin-item">Garland</span>
+          <span class="bin-item">Stockings (x4)</span>
+        </div>
+      </div>
+
+      <div class="bin-card">
+        <div class="bin-header">
+          <div class="bin-icon-wrap">
+            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
+              <rect x="2" y="8" width="16" height="11" rx="1.5" fill="#1C1C1C"/>
+              <rect x="1" y="5" width="18" height="5" rx="1.5" fill="#F5C800"/>
+              <rect x="7" y="3" width="6" height="3" rx="1" fill="#F5C800"/>
+            </svg>
+          </div>
+          <span class="bin-name">🕎 Hanukkah</span>
+          <span class="bin-count">8 items</span>
+        </div>
+        <div class="bin-items">
+          <span class="bin-item">Menorah</span>
+          <span class="bin-item">Dreidels</span>
+          <span class="bin-item">Blue lights</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── FEATURES ─── -->
+<section class="features" id="features">
+  <div class="section-header">
+    <span class="section-tag">Features</span>
+    <h2 class="section-title">Everything your bins <em>deserve.</em></h2>
+  </div>
+
+  <div class="features-grid">
+    <!-- QR featured card -->
+    <div class="feature-card featured">
+      <div>
+        <div class="feature-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#F5A623" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <rect x="3" y="3" width="7" height="7" rx="1"/>
+            <rect x="14" y="3" width="7" height="7" rx="1"/>
+            <rect x="3" y="14" width="7" height="7" rx="1"/>
+            <rect x="14" y="14" width="3" height="3"/>
+            <rect x="18" y="18" width="3" height="3"/>
+            <rect x="14" y="18" width="3" height="0"/>
+            <rect x="18" y="14" width="3" height="3"/>
+          </svg>
+        </div>
+        <h3>QR codes, generated and printed</h3>
+        <p>Every bin gets its own QR code — generated by the app, printed by you. Stick it on the bin. Scan it later. The full contents list appears instantly on your phone, including a photo of the bin and everything inside it.</p>
+      </div>
+      <div class="qr-demo">
+        <div class="qr-code-mock">
+          <!-- 7x7 QR pattern mock -->
+          <div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+          <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+          <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+          <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+          <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+          <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+          <div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+        </div>
+        <p class="qr-label">BIN-007 · Halloween Decor</p>
+        <p class="qr-label" style="opacity:0.35">scan to view contents</p>
+      </div>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/>
+          <circle cx="12" cy="13" r="4"/>
+        </svg>
+      </div>
+      <h3>AI-powered item identification</h3>
+      <p>Snap a photo and our AI identifies the item for you. Or scan the barcode for instant product lookup. Confirmation is always yours — no mystery labels.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="11" cy="11" r="8"/>
+          <line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <h3>Search by house, room, or bin</h3>
+      <p>Can't remember which bin something is in? Search the app. Filter by location, holiday, or bin number. Every item is one tap away.</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+          <circle cx="9" cy="7" r="4"/>
+          <path d="M23 21v-2a4 4 0 0 0-3-3.87"/>
+          <path d="M16 3.13a4 4 0 0 1 0 7.75"/>
+        </svg>
+      </div>
+      <h3>Share with your household</h3>
+      <p>Everyone in the house can add items, check things out, and check them back in. One shared inventory — no more "did you see the ___?"</p>
+    </div>
+
+    <div class="feature-card">
+      <div class="feature-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <polyline points="9 11 12 14 22 4"/>
+          <path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>
+        </svg>
+      </div>
+      <h3>Check out &amp; check in</h3>
+      <p>Taking something out of the bin? Check it out and log where you're putting it. Return it later with a tap. Always know where your stuff actually is.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ─── TESTIMONIALS ─── -->
+<section class="testimonials" id="testimonials">
+  <div class="section-header">
+    <span class="section-tag">Early users</span>
+    <h2 class="section-title">What people are <em>saying.</em></h2>
+  </div>
+
+  <div class="testimonials-grid">
+    <div class="testimonial-card">
+      <div class="testimonial-placeholder">
+        <div class="placeholder-stars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p>Testimonial coming soon.<br/>Be one of the first — get early access<br/>and share your experience.</p>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-placeholder">
+        <div class="placeholder-stars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p>Testimonial coming soon.<br/>Be one of the first — get early access<br/>and share your experience.</p>
+      </div>
+    </div>
+    <div class="testimonial-card">
+      <div class="testimonial-placeholder">
+        <div class="placeholder-stars">
+          <span></span><span></span><span></span><span></span><span></span>
+        </div>
+        <p>Testimonial coming soon.<br/>Be one of the first — get early access<br/>and share your experience.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ─── CTA ─── -->
+<section class="cta-section" id="cta">
+  <span class="section-tag" style="color:var(--amber);">Early access</span>
+  <h2 class="section-title">Stop guessing. <em>Start finding.</em></h2>
+  <p class="cta-sub">BinKeeper is coming soon. Get early access and be the first to bring order to your storage chaos.</p>
+  <div class="cta-buttons">
+    <a href="#" class="btn-amber">Get Early Access — Free</a>
+    <a href="#how" class="btn-outline-white">See how it works</a>
+  </div>
+</section>
+
+<!-- ─── FOOTER ─── -->
+<footer>
+  <a class="footer-logo" href="#">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+
+<script>
+  // Holiday tag interactivity
+  document.querySelectorAll('.holiday-tag').forEach(tag => {
+    tag.addEventListener('click', function() {
+      document.querySelectorAll('.holiday-tag').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+    });
+  });
+
+  // Scroll-triggered fade-in
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.style.opacity = '1';
+        entry.target.style.transform = 'translateY(0)';
+      }
+    });
+  }, { threshold: 0.12 });
+
+  document.querySelectorAll('.step, .feature-card, .bin-card, .testimonial-card').forEach(el => {
+    el.style.opacity = '0';
+    el.style.transform = 'translateY(24px)';
+    el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+    observer.observe(el);
+  });
+</script>
+
+</body>
+</html>

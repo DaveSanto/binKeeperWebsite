@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>BinKeeper — Find It. Every Time.</title>
+<title>BinKeeper — Bee Organized.</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -49,7 +49,7 @@
     font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
   }
 
-  .nav-logo svg { width: 36px; height: 36px; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
 
   .nav-links { display: flex; gap: 2rem; list-style: none; }
   .nav-links a {
@@ -299,6 +299,16 @@
 
   .section-title em { font-style: italic; color: var(--amber-deep); }
 
+  .how-divider {
+    max-width: 1100px; margin: 5rem auto 4rem;
+    display: flex; align-items: center; gap: 1.5rem;
+    font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber-deep);
+  }
+  .how-divider::before, .how-divider::after {
+    content: ''; flex: 1; height: 1px; background: var(--gray-light);
+  }
+
   /* ─── GUIDE ─── */
   .guide {
     padding: 8rem 3rem;
@@ -543,6 +553,17 @@
   }
 
   .feature-card.featured p { color: rgba(255,255,255,0.65); }
+
+  .feature-learn-more {
+    display: inline-flex; align-items: center; gap: 0.35rem; margin-top: 1.25rem;
+    font-size: 0.85rem; font-weight: 500; text-decoration: none;
+    color: var(--amber-deep); transition: gap 0.2s, color 0.2s;
+  }
+  .feature-learn-more::after { content: '→'; transition: transform 0.2s; }
+  .feature-learn-more:hover { color: var(--brown-dark); }
+  .feature-learn-more:hover::after { transform: translateX(3px); }
+  .feature-card.featured .feature-learn-more { color: var(--amber); }
+  .feature-card.featured .feature-learn-more:hover { color: #FFB830; }
 
   .qr-demo {
     display: flex; flex-direction: column; align-items: center; gap: 1rem;
@@ -913,7 +934,7 @@
     display: flex; gap: 1.5rem; list-style: none;
   }
 
-  .foo
+  .footer-links a {
     font-size: 0.82rem; color: rgba(255,255,255,0.4);
     text-decoration: none; transition: color 0.2s;
   }
@@ -977,23 +998,15 @@
 <!-- ─── NAV ─── -->
 <nav>
   <a class="nav-logo" href="#">
-    <svg viewBox="0 0 36 36" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <polygon points="18,2 32,10 32,26 18,34 4,26 4,10" fill="#F5A623" stroke="#C47A08" stroke-width="1.5"/>
-      <rect x="10" y="17" width="16" height="13" rx="1.5" fill="#8B5E3C"/>
-      <polygon points="4,19 18,7 32,19" fill="#4A2800"/>
-      <rect x="8" y="8" width="5" height="10" rx="1" fill="#3A1E00"/>
-      <rect x="7" y="7" width="7" height="2" rx="0.5" fill="#2C1500"/>
-      <rect x="13" y="20" width="10" height="10" rx="1" fill="#1C1C1C"/>
-      <rect x="11" y="17" width="14" height="4" rx="1" fill="#F5C800"/>
-    </svg>
+    <img src="assets/adaptive-icon.png" alt="BinKeeper"/>
     BinKeeper
   </a>
   <ul class="nav-links">
     <li><a href="#how">How it Works</a></li>
-    <li><a href="#guide">Getting Started</a></li>
-    <li><a href="#holidays">Holiday Ready</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
     <li><a href="#features">Features</a></li>
-    <li><a href="#pricing">Pricing</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
   </ul>
   <a class="nav-cta" href="#cta">Get Early Access</a>
 </nav>
@@ -1043,7 +1056,7 @@
       Problem solved — except now I have no idea where anything is.
       I don't want to unpack every bin every time I need to find something.
       I just wish there was a way to <em>organize my stuff, hide it away,
-      and remember where I put it all.</em>
+      and then, (MOST IMPORTANTLY) remember where I put it all.</em>
     </p>
     <p class="story-byline">— Every homeowner, ever</p>
   </div>
@@ -1096,20 +1109,13 @@
       <p>Need something? Search the app by item name, room, or bin number. Or scan a bin's QR code to see its full contents — photo and list, right there.</p>
     </div>
   </div>
-</section>
 
-<!-- ─── GUIDE ─── -->
-<section class="guide" id="guide">
-  <div class="section-header">
-    <span class="section-tag">Getting started</span>
-    <h2 class="section-title">A few things worth <em>knowing.</em></h2>
-  </div>
+  <div class="how-divider"><span>Getting Started</span></div>
 
   <div class="guide-grid">
 
     <div class="guide-card">
       <div class="guide-icon">
-        <!-- Package icon -->
         <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M22 9.5V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9.5"/>
           <polyline points="2 7 13 2 24 7"/>
@@ -1123,7 +1129,6 @@
 
     <div class="guide-card">
       <div class="guide-icon">
-        <!-- Camera icon -->
         <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M23 19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l2-3h6l2 3h3a2 2 0 0 1 2 2z"/>
           <circle cx="13" cy="13" r="3.5"/>
@@ -1135,7 +1140,6 @@
 
     <div class="guide-card">
       <div class="guide-icon">
-        <!-- Sparkles / AI icon -->
         <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M13 2 L14.5 8 L21 9 L14.5 10.5 L13 17 L11.5 10.5 L5 9 L11.5 8 Z"/>
           <path d="M21 16 L21.8 18.5 L24 19 L21.8 19.5 L21 22 L20.2 19.5 L18 19 L20.2 18.5 Z"/>
@@ -1148,7 +1152,6 @@
 
     <div class="guide-card">
       <div class="guide-icon">
-        <!-- CheckCircle icon -->
         <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <circle cx="13" cy="13" r="10"/>
           <polyline points="8.5 13 11.5 16 17.5 10"/>
@@ -1160,7 +1163,6 @@
 
     <div class="guide-card">
       <div class="guide-icon">
-        <!-- MapPin icon -->
         <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M13 2C9.1 2 6 5.1 6 9c0 5.25 7 15 7 15s7-9.75 7-15c0-3.9-3.1-7-7-7z"/>
           <circle cx="13" cy="9" r="2.5"/>
@@ -1172,7 +1174,6 @@
 
     <div class="guide-card">
       <div class="guide-icon">
-        <!-- QR Code icon -->
         <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <rect x="3" y="3" width="8" height="8" rx="1"/>
           <rect x="15" y="3" width="8" height="8" rx="1"/>
@@ -1189,31 +1190,6 @@
     </div>
 
   </div>
-</section>
-
-<!-- ─── HOLIDAY SECTION ─── -->
-<section class="holidays" id="holidays">
-  <div class="section-header">
-    <span class="section-tag">Built for every season</span>
-    <h2 class="section-title">A bin for <em>every occasion.</em></h2>
-  </div>
-  <div class="holiday-tag-cloud">
-    <span class="holiday-tag active" data-cat="halloween">🎃 Halloween</span>
-    <span class="holiday-tag" data-cat="thanksgiving">🍂 Thanksgiving</span>
-    <span class="holiday-tag" data-cat="christmas">🎄 Christmas</span>
-    <span class="holiday-tag" data-cat="hanukkah">🕎 Hanukkah</span>
-    <span class="holiday-tag" data-cat="newyears">🎉 New Year's</span>
-    <span class="holiday-tag" data-cat="chinesenewyear">🧧 Chinese New Year</span>
-    <span class="holiday-tag" data-cat="valentines">💝 Valentine's Day</span>
-    <span class="holiday-tag" data-cat="stpatricks">🍀 St. Patrick's Day</span>
-    <span class="holiday-tag" data-cat="easter">🐣 Easter / Spring</span>
-    <span class="holiday-tag" data-cat="july4">🎆 4th of July</span>
-    <span class="holiday-tag" data-cat="beach">🏖️ Beach &amp; Summer</span>
-    <span class="holiday-tag" data-cat="weddings">💍 Weddings</span>
-    <span class="holiday-tag" data-cat="sports">🏆 Sports</span>
-    <span class="holiday-tag" data-cat="skiing">⛷️ Skiing</span>
-  </div>
-  <div class="bins-showcase" id="bins-showcase"></div>
 </section>
 
 <!-- ─── FEATURES ─── -->
@@ -1240,6 +1216,7 @@
         </div>
         <h3>QR codes, generated and printed</h3>
         <p>Every bin gets its own QR code — generated by the app, printed by you. Stick it on the bin. Scan it later. The full contents list appears instantly on your phone, including a photo of the bin and everything inside it.</p>
+        <a href="features/qr-labels.html" class="feature-learn-more">Learn more</a>
       </div>
       <div class="qr-demo">
         <div class="qr-code-mock">
@@ -1266,6 +1243,7 @@
       </div>
       <h3>AI-powered item identification</h3>
       <p>Snap a photo and our AI identifies the item for you. Or scan the barcode for instant product lookup. Confirmation is always yours — no mystery labels.</p>
+      <a href="features/ai-identification.html" class="feature-learn-more">Learn more</a>
     </div>
 
     <div class="feature-card">
@@ -1277,6 +1255,7 @@
       </div>
       <h3>Search by house, room, or bin</h3>
       <p>Can't remember which bin something is in? Search the app. Filter by location, holiday, or bin number. Every item is one tap away.</p>
+      <a href="features/search.html" class="feature-learn-more">Learn more</a>
     </div>
 
     <div class="feature-card">
@@ -1290,6 +1269,7 @@
       </div>
       <h3>Share with your household</h3>
       <p>Everyone in the house can add items, check things out, and check them back in. One shared inventory — no more "did you see the ___?"</p>
+      <a href="features/household-sharing.html" class="feature-learn-more">Learn more</a>
     </div>
 
     <div class="feature-card">
@@ -1301,12 +1281,13 @@
       </div>
       <h3>Check out &amp; check in</h3>
       <p>Taking something out of the bin? Check it out and log where you're putting it. Return it later with a tap. Always know where your stuff actually is.</p>
+      <a href="features/check-in-out.html" class="feature-learn-more">Learn more</a>
     </div>
   </div>
 </section>
 
-<!-- ─── PRICING ─── -->
-<section class="pricing" id="pricing">
+<!-- Pricing moved to pricing.html -->
+<section class="pricing" id="pricing" style="display:none">
   <div class="section-header">
     <span class="section-tag">Simple pricing</span>
     <h2 class="section-title">Pick your plan. <em>Own your bins.</em></h2>
@@ -1444,19 +1425,20 @@
   <form
     id="early-access-form"
     class="early-access-form"
-    action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID"
-    method="POST"
+    action="https://binkeeper.us22.list-manage.com/subscribe/post?u=f8ae6a7729e84e4b6842d34ba&amp;id=573d8c6773&amp;f_id=0053c2e1f0"
+    method="post"
+    name="mc-embedded-subscribe-form"
   >
-    <!-- Formspree subject line override -->
-    <input type="hidden" name="_subject" value="Bin Keeper Early Access"/>
-    <!-- Redirect back to same page after submit (Formspree fallback) -->
-    <input type="hidden" name="_next" value="https://davesanto.github.io/binKeeperWebsite/#cta"/>
+    <!-- Mailchimp honeypot — do not remove -->
+    <div aria-hidden="true" style="position:absolute;left:-5000px;">
+      <input type="text" name="b_f8ae6a7729e84e4b6842d34ba_573d8c6773" tabindex="-1" value=""/>
+    </div>
 
     <div class="form-row">
-      <input type="text"  name="name"  placeholder="Your name"  required/>
-      <input type="email" name="email" placeholder="Your email" required/>
+      <input type="text"  name="FNAME" id="mce-FNAME" placeholder="Your name"/>
+      <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="Your email" required/>
     </div>
-    <button type="submit">Get Early Access — Free</button>
+    <button type="submit" name="subscribe">Get Early Access — Free</button>
   </form>
 
   <!-- Success state (shown by JS after submit) -->
@@ -1475,9 +1457,11 @@
 <footer>
   <a class="footer-logo" href="#">BinKeeper</a>
   <ul class="footer-links">
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
     <li><a href="#">Privacy</a></li>
     <li><a href="#">Terms</a></li>
-    <li><a href="#">Contact</a></li>
   </ul>
   <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
 </footer>
@@ -1626,33 +1610,51 @@
     observer.observe(el);
   });
 
-  // Early access form — AJAX submit via Formspree
-  const earlyForm    = document.getElementById('early-access-form');
-  const formSuccess  = document.getElementById('form-success');
+  // Early access form — Mailchimp JSONP submit
+  const earlyForm   = document.getElementById('early-access-form');
+  const formSuccess = document.getElementById('form-success');
 
   if (earlyForm) {
-    earlyForm.addEventListener('submit', async (e) => {
+    earlyForm.addEventListener('submit', function(e) {
       e.preventDefault();
-      const data = new FormData(earlyForm);
-      try {
-        const res = await fetch(earlyForm.action, {
-          method: 'POST',
-          body: data,
-          headers: { 'Accept': 'application/json' }
-        });
-        if (res.ok) {
+
+      const params = new URLSearchParams({
+        EMAIL: earlyForm.querySelector('[name="EMAIL"]').value,
+        FNAME: earlyForm.querySelector('[name="FNAME"]').value || '',
+        'b_f8ae6a7729e84e4b6842d34ba_573d8c6773': '',
+        c: 'mcCallback'
+      });
+
+      // Mailchimp JSONP: inject a script tag with a callback
+      window.mcCallback = function(data) {
+        if (data.result === 'success' || data.result === 'error' && data.msg.includes('already subscribed')) {
           earlyForm.style.display   = 'none';
           formSuccess.style.display = 'flex';
         } else {
-          // Graceful fallback: let the browser submit normally
-          earlyForm.submit();
+          // Show Mailchimp's own error message below the button
+          let errEl = document.getElementById('mc-error-msg');
+          if (!errEl) {
+            errEl = document.createElement('p');
+            errEl.id = 'mc-error-msg';
+            errEl.style.cssText = 'color:rgba(255,200,100,0.9);font-size:0.85rem;margin-top:0.5rem;text-align:center;';
+            earlyForm.appendChild(errEl);
+          }
+          errEl.textContent = data.msg.replace(/<[^>]+>/g, '');
         }
-      } catch {
-        earlyForm.submit();
-      }
+        // Clean up the script tag
+        const s = document.getElementById('mc-jsonp');
+        if (s) s.remove();
+      };
+
+      const baseAction = earlyForm.action.replace('/post-json', '/post-json');
+      const script = document.createElement('script');
+      script.id  = 'mc-jsonp';
+      script.src = 'https://binkeeper.us22.list-manage.com/subscribe/post-json?' + params.toString();
+      document.body.appendChild(script);
     });
   }
 </script>
 
+<script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/f8ae6a7729e84e4b6842d34ba/1c513e3b6d09f9cb3816e550a.js");</script>
 </body>
 </html>

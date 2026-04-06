@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>QR Labels — BinKeeper Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --amber:#F5A623; --amber-deep:#E8920A; --amber-light:#FDF3E0; --brown-dark:#4A2800; --brown-mid:#8B5E3C; --black:#1A1208; --off-white:#FEFBF5; --gray-warm:#9E8E7A; --gray-light:#F2EDE4; --font-display:'Playfair Display',Georgia,serif; --font-body:'DM Sans',sans-serif; --font-mono:'DM Mono',monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(254,251,245,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,166,35,0.2); }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--brown-dark); text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber-deep); }
+  .nav-cta { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 0.88rem; padding: 0.6rem 1.4rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  .page-hero { padding: 10rem 3rem 5rem; background: var(--brown-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E"); pointer-events: none; }
+  .hero-text { position: relative; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: var(--amber); text-decoration: none; }
+  .hero-tag { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 0.75rem; }
+  .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.4rem); color: white; line-height: 1.1; margin-bottom: 1.25rem; }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero > .hero-text p { font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.75; }
+
+  .hero-visual { position: relative; display: flex; justify-content: center; }
+  .qr-mock-card { background: white; border-radius: 20px; padding: 2.5rem; display: flex; flex-direction: column; align-items: center; gap: 1.25rem; box-shadow: 0 32px 80px rgba(0,0,0,0.3); max-width: 260px; }
+  .qr-code-mock { width: 160px; height: 160px; background: white; border-radius: 12px; padding: 14px; display: grid; grid-template-columns: repeat(7, 1fr); grid-template-rows: repeat(7, 1fr); gap: 2px; border: 1px solid var(--gray-light); }
+  .qr-cell { border-radius: 1px; }
+  .qr-cell.on { background: var(--brown-dark); }
+  .qr-cell.off { background: transparent; }
+  .qr-bin-label { font-family: var(--font-mono); font-size: 0.8rem; letter-spacing: 0.08em; color: var(--brown-dark); font-weight: 500; text-align: center; }
+  .qr-bin-sub { font-size: 0.72rem; color: var(--gray-warm); text-align: center; }
+  .qr-scan-hint { font-family: var(--font-mono); font-size: 0.65rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--amber-deep); border: 1px dashed rgba(245,166,35,0.4); border-radius: 6px; padding: 0.3rem 0.6rem; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 6rem 3rem; }
+  .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+  .content-card { background: white; border-radius: 20px; padding: 2rem; border: 1px solid var(--gray-light); }
+  .content-card-icon { width: 48px; height: 48px; background: var(--amber-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+  .content-card-icon svg { width: 24px; height: 24px; }
+  .content-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); margin-bottom: 0.6rem; }
+  .content-card p { font-size: 0.93rem; line-height: 1.75; color: var(--brown-mid); font-weight: 300; }
+  .content h2 { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--brown-dark); margin-bottom: 1rem; }
+  .content > p { font-size: 1rem; line-height: 1.8; color: var(--brown-mid); font-weight: 300; margin-bottom: 3rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; font-weight: 500; color: var(--amber-deep); text-decoration: none; margin-bottom: 3rem; transition: gap 0.2s; }
+  .back-link::before { content: '←'; transition: transform 0.2s; }
+  .back-link:hover::before { transform: translateX(-3px); }
+
+  .cta-strip { background: var(--brown-dark); border-radius: 24px; padding: 3rem; text-align: center; margin-top: 4rem; }
+  .cta-strip h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; color: white; margin-bottom: 0.75rem; }
+  .cta-strip h3 em { color: var(--amber); font-style: italic; }
+  .cta-strip p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 300; }
+  .btn-amber { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 2.2rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 24px rgba(245,166,35,0.4); }
+  .btn-amber:hover { background: #FFB830; transform: translateY(-2px); }
+
+  footer { background: var(--black); padding: 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--amber); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+    .page-hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 4rem; }
+    .content { padding: 4rem 1.5rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/icon.png" alt="BinKeeper"/>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#how">How it Works</a></li>
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../index.html#features">Features</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="../index.html#cta">Get Early Access</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-text">
+    <div class="breadcrumb"><a href="../index.html#features">Features</a> / QR Labels</div>
+    <span class="hero-tag">Feature</span>
+    <h1>QR codes, generated <em>and printed.</em></h1>
+    <p>Every bin gets a unique QR code the moment you create it. Print it, stick it on, and you're done — scan from across the room to see everything inside.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="qr-mock-card">
+      <div class="qr-code-mock">
+        <div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div>
+        <div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell off"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+        <div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div><div class="qr-cell on"></div>
+      </div>
+      <div class="qr-bin-label">BIN-007</div>
+      <div class="qr-bin-sub">Halloween Decor · Basement</div>
+      <div class="qr-scan-hint">Tap to scan</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <a class="back-link" href="../index.html#features">Back to Features</a>
+
+  <h2>One scan. Everything inside.</h2>
+  <p>The QR label is BinKeeper's killer feature. Stick one on every bin and you'll never have to lift a lid to know what's inside. Pull up your phone, scan, and the full contents list — with photos — appears instantly. No app navigation required.</p>
+
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/></svg>
+      </div>
+      <h3>Auto-generated</h3>
+      <p>Every bin gets a unique QR code the moment you create it in BinKeeper. No setup, no configuration — it just appears, ready to print.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+      </div>
+      <h3>Print at home</h3>
+      <p>Print labels directly from the app — standard letter size, or any label paper you already own. No special equipment needed.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 3h18v18H3z" rx="2"/><path d="M8 9h8M8 13h5"/></svg>
+      </div>
+      <h3>Instant contents</h3>
+      <p>Scan the QR code and see the bin's name, room, photo, and full items list. No app login required for viewing — just scan and go.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <h3>Always up to date</h3>
+      <p>The QR code links live to your bin. Update the bin's contents in the app and the next scan shows the latest — no reprinting required.</p>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h3>Ready to label <em>every bin?</em></h3>
+    <p>Get early access and start scanning from across the room.</p>
+    <a href="../index.html#cta" class="btn-amber">Get Early Access — Free</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="../index.html">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+</body>
+</html>

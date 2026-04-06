@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Check In / Check Out — BinKeeper Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --amber:#F5A623; --amber-deep:#E8920A; --amber-light:#FDF3E0; --brown-dark:#4A2800; --brown-mid:#8B5E3C; --black:#1A1208; --off-white:#FEFBF5; --gray-warm:#9E8E7A; --gray-light:#F2EDE4; --font-display:'Playfair Display',Georgia,serif; --font-body:'DM Sans',sans-serif; --font-mono:'DM Mono',monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(254,251,245,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,166,35,0.2); }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--brown-dark); text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber-deep); }
+  .nav-cta { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 0.88rem; padding: 0.6rem 1.4rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  .page-hero { padding: 10rem 3rem 5rem; background: var(--brown-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E"); pointer-events: none; }
+  .hero-text { position: relative; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: var(--amber); text-decoration: none; }
+  .hero-tag { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 0.75rem; }
+  .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.4rem); color: white; line-height: 1.1; margin-bottom: 1.25rem; }
+  .page-hero h1 em { color: var(--amber); font-style: italic; }
+  .page-hero .hero-text > p { font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.75; }
+
+  /* Check out mock */
+  .hero-visual { display: flex; justify-content: center; }
+  .checkout-mock { background: white; border-radius: 20px; padding: 1.5rem; width: 260px; box-shadow: 0 32px 80px rgba(0,0,0,0.3); }
+  .checkout-item { display: flex; align-items: center; gap: 0.8rem; padding: 0.65rem 0; border-bottom: 1px solid var(--gray-light); }
+  .checkout-item:last-of-type { border: none; margin-bottom: 0.5rem; }
+  .item-icon { width: 34px; height: 34px; border-radius: 8px; background: var(--amber-light); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; flex-shrink: 0; }
+  .item-name { font-size: 0.85rem; font-weight: 500; color: var(--brown-dark); }
+  .item-status { font-size: 0.72rem; color: var(--gray-warm); }
+  .item-status.out { color: #E8920A; font-weight: 500; }
+  .item-check { margin-left: auto; }
+  .checkout-btn { display: block; width: 100%; background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 600; font-size: 0.88rem; padding: 0.7rem; border-radius: 10px; border: none; cursor: pointer; text-align: center; }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 6rem 3rem; }
+  .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+  .content-card { background: white; border-radius: 20px; padding: 2rem; border: 1px solid var(--gray-light); }
+  .content-card-icon { width: 48px; height: 48px; background: var(--amber-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+  .content-card-icon svg { width: 24px; height: 24px; }
+  .content-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); margin-bottom: 0.6rem; }
+  .content-card p { font-size: 0.93rem; line-height: 1.75; color: var(--brown-mid); font-weight: 300; }
+  .content h2 { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--brown-dark); margin-bottom: 1rem; }
+  .content > p { font-size: 1rem; line-height: 1.8; color: var(--brown-mid); font-weight: 300; margin-bottom: 3rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; font-weight: 500; color: var(--amber-deep); text-decoration: none; margin-bottom: 3rem; }
+  .back-link::before { content: '←'; }
+  .cta-strip { background: var(--brown-dark); border-radius: 24px; padding: 3rem; text-align: center; margin-top: 4rem; }
+  .cta-strip h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; color: white; margin-bottom: 0.75rem; }
+  .cta-strip h3 em { color: var(--amber); font-style: italic; }
+  .cta-strip p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 300; }
+  .btn-amber { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 2.2rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 24px rgba(245,166,35,0.4); }
+  .btn-amber:hover { background: #FFB830; transform: translateY(-2px); }
+  footer { background: var(--black); padding: 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--amber); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+  @media (max-width: 900px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .page-hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 4rem; } .content { padding: 4rem 1.5rem; } .content-grid { grid-template-columns: 1fr; } footer { flex-direction: column; padding: 2rem 1.5rem; } }
+</style>
+</head>
+<body>
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/icon.png" alt="BinKeeper"/>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#how">How it Works</a></li>
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../index.html#features">Features</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="../index.html#cta">Get Early Access</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-text">
+    <div class="breadcrumb"><a href="../index.html#features">Features</a> / Check In / Check Out</div>
+    <span class="hero-tag">Feature</span>
+    <h1>Know exactly <em>where it is.</em></h1>
+    <p>Borrowed something from a bin? Log it. Return it later with a tap. BinKeeper tracks where things are — even when they're out of the bin.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="checkout-mock">
+      <div class="checkout-item">
+        <div class="item-icon">🔦</div>
+        <div>
+          <div class="item-name">Flashlight (large)</div>
+          <div class="item-status out">Checked out · Dave · Garage</div>
+        </div>
+      </div>
+      <div class="checkout-item">
+        <div class="item-icon">🎃</div>
+        <div>
+          <div class="item-name">Fog machine</div>
+          <div class="item-status">In bin · Halloween Bin 1</div>
+        </div>
+        <div class="item-check">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#28C840" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"/></svg>
+        </div>
+      </div>
+      <div class="checkout-item">
+        <div class="item-icon">🧹</div>
+        <div>
+          <div class="item-name">Broom</div>
+          <div class="item-status out">Checked out · Sarah · Porch</div>
+        </div>
+      </div>
+      <button class="checkout-btn">Check out an item</button>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <a class="back-link" href="../index.html#features">Back to Features</a>
+  <h2>Your bins, accounted for.</h2>
+  <p>A bin inventory only works if it reflects reality. Check out / check in keeps your inventory honest — when something leaves the bin, you log where it went. When it comes back, one tap marks it returned. No more "it's in the bin" when it actually isn't.</p>
+
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <h3>One-tap check out</h3>
+      <p>Taking something from a bin? Tap check out, log where you're putting it, and you're done. Takes less time than putting the item back improperly.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+      </div>
+      <h3>Easy return</h3>
+      <p>When something comes back to the bin, mark it returned. The inventory updates immediately for everyone in the household.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      </div>
+      <h3>Location logging</h3>
+      <p>Log where a checked-out item went — "living room", "car", "lent to neighbor" — so you always know where to find it, bin or not.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/></svg>
+      </div>
+      <h3>Outstanding items view</h3>
+      <p>See a list of everything currently out of its bin — who has it, where it is, how long it's been out. Nothing falls through the cracks.</p>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h3>Always know <em>where it is.</em></h3>
+    <p>Get early access and keep your bins honest.</p>
+    <a href="../index.html#cta" class="btn-amber">Get Early Access — Free</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="../index.html">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+</body>
+</html>

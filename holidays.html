@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Holiday Bins — BinKeeper</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:       #F5A623;
+    --amber-deep:  #E8920A;
+    --amber-dark:  #7B4A00;
+    --amber-light: #FDF3E0;
+    --brown-dark:  #4A2800;
+    --brown-mid:   #8B5E3C;
+    --black:       #1A1208;
+    --off-white:   #FEFBF5;
+    --gray-warm:   #9E8E7A;
+    --gray-light:  #F2EDE4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(254,251,245,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,166,35,0.2); }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--brown-dark); text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber-deep); }
+  .nav-cta { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 0.88rem; padding: 0.6rem 1.4rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  /* PAGE HERO */
+  .page-hero { padding: 10rem 3rem 5rem; background: var(--brown-dark); text-align: center; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E"); pointer-events: none; }
+  .page-hero-tag { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 1rem; position: relative; }
+  .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.5rem, 5vw, 4rem); color: white; line-height: 1.1; margin-bottom: 1.25rem; position: relative; }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero p { font-size: 1.1rem; color: rgba(255,255,255,0.6); font-weight: 300; max-width: 520px; margin: 0 auto; line-height: 1.7; position: relative; }
+
+  /* HOLIDAY BROWSER */
+  .holiday-browser { padding: 5rem 3rem 8rem; }
+
+  .tag-cloud {
+    display: flex; flex-wrap: wrap; gap: 0.6rem;
+    justify-content: center;
+    max-width: 960px; margin: 0 auto 3.5rem;
+  }
+
+  .holiday-tag {
+    font-family: var(--font-mono); font-size: 0.8rem; font-weight: 500;
+    padding: 0.5rem 1.1rem; border-radius: 100px;
+    border: 1.5px solid var(--amber); color: var(--amber-dark);
+    background: white; letter-spacing: 0.04em;
+    transition: all 0.2s; cursor: pointer; user-select: none;
+  }
+  .holiday-tag:hover, .holiday-tag.active { background: var(--amber); color: var(--brown-dark); }
+
+  /* APP-STYLE BIN LIST */
+  .app-shell {
+    max-width: 960px; margin: 0 auto;
+    background: #F7F7F7; border-radius: 24px;
+    border: 1px solid rgba(0,0,0,0.07);
+    overflow: hidden;
+    box-shadow: 0 24px 80px rgba(0,0,0,0.12);
+  }
+
+  .app-topbar {
+    background: white; padding: 1rem 1.5rem;
+    display: flex; align-items: center; gap: 1rem;
+    border-bottom: 1px solid #EFEFEF;
+  }
+
+  .app-topbar-dots { display: flex; gap: 6px; }
+  .app-topbar-dots span { width: 12px; height: 12px; border-radius: 50%; }
+  .app-topbar-dots span:nth-child(1) { background: #FF5F57; }
+  .app-topbar-dots span:nth-child(2) { background: #FEBC2E; }
+  .app-topbar-dots span:nth-child(3) { background: #28C840; }
+
+  .app-topbar-title {
+    font-family: var(--font-mono); font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.08em; color: #888; margin-left: auto; margin-right: auto;
+  }
+
+  .app-search {
+    margin: 1.25rem 1.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+    background: white; border-radius: 12px;
+    padding: 0.7rem 1rem; border: 1px solid #E8E8E8;
+  }
+  .app-search-icon { opacity: 0.35; flex-shrink: 0; }
+  .app-search-text { font-size: 0.9rem; color: #AAAAAA; font-family: var(--font-body); }
+
+  .app-list { padding: 0 1.5rem 1.5rem; }
+
+  .app-section-label {
+    font-family: var(--font-mono); font-size: 0.72rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase; color: #AAAAAA;
+    padding: 0.5rem 0 0.75rem; margin-top: 0.5rem;
+  }
+
+  .app-bin-row {
+    background: white; border-radius: 14px; margin-bottom: 0.5rem;
+    padding: 0.9rem 1rem;
+    display: flex; align-items: center; gap: 0.9rem;
+    border: 1px solid #F0F0F0;
+    transition: box-shadow 0.15s;
+    animation: fadeSlide 0.3s ease both;
+  }
+  @keyframes fadeSlide { from { opacity:0; transform:translateY(8px); } to { opacity:1; transform:translateY(0); } }
+
+  .app-bin-icon {
+    width: 40px; height: 40px; border-radius: 10px;
+    background: var(--amber); display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+
+  .app-bin-info { flex: 1; min-width: 0; }
+  .app-bin-name { font-weight: 500; font-size: 0.95rem; color: #1A1A1A; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .app-bin-items-preview { font-size: 0.78rem; color: #AAAAAA; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+  .app-bin-badge {
+    font-family: var(--font-mono); font-size: 0.68rem; font-weight: 500;
+    background: var(--amber-light); color: var(--amber-deep);
+    padding: 0.2rem 0.55rem; border-radius: 100px; flex-shrink: 0;
+    border: 1px solid rgba(245,166,35,0.3);
+  }
+
+  .app-bin-chevron { color: #CCCCCC; flex-shrink: 0; font-size: 1rem; }
+
+  .app-bin-row.wide-card {
+    border: 1.5px solid rgba(245,166,35,0.4);
+    background: linear-gradient(135deg, #FFFBF2 0%, white 100%);
+  }
+  .app-bin-row.wide-card .app-bin-icon { background: var(--brown-dark); }
+
+  .bins-fading { opacity: 0; transition: opacity 0.18s; }
+  .bins-visible { opacity: 1; transition: opacity 0.18s; }
+
+  /* FOOTER */
+  footer { background: var(--black); padding: 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--amber); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .holiday-browser { padding: 3rem 1.5rem 5rem; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/icon.png" alt="BinKeeper"/>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html" class="active">Holidays</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+</nav>
+
+<div class="page-hero">
+  <span class="page-hero-tag">Built for every season</span>
+  <h1>A bin for <em>every occasion.</em></h1>
+  <p>See how BinKeeper keeps your seasonal stuff organized — from Halloween decorations to ski gear. Browse by holiday below.</p>
+</div>
+
+<section class="holiday-browser">
+  <div class="tag-cloud" id="tag-cloud">
+    <span class="holiday-tag active" data-cat="halloween">🎃 Halloween</span>
+    <span class="holiday-tag" data-cat="thanksgiving">🍂 Thanksgiving</span>
+    <span class="holiday-tag" data-cat="christmas">🎄 Christmas</span>
+    <span class="holiday-tag" data-cat="hanukkah">🕎 Hanukkah</span>
+    <span class="holiday-tag" data-cat="newyears">🎉 New Year's</span>
+    <span class="holiday-tag" data-cat="chinesenewyear">🧧 Chinese New Year</span>
+    <span class="holiday-tag" data-cat="valentines">💝 Valentine's Day</span>
+    <span class="holiday-tag" data-cat="stpatricks">🍀 St. Patrick's Day</span>
+    <span class="holiday-tag" data-cat="easter">🐣 Easter / Spring</span>
+    <span class="holiday-tag" data-cat="july4">🎆 4th of July</span>
+    <span class="holiday-tag" data-cat="beach">🏖️ Beach &amp; Summer</span>
+    <span class="holiday-tag" data-cat="weddings">💍 Weddings</span>
+    <span class="holiday-tag" data-cat="sports">🏆 Sports</span>
+    <span class="holiday-tag" data-cat="skiing">⛷️ Skiing</span>
+  </div>
+
+  <div class="app-shell">
+    <div class="app-topbar">
+      <div class="app-topbar-dots">
+        <span></span><span></span><span></span>
+      </div>
+      <div class="app-topbar-title" id="app-topbar-title">BinKeeper — Halloween</div>
+    </div>
+
+    <div class="app-search">
+      <svg class="app-search-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="#666" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <span class="app-search-text">Search items, bins, rooms…</span>
+    </div>
+
+    <div class="app-list" id="app-list"></div>
+  </div>
+</section>
+
+<footer>
+  <a class="footer-logo" href="index.html">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+
+<script>
+  const BIN_SVG = `<svg width="20" height="20" viewBox="0 0 20 20" fill="none"><rect x="2" y="8" width="16" height="11" rx="1.5" fill="#1C1C1C"/><rect x="1" y="5" width="18" height="5" rx="1.5" fill="#F5C800"/><rect x="7" y="3" width="6" height="3" rx="1" fill="#F5C800"/></svg>`;
+
+  const categoryData = {
+    halloween: {
+      label: '🎃 Halloween',
+      bins: [
+        { name:'Halloween — Bin 1', count:14, wide:true, items:['Jack-o-lantern lights','Skeleton door decor','Orange string lights','Fog machine','Candy bowls (x3)','Witch hat','Cauldron prop','Fake cobwebs','Pumpkin carving kit'] },
+        { name:'Halloween — Bin 2', count:9, items:['Costumes (kids)','Face paint kit','Trick-or-treat bags','Plastic spiders','Candle holders'] },
+        { name:'Halloween — Bin 3', count:6, items:['Outdoor inflatables','Stake lights','Extension cord'] },
+      ]
+    },
+    thanksgiving: {
+      label: '🍂 Thanksgiving',
+      bins: [
+        { name:'Thanksgiving — Bin 1', count:11, wide:true, items:['Turkey centerpiece','Fall leaf garland','Pillar candles','Harvest wreath','Cornucopia basket','Linen tablecloth','Cloth napkins (x12)','Napkin rings','Acorn place cards'] },
+        { name:'Thanksgiving — Bin 2', count:7, items:['Serving platters (x4)','Gravy boat','Carving set','Turkey baster'] },
+      ]
+    },
+    christmas: {
+      label: '🎄 Christmas',
+      bins: [
+        { name:'Christmas — Bin 1', count:22, wide:true, items:['Tree topper star','Garland (x3)','Stockings (x4)','Stocking hooks','Wreath','Tree skirt','Mantle lights','Nutcrackers (x2)','Snow globe'] },
+        { name:'Christmas — Bin 2', count:18, items:['Ornaments (assorted)','Ribbon spools','Gift tags','Wrapping paper rolls','Tape & scissors','Bows bag'] },
+        { name:'Christmas — Bin 3', count:8, items:['Outdoor lights (x4 boxes)','Extension cords','Light clips','Yard stakes'] },
+      ]
+    },
+    hanukkah: {
+      label: '🕎 Hanukkah',
+      bins: [
+        { name:'Hanukkah — Bin 1', count:12, wide:true, items:['Menorah (main)','Travel menorah','Dreidels (x6)','Hanukkah candles (x3 boxes)','Blue string lights','Window lights','Shamash candles'] },
+        { name:'Hanukkah — Bin 2', count:8, items:['Wrapping paper (blue/silver)','Gelt bags','Gift boxes','Ribbon','Star of David banner'] },
+      ]
+    },
+    newyears: {
+      label: "🎉 New Year's",
+      bins: [
+        { name:"New Year's — Bin 1", count:16, wide:true, items:['Champagne flutes (x8)','Party hats box','Noisemakers bag','Balloon bag','Streamers (x10)','Confetti cannon','Countdown banner','Glitter glasses','Photo booth props'] },
+        { name:"New Year's — Bin 2", count:6, items:['Silver & gold tablecloth','Star garland','Glitter candles','Centerpiece vase'] },
+      ]
+    },
+    chinesenewyear: {
+      label: '🧧 Chinese New Year',
+      bins: [
+        { name:'Chinese New Year — Bin 1', count:14, wide:true, items:['Red lanterns (x6)','Gold foil decorations','Firecracker garland','Red envelopes (x20)','Dragon wall decal','Lucky bamboo pot','Gold ingot decor','Plum blossom picks'] },
+        { name:'Chinese New Year — Bin 2', count:8, items:['Lion dance costume','Drum & sticks','Red tablecloth','Gold runner','Chopstick sets (x8)'] },
+      ]
+    },
+    valentines: {
+      label: "💝 Valentine's Day",
+      bins: [
+        { name:"Valentine's Day — Bin 1", count:13, wide:true, items:['Heart string lights','Red & pink balloons','Rose garland','Heart-shaped serving dish','Conversation hearts bowl','Pink tablecloth','Candle holders (x4)','Heart cookie cutters','Rose petals bag'] },
+        { name:"Valentine's Day — Bin 2", count:7, items:['Gift bags (x6)','Red tissue paper','Heart-shaped boxes','Ribbon assortment','Kraft gift tags'] },
+      ]
+    },
+    stpatricks: {
+      label: "🍀 St. Patrick's Day",
+      bins: [
+        { name:"St. Patrick's Day — Bin 1", count:11, wide:true, items:['Shamrock garland','Green string lights','Leprechaun hat','Rainbow banner','Gold coin scatter','Green tablecloth','Clover confetti','Inflatable pot of gold','Green beads (x3)'] },
+        { name:"St. Patrick's Day — Bin 2", count:6, items:['Green face paint','Party pins bag','Shamrock glasses (x6)','Irish flag bunting'] },
+      ]
+    },
+    easter: {
+      label: '🐣 Easter / Spring',
+      bins: [
+        { name:'Easter / Spring — Bin 1', count:18, wide:true, items:['Easter egg dye kits (x3)','Plastic eggs (x50)','Easter baskets (x4)','Basket grass (x4 bags)','Egg hunt flags','Bunny ears (x4)','Chick stuffed animals','Spring wreath','Pastel tablecloth'] },
+        { name:'Easter / Spring — Bin 2', count:10, items:['Flower pot stakes','Garden pinwheels','Pastel ribbon','Spring banner','Mason jars','Seed packets'] },
+      ]
+    },
+    july4: {
+      label: '🎆 4th of July',
+      bins: [
+        { name:'4th of July — Bin 1', count:15, wide:true, items:['Red/white/blue bunting','Star garland (x4)','American flag (large)','Mini flag set (x24)','Star-shaped glasses (x6)','Patriotic tablecloth','Sparkler bag','Glow bracelets (x20)','Pinwheel stakes (x12)'] },
+        { name:'4th of July — Bin 2', count:8, items:['Cornhole set','Lawn games bag','Outdoor string lights','Portable speaker','Cooler bag'] },
+      ]
+    },
+    beach: {
+      label: '🏖️ Beach & Summer',
+      bins: [
+        { name:'Beach & Summer — Bin 1', count:20, wide:true, items:['Beach umbrella','Sand anchor','Beach chairs (x4)','Cooler bag','Sand toys set','Boogie boards (x2)','Swim vests (x2)','Snorkel set','Waterproof phone case','Beach towels (x6)'] },
+        { name:'Beach & Summer — Bin 2', count:10, items:['Sunscreen supply','After-sun lotion','Rashguards (kids)','Water shoes (x4 pairs)','Floaties','Beach games bag'] },
+        { name:'Beach & Summer — Bin 3', count:7, items:['Portable grill & tools','Charcoal bag','Lighter','Bamboo skewers','Grill brush'] },
+      ]
+    },
+    weddings: {
+      label: '💍 Weddings',
+      bins: [
+        { name:'Weddings — Florals Bin', count:16, wide:true, items:['Flower girl basket','Ring bearer pillow','Aisle runner','Pew ribbon (x20)','Tulle rolls (x4)','Mason jar centerpieces (x10)','Tea light candles (x50)','Floral foam blocks','Florist wire & tape'] },
+        { name:'Weddings — Details Bin', count:12, items:['Guest book & pen','Card box','Unity candle set','Bubbles (x24)','Dried petal cones (x20)','Table number frames'] },
+        { name:'Weddings — Photo Bin', count:8, items:['Photo booth kit','Backdrop stand','Props bag','Polaroid film (x3)','Fairy lights'] },
+      ]
+    },
+    sports: {
+      label: '🏆 Sports',
+      bins: [
+        { name:'Sports — Game Day Bin', count:18, wide:true, items:['Team jerseys (x4)','Foam fingers (x2)','Team flags (x3)','Face paint kit','Stadium cushions (x4)','Tailgate chairs (x4)','Cooler','Bluetooth speaker','Cornhole set'] },
+        { name:'Sports — Kids League Bin', count:12, items:['Batting helmet','Batting gloves (x2)','Batting tee','Ball bag','Catcher\'s gear','Scorebook','Lineup cards'] },
+        { name:'Sports — Gear Bin', count:9, items:['Pump & needles','Pinnies (x10)','Cones (x20)','Agility ladder','First aid kit'] },
+      ]
+    },
+    skiing: {
+      label: '⛷️ Skiing',
+      bins: [
+        { name:'Skiing — Clothing Bin', count:16, wide:true, items:['Ski goggles (x3)','Helmet (adult)','Helmet (child)','Neck gaiter (x4)','Hand warmers (x20)','Ski socks (x6 pairs)','Balaclava (x2)','Base layer tops (x4)','Base layer bottoms (x4)'] },
+        { name:'Skiing — Boot Bin', count:10, items:['Ski boot bag','Boot dryer','Ski locks (x2)','Wrist guards','Knee pads','Boot warmers (x4 pairs)'] },
+        { name:'Skiing — Maintenance Bin', count:8, items:['Ski wax kit','Edge sharpener','Binding screwdriver','Boot buckle repair kit','Goggle wipes','Ski bag'] },
+      ]
+    },
+  };
+
+  function renderBins(cat) {
+    const data = categoryData[cat];
+    if (!data) return;
+    const list = document.getElementById('app-list');
+    const topbar = document.getElementById('app-topbar-title');
+
+    list.classList.add('bins-fading');
+    setTimeout(() => {
+      topbar.textContent = 'BinKeeper — ' + data.label;
+      list.innerHTML = `<div class="app-section-label">${data.bins.length} bin${data.bins.length !== 1 ? 's' : ''} · ${data.label}</div>` +
+        data.bins.map((bin, i) => `
+          <div class="app-bin-row ${bin.wide ? 'wide-card' : ''}" style="animation-delay:${i * 0.06}s">
+            <div class="app-bin-icon">${BIN_SVG}</div>
+            <div class="app-bin-info">
+              <div class="app-bin-name">${bin.name}</div>
+              <div class="app-bin-items-preview">${bin.items.slice(0, 4).join(' · ')}${bin.items.length > 4 ? ' · …' : ''}</div>
+            </div>
+            <span class="app-bin-badge">${bin.count} items</span>
+            <span class="app-bin-chevron">›</span>
+          </div>
+        `).join('');
+      list.classList.remove('bins-fading');
+      list.classList.add('bins-visible');
+    }, 180);
+  }
+
+  renderBins('halloween');
+
+  document.querySelectorAll('.holiday-tag[data-cat]').forEach(tag => {
+    tag.addEventListener('click', function() {
+      document.querySelectorAll('.holiday-tag').forEach(t => t.classList.remove('active'));
+      this.classList.add('active');
+      renderBins(this.dataset.cat);
+    });
+  });
+</script>
+</body>
+</html>

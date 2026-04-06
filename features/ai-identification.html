@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>AI Identification — BinKeeper Features</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --amber:#F5A623; --amber-deep:#E8920A; --amber-light:#FDF3E0; --brown-dark:#4A2800; --brown-mid:#8B5E3C; --black:#1A1208; --off-white:#FEFBF5; --gray-warm:#9E8E7A; --gray-light:#F2EDE4; --font-display:'Playfair Display',Georgia,serif; --font-body:'DM Sans',sans-serif; --font-mono:'DM Mono',monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(254,251,245,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,166,35,0.2); }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--brown-dark); text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber-deep); }
+  .nav-cta { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 0.88rem; padding: 0.6rem 1.4rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  .page-hero { padding: 10rem 3rem 5rem; background: var(--brown-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E"); pointer-events: none; }
+  .hero-text { position: relative; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: var(--amber); text-decoration: none; }
+  .hero-tag { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 0.75rem; }
+  .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.4rem); color: white; line-height: 1.1; margin-bottom: 1.25rem; }
+  .page-hero h1 em { color: var(--amber); font-style: italic; }
+  .page-hero .hero-text > p { font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.75; }
+
+  /* AI mock phone */
+  .hero-visual { display: flex; justify-content: center; position: relative; }
+  .ai-mock { background: white; border-radius: 24px; padding: 1.5rem; width: 240px; box-shadow: 0 32px 80px rgba(0,0,0,0.3); }
+  .ai-photo-area { background: var(--gray-light); border-radius: 14px; height: 130px; display: flex; align-items: center; justify-content: center; margin-bottom: 1rem; position: relative; overflow: hidden; }
+  .ai-photo-area::after { content: '📷'; font-size: 2.5rem; opacity: 0.4; }
+  .ai-scan-line { position: absolute; left: 0; right: 0; height: 2px; background: linear-gradient(90deg, transparent, var(--amber), transparent); animation: scan 2s ease-in-out infinite; }
+  @keyframes scan { 0%,100% { top: 10%; } 50% { top: 85%; } }
+  .ai-result { background: var(--amber-light); border-radius: 10px; padding: 0.75rem; border: 1px solid rgba(245,166,35,0.3); }
+  .ai-result-tag { font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.1em; text-transform: uppercase; color: var(--amber-deep); margin-bottom: 0.3rem; }
+  .ai-result-name { font-weight: 500; font-size: 0.88rem; color: var(--brown-dark); margin-bottom: 0.5rem; }
+  .ai-result-actions { display: flex; gap: 0.5rem; }
+  .ai-btn { font-size: 0.72rem; font-weight: 500; padding: 0.3rem 0.7rem; border-radius: 100px; cursor: pointer; }
+  .ai-btn-confirm { background: var(--amber); color: var(--brown-dark); border: none; }
+  .ai-btn-edit { background: white; color: var(--brown-mid); border: 1px solid var(--gray-light); }
+
+  .content { max-width: 900px; margin: 0 auto; padding: 6rem 3rem; }
+  .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+  .content-card { background: white; border-radius: 20px; padding: 2rem; border: 1px solid var(--gray-light); }
+  .content-card-icon { width: 48px; height: 48px; background: var(--amber-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+  .content-card-icon svg { width: 24px; height: 24px; }
+  .content-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); margin-bottom: 0.6rem; }
+  .content-card p { font-size: 0.93rem; line-height: 1.75; color: var(--brown-mid); font-weight: 300; }
+  .content h2 { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--brown-dark); margin-bottom: 1rem; }
+  .content > p { font-size: 1rem; line-height: 1.8; color: var(--brown-mid); font-weight: 300; margin-bottom: 3rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; font-weight: 500; color: var(--amber-deep); text-decoration: none; margin-bottom: 3rem; transition: gap 0.2s; }
+  .back-link::before { content: '←'; }
+  .back-link:hover::before { transform: translateX(-3px); }
+  .coming-soon-badge { display: inline-flex; align-items: center; gap: 0.4rem; background: rgba(245,166,35,0.12); color: var(--amber-deep); font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em; padding: 0.4rem 0.9rem; border-radius: 100px; margin-bottom: 1.5rem; border: 1px solid rgba(245,166,35,0.3); }
+  .coming-soon-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); }
+  .cta-strip { background: var(--brown-dark); border-radius: 24px; padding: 3rem; text-align: center; margin-top: 4rem; }
+  .cta-strip h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; color: white; margin-bottom: 0.75rem; }
+  .cta-strip h3 em { color: var(--amber); font-style: italic; }
+  .cta-strip p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 300; }
+  .btn-amber { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 2.2rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 24px rgba(245,166,35,0.4); }
+  .btn-amber:hover { background: #FFB830; transform: translateY(-2px); }
+  footer { background: var(--black); padding: 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--amber); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+  @media (max-width: 900px) { nav { padding: 1rem 1.5rem; } .nav-links { display: none; } .page-hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 4rem; } .content { padding: 4rem 1.5rem; } .content-grid { grid-template-columns: 1fr; } footer { flex-direction: column; padding: 2rem 1.5rem; } }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/icon.png" alt="BinKeeper"/>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#how">How it Works</a></li>
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../index.html#features">Features</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="../index.html#cta">Get Early Access</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-text">
+    <div class="breadcrumb"><a href="../index.html#features">Features</a> / AI Identification</div>
+    <span class="hero-tag">Feature</span>
+    <h1>AI that reads your <em>bin for you.</em></h1>
+    <p>Snap a photo of your bin's contents and BinKeeper's AI suggests what's inside. No typing. No scanning every item. Just confirm what looks right and move on.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="ai-mock">
+      <div class="ai-photo-area">
+        <div class="ai-scan-line"></div>
+      </div>
+      <div class="ai-result">
+        <div class="ai-result-tag">✦ AI identified</div>
+        <div class="ai-result-name">Halloween Decoration Set</div>
+        <div class="ai-result-actions">
+          <button class="ai-btn ai-btn-confirm">Confirm</button>
+          <button class="ai-btn ai-btn-edit">Edit</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <a class="back-link" href="../index.html#features">Back to Features</a>
+  <div class="coming-soon-badge">Expanding to all bins — coming soon</div>
+
+  <h2>Stop typing. Start snapping.</h2>
+  <p>The hardest part of any organization system is entering data. BinKeeper's AI skips that entirely — take one photo, and it does the identification work for you. You just confirm what's right and skip what isn't. You're always in control; the AI just does the heavy lifting.</p>
+
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z"/><circle cx="12" cy="13" r="4"/></svg>
+      </div>
+      <h3>Photo recognition</h3>
+      <p>Point your camera at the bin contents and the AI analyzes the image — identifying items, grouping similar things, and suggesting descriptive names.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/></svg>
+      </div>
+      <h3>Barcode scanning</h3>
+      <p>Got a box with a barcode? Scan it and we'll look it up instantly — product name, brand, and description all filled in automatically.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <h3>You confirm everything</h3>
+      <p>The AI suggests, you decide. Accept, edit, or skip each suggestion. Nothing gets added to your bin without your approval — no mystery labels, ever.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M13 2 L14.5 8 L21 9 L14.5 10.5 L13 17 L11.5 10.5 L5 9 L11.5 8 Z"/></svg>
+      </div>
+      <h3>Gets smarter over time</h3>
+      <p>The more you use BinKeeper, the better it gets at recognizing your stuff — seasonal decorations, sports gear, tools — whatever lives in your bins.</p>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h3>Let AI do <em>the work.</em></h3>
+    <p>Get early access and be the first to try AI-powered bin identification.</p>
+    <a href="../index.html#cta" class="btn-amber">Get Early Access — Free</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="../index.html">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+</body>
+</html>

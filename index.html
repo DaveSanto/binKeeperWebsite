@@ -201,7 +201,7 @@
   }
 
   .photo-label {
-    position: absolute; bottom: 16px; left: 16px;
+    position: absolute; bottom: 16px; right: 16px;
     background: rgba(26,18,8,0.85); color: rgba(255,255,255,0.8);
     font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
     padding: 0.4rem 0.75rem; border-radius: 8px;
@@ -298,6 +298,60 @@
   }
 
   .section-title em { font-style: italic; color: var(--amber-deep); }
+
+  /* ─── GUIDE ─── */
+  .guide {
+    padding: 8rem 3rem;
+    background: var(--off-white);
+  }
+
+  .guide-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1.5rem;
+    max-width: 1100px; margin: 0 auto;
+  }
+
+  .guide-card {
+    background: white;
+    border-radius: 20px;
+    padding: 2.5rem;
+    border: 1.5px solid var(--gray-light);
+    transition: transform 0.2s, box-shadow 0.2s, border-color 0.2s;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .guide-card::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0; height: 3px;
+    background: linear-gradient(90deg, var(--amber), var(--amber-deep));
+    opacity: 0; transition: opacity 0.2s;
+  }
+
+  .guide-card:hover { transform: translateY(-4px); box-shadow: 0 12px 40px rgba(74,40,0,0.09); border-color: rgba(245,166,35,0.4); }
+  .guide-card:hover::before { opacity: 1; }
+
+  .guide-icon {
+    width: 52px; height: 52px; margin-bottom: 1.4rem;
+    background: var(--amber); border-radius: 14px;
+    display: flex; align-items: center; justify-content: center;
+  }
+
+  .guide-icon svg { width: 26px; height: 26px; }
+
+  .guide-card h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.25rem;
+    color: var(--brown-dark); margin-bottom: 0.65rem;
+  }
+
+  .guide-card p {
+    font-size: 0.95rem; line-height: 1.75; color: var(--brown-mid); font-weight: 300;
+  }
+
+  @media (max-width: 700px) {
+    .guide-grid { grid-template-columns: 1fr; }
+  }
 
   .steps {
     display: grid;
@@ -773,6 +827,57 @@
 
   .btn-amber:hover { background: #FFB830; transform: translateY(-2px); }
 
+  /* ─── EARLY ACCESS FORM ─── */
+  .early-access-form {
+    display: flex; flex-direction: column; align-items: center; gap: 1rem;
+    max-width: 480px; margin: 0 auto; position: relative; z-index: 1;
+  }
+
+  .early-access-form .form-row {
+    display: flex; gap: 0.75rem; width: 100%; flex-wrap: wrap;
+  }
+
+  .early-access-form input[type="text"],
+  .early-access-form input[type="email"] {
+    flex: 1; min-width: 0;
+    padding: 0.9rem 1.2rem;
+    border-radius: 100px; border: 1.5px solid rgba(255,255,255,0.15);
+    background: rgba(255,255,255,0.08);
+    color: white; font-family: var(--font-body); font-size: 0.95rem;
+    outline: none; transition: border-color 0.2s, background 0.2s;
+  }
+
+  .early-access-form input::placeholder { color: rgba(255,255,255,0.4); }
+
+  .early-access-form input:focus {
+    border-color: var(--amber); background: rgba(255,255,255,0.12);
+  }
+
+  .early-access-form button[type="submit"] {
+    width: 100%;
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+    padding: 1rem 2.4rem; border-radius: 100px; border: none;
+    cursor: pointer; letter-spacing: 0.02em;
+    transition: background 0.2s, transform 0.15s;
+    box-shadow: 0 4px 24px rgba(245,166,35,0.4);
+  }
+
+  .early-access-form button[type="submit"]:hover { background: #FFB830; transform: translateY(-2px); }
+
+  .form-success {
+    display: none; flex-direction: column; align-items: center; gap: 0.6rem;
+    color: white; text-align: center;
+  }
+
+  .form-success .success-icon {
+    width: 56px; height: 56px; background: var(--amber); border-radius: 50%;
+    display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem;
+  }
+
+  .form-success h3 { font-family: var(--font-display); font-size: 1.6rem; color: white; }
+  .form-success p  { color: rgba(255,255,255,0.65); font-size: 0.97rem; }
+
   .btn-outline-white {
     background: transparent; color: white;
     font-family: var(--font-body); font-weight: 500; font-size: 1rem;
@@ -808,7 +913,7 @@
     display: flex; gap: 1.5rem; list-style: none;
   }
 
-  .footer-links a {
+  .foo
     font-size: 0.82rem; color: rgba(255,255,255,0.4);
     text-decoration: none; transition: color 0.2s;
   }
@@ -885,6 +990,7 @@
   </a>
   <ul class="nav-links">
     <li><a href="#how">How it Works</a></li>
+    <li><a href="#guide">Getting Started</a></li>
     <li><a href="#holidays">Holiday Ready</a></li>
     <li><a href="#features">Features</a></li>
     <li><a href="#pricing">Pricing</a></li>
@@ -913,24 +1019,9 @@
   <div class="hero-visual">
     <div class="photo-stack">
       <!-- Messy basement placeholder — replace with real photo -->
-      <div class="photo-placeholder">
-        <!-- simulated clutter -->
-        <div class="clutter-box" style="width:80px;height:50px;background:#3D2C1A;top:20px;left:30px;transform:rotate(-8deg);"></div>
-        <div class="clutter-box" style="width:55px;height:70px;background:#2C2018;top:15px;left:120px;transform:rotate(5deg);"></div>
-        <div class="clutter-box" style="width:100px;height:40px;background:#4A3020;top:80px;left:50px;transform:rotate(3deg);"></div>
-        <div class="clutter-box" style="width:60px;height:60px;background:#251A10;top:60px;right:40px;transform:rotate(-12deg);"></div>
-        <div class="clutter-box" style="width:90px;height:30px;background:#5A3D22;bottom:60px;left:20px;transform:rotate(7deg);"></div>
-        <div class="clutter-box" style="width:40px;height:80px;background:#3A2718;bottom:40px;right:60px;transform:rotate(-5deg);"></div>
-        <div class="clutter-box" style="width:120px;height:35px;background:#4D3425;bottom:20px;left:60px;transform:rotate(-2deg);"></div>
-        <svg style="position:relative;z-index:1;opacity:0.5" width="48" height="48" viewBox="0 0 48 48" fill="none">
-          <circle cx="24" cy="24" r="22" stroke="rgba(245,166,35,0.6)" stroke-width="2" stroke-dasharray="5 3"/>
-          <path d="M16 32 L24 16 L32 32" stroke="rgba(245,166,35,0.6)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-          <path d="M19 26 h10" stroke="rgba(245,166,35,0.6)" stroke-width="2" stroke-linecap="round"/>
-        </svg>
-        <span style="font-family:'DM Mono',monospace;font-size:0.75rem;color:rgba(245,166,35,0.7);letter-spacing:0.08em;z-index:1">
-          → Add your basement photo here
-        </span>
-        <div class="photo-label">Sound familiar?</div>
+      <div style="width:100%;aspect-ratio:4/3;border-radius:20px;overflow:hidden;position:relative;">
+        <img src="assets/BinKeeper_TheNightmareThatStartedItAll.png" alt="A messy basement full of unlabeled bins" style="width:100%;height:100%;object-fit:cover;display:block;"/>
+        <div class="photo-label">Look familiar?</div>
       </div>
 
       <div class="floating-badge">We've all been there.</div>
@@ -1004,6 +1095,99 @@
       <h3>Find anything, instantly</h3>
       <p>Need something? Search the app by item name, room, or bin number. Or scan a bin's QR code to see its full contents — photo and list, right there.</p>
     </div>
+  </div>
+</section>
+
+<!-- ─── GUIDE ─── -->
+<section class="guide" id="guide">
+  <div class="section-header">
+    <span class="section-tag">Getting started</span>
+    <h2 class="section-title">A few things worth <em>knowing.</em></h2>
+  </div>
+
+  <div class="guide-grid">
+
+    <div class="guide-card">
+      <div class="guide-icon">
+        <!-- Package icon -->
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M22 9.5V17a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V9.5"/>
+          <polyline points="2 7 13 2 24 7"/>
+          <line x1="13" y1="2" x2="13" y2="19"/>
+          <polyline points="2 7 13 12 24 7"/>
+        </svg>
+      </div>
+      <h3>The Bin is the Star</h3>
+      <p>Don't think of BinKeeper as an inventory app — think of it as a bin tracker. Create a bin, give it a name, assign it to a room. That's it. You're already done.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-icon">
+        <!-- Camera icon -->
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M23 19a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V9a2 2 0 0 1 2-2h3l2-3h6l2 3h3a2 2 0 0 1 2 2z"/>
+          <circle cx="13" cy="13" r="3.5"/>
+        </svg>
+      </div>
+      <h3>Snap a Photo</h3>
+      <p>The single most useful thing you can do is take one good photo of your bin — either the outside label, the inside contents, or both. A photo is worth a thousand item entries.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-icon">
+        <!-- Sparkles / AI icon -->
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2 L14.5 8 L21 9 L14.5 10.5 L13 17 L11.5 10.5 L5 9 L11.5 8 Z"/>
+          <path d="M21 16 L21.8 18.5 L24 19 L21.8 19.5 L21 22 L20.2 19.5 L18 19 L20.2 18.5 Z"/>
+          <path d="M5 3 L5.6 4.8 L7 5 L5.6 5.2 L5 7 L4.4 5.2 L3 5 L4.4 4.8 Z"/>
+        </svg>
+      </div>
+      <h3>Let AI Do the Heavy Lifting</h3>
+      <p>BinKeeper can look at your bin photo and suggest what's inside. You don't have to type a single item name — just review and confirm what it finds. <em style="color:var(--amber-deep)">(Coming soon for all bins.)</em></p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-icon">
+        <!-- CheckCircle icon -->
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <circle cx="13" cy="13" r="10"/>
+          <polyline points="8.5 13 11.5 16 17.5 10"/>
+        </svg>
+      </div>
+      <h3>Items Are Optional</h3>
+      <p>Adding individual items is completely optional — it's there when you need it. But a bin with just a name and a photo is already a win. Stick on a QR code and scan it from across the room — that's space-age X-ray vision right there.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-icon">
+        <!-- MapPin icon -->
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <path d="M13 2C9.1 2 6 5.1 6 9c0 5.25 7 15 7 15s7-9.75 7-15c0-3.9-3.1-7-7-7z"/>
+          <circle cx="13" cy="9" r="2.5"/>
+        </svg>
+      </div>
+      <h3>Locations &amp; Rooms</h3>
+      <p>Organize bins by where they live — a house, a storage unit, a garage. Inside a location, sort bins into rooms. When you're looking for something you'll know exactly which room to walk into.</p>
+    </div>
+
+    <div class="guide-card">
+      <div class="guide-icon">
+        <!-- QR Code icon -->
+        <svg viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+          <rect x="3" y="3" width="8" height="8" rx="1"/>
+          <rect x="15" y="3" width="8" height="8" rx="1"/>
+          <rect x="3" y="15" width="8" height="8" rx="1"/>
+          <rect x="5.5" y="5.5" width="3" height="3" fill="#4A2800" stroke="none"/>
+          <rect x="17.5" y="5.5" width="3" height="3" fill="#4A2800" stroke="none"/>
+          <rect x="5.5" y="17.5" width="3" height="3" fill="#4A2800" stroke="none"/>
+          <line x1="15" y1="15" x2="15" y2="23"/><line x1="15" y1="15" x2="23" y2="15"/>
+          <line x1="19" y1="19" x2="23" y2="19"/><line x1="19" y1="19" x2="19" y2="23"/>
+        </svg>
+      </div>
+      <h3>Scan to Find Anything</h3>
+      <p>Print a QR label for all your bins and stick it on the outside. Scan it later with BinKeeper to instantly see what's inside — no searching, no guessing.</p>
+    </div>
+
   </div>
 </section>
 
@@ -1255,10 +1439,35 @@
 <section class="cta-section" id="cta">
   <span class="section-tag" style="color:var(--amber);">Early access</span>
   <h2 class="section-title">Stop guessing. <em>Start finding.</em></h2>
-  <p class="cta-sub">BinKeeper is coming soon. Get early access and be the first to bring order to your storage chaos.</p>
-  <div class="cta-buttons">
-    <a href="#" class="btn-amber">Get Early Access — Free</a>
-    <a href="#how" class="btn-outline-white">See how it works</a>
+  <p class="cta-sub">BinKeeper is coming soon. Drop your email and be first in line.</p>
+
+  <form
+    id="early-access-form"
+    class="early-access-form"
+    action="https://formspree.io/f/REPLACE_WITH_YOUR_FORM_ID"
+    method="POST"
+  >
+    <!-- Formspree subject line override -->
+    <input type="hidden" name="_subject" value="Bin Keeper Early Access"/>
+    <!-- Redirect back to same page after submit (Formspree fallback) -->
+    <input type="hidden" name="_next" value="https://davesanto.github.io/binKeeperWebsite/#cta"/>
+
+    <div class="form-row">
+      <input type="text"  name="name"  placeholder="Your name"  required/>
+      <input type="email" name="email" placeholder="Your email" required/>
+    </div>
+    <button type="submit">Get Early Access — Free</button>
+  </form>
+
+  <!-- Success state (shown by JS after submit) -->
+  <div class="form-success" id="form-success">
+    <div class="success-icon">
+      <svg width="26" height="26" viewBox="0 0 26 26" fill="none" stroke="#4A2800" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="4 13 10 19 22 7"/>
+      </svg>
+    </div>
+    <h3>You're on the list!</h3>
+    <p>We'll be in touch when BinKeeper is ready.<br/>Get those bins labelled in the meantime.</p>
   </div>
 </section>
 
@@ -1416,6 +1625,33 @@
     el.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
     observer.observe(el);
   });
+
+  // Early access form — AJAX submit via Formspree
+  const earlyForm    = document.getElementById('early-access-form');
+  const formSuccess  = document.getElementById('form-success');
+
+  if (earlyForm) {
+    earlyForm.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const data = new FormData(earlyForm);
+      try {
+        const res = await fetch(earlyForm.action, {
+          method: 'POST',
+          body: data,
+          headers: { 'Accept': 'application/json' }
+        });
+        if (res.ok) {
+          earlyForm.style.display   = 'none';
+          formSuccess.style.display = 'flex';
+        } else {
+          // Graceful fallback: let the browser submit normally
+          earlyForm.submit();
+        }
+      } catch {
+        earlyForm.submit();
+      }
+    });
+  }
 </script>
 
 </body>

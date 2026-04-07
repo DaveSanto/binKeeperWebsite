@@ -107,11 +107,7 @@
     margin-bottom: 1.5rem;
   }
 
-  .hero-eyebrow::before {
-    content: '';
-    width: 6px; height: 6px; border-radius: 50%;
-    background: var(--amber); display: block;
-  }
+  .hero-eyebrow::before { display: none; }
 
   .hero-headline {
     font-family: var(--font-display);
@@ -850,17 +846,18 @@
 
   /* ─── EARLY ACCESS FORM ─── */
   .early-access-form {
-    display: flex; flex-direction: column; align-items: center; gap: 1rem;
-    max-width: 480px; margin: 0 auto; position: relative; z-index: 1;
+    display: flex; flex-direction: column; gap: 0.75rem;
+    max-width: 520px; margin: 0 auto; position: relative; z-index: 1; width: 100%;
   }
 
   .early-access-form .form-row {
-    display: flex; gap: 0.75rem; width: 100%; flex-wrap: wrap;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; width: 100%;
   }
 
   .early-access-form input[type="text"],
-  .early-access-form input[type="email"] {
-    flex: 1; min-width: 0;
+  .early-access-form input[type="email"],
+  .early-access-form input[type="tel"] {
+    width: 100%;
     padding: 0.9rem 1.2rem;
     border-radius: 100px; border: 1.5px solid rgba(255,255,255,0.15);
     background: rgba(255,255,255,0.08);
@@ -872,6 +869,11 @@
 
   .early-access-form input:focus {
     border-color: var(--amber); background: rgba(255,255,255,0.12);
+  }
+
+  .early-access-form .form-note {
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.04em;
+    color: rgba(255,255,255,0.35); text-align: center;
   }
 
   .early-access-form button[type="submit"] {
@@ -978,6 +980,7 @@
     .nav-links { display: none; }
     .hero { grid-template-columns: 1fr; padding: 6rem 1.5rem 3rem; gap: 3rem; }
     .hero::after { display: none; }
+    .early-access-form .form-row { grid-template-columns: 1fr; }
     .story { padding: 5rem 1.5rem; }
     .how, .holidays, .features, .pricing, .testimonials, .cta-section { padding: 5rem 1.5rem; }
     .pricing-grid { grid-template-columns: 1fr; }
@@ -1014,7 +1017,7 @@
 <!-- ─── HERO ─── -->
 <section class="hero">
   <div class="hero-text">
-    <div class="hero-eyebrow">Finally — a smarter way to store</div>
+    <div class="hero-eyebrow">🐝 Bee Organized. Finally.</div>
     <h1 class="hero-headline">
       Your stuff is in there.
       <em>Somewhere.</em>
@@ -1418,7 +1421,7 @@
 
 <!-- ─── CTA ─── -->
 <section class="cta-section" id="cta">
-  <span class="section-tag" style="color:var(--amber);">Early access</span>
+  <span class="section-tag" style="color:var(--amber);">Join the hive</span>
   <h2 class="section-title">Stop guessing. <em>Start finding.</em></h2>
   <p class="cta-sub">BinKeeper is coming soon. Drop your email and be first in line.</p>
 
@@ -1435,10 +1438,13 @@
     </div>
 
     <div class="form-row">
-      <input type="text"  name="FNAME" id="mce-FNAME" placeholder="Your name"/>
-      <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="Your email" required/>
+      <input type="text"  name="FNAME" id="mce-FNAME" placeholder="First name" required/>
+      <input type="text"  name="LNAME" id="mce-LNAME" placeholder="Last name" required/>
     </div>
+    <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="Email address" required/>
+    <input type="tel"   name="PHONE" id="mce-PHONE" placeholder="Phone number (optional)"/>
     <button type="submit" name="subscribe">Get Early Access — Free</button>
+    <p class="form-note">No spam. No credit card. Just early access.</p>
   </form>
 
   <!-- Success state (shown by JS after submit) -->
@@ -1449,7 +1455,7 @@
       </svg>
     </div>
     <h3>You're on the list!</h3>
-    <p>We'll be in touch when BinKeeper is ready.<br/>Get those bins labelled in the meantime.</p>
+    <p>Welcome to the hive! We'll be in touch when BinKeeper is ready.</p>
   </div>
 </section>
 
@@ -1611,27 +1617,39 @@
   });
 
   // Early access form — Mailchimp JSONP submit
-  const earlyForm   = document.getElementById('early-access-form');
-  const formSuccess = document.getElementById('form-success');
+  document.addEventListener('DOMContentLoaded', function() {
+    const earlyForm   = document.getElementById('early-access-form');
+    const formSuccess = document.getElementById('form-success');
 
-  if (earlyForm) {
+    if (!earlyForm) return;
+
     earlyForm.addEventListener('submit', function(e) {
       e.preventDefault();
+      e.stopPropagation();
 
+      const old = document.getElementById('mc-jsonp');
+      if (old) old.remove();
+
+      const phone = earlyForm.querySelector('[name="PHONE"]').value.trim();
       const params = new URLSearchParams({
-        EMAIL: earlyForm.querySelector('[name="EMAIL"]').value,
-        FNAME: earlyForm.querySelector('[name="FNAME"]').value || '',
+        u:     'f8ae6a7729e84e4b6842d34ba',
+        id:    '573d8c6773',
+        f_id:  '0053c2e1f0',
+        EMAIL: earlyForm.querySelector('[name="EMAIL"]').value.trim(),
+        FNAME: earlyForm.querySelector('[name="FNAME"]').value.trim(),
+        LNAME: earlyForm.querySelector('[name="LNAME"]').value.trim(),
         'b_f8ae6a7729e84e4b6842d34ba_573d8c6773': '',
         c: 'mcCallback'
       });
+      if (phone) params.set('PHONE', phone);
 
-      // Mailchimp JSONP: inject a script tag with a callback
       window.mcCallback = function(data) {
-        if (data.result === 'success' || data.result === 'error' && data.msg.includes('already subscribed')) {
+        const s = document.getElementById('mc-jsonp');
+        if (s) s.remove();
+        if (data.result === 'success' || (data.result === 'error' && data.msg.includes('already subscribed'))) {
           earlyForm.style.display   = 'none';
           formSuccess.style.display = 'flex';
         } else {
-          // Show Mailchimp's own error message below the button
           let errEl = document.getElementById('mc-error-msg');
           if (!errEl) {
             errEl = document.createElement('p');
@@ -1641,18 +1659,14 @@
           }
           errEl.textContent = data.msg.replace(/<[^>]+>/g, '');
         }
-        // Clean up the script tag
-        const s = document.getElementById('mc-jsonp');
-        if (s) s.remove();
       };
 
-      const baseAction = earlyForm.action.replace('/post-json', '/post-json');
       const script = document.createElement('script');
       script.id  = 'mc-jsonp';
       script.src = 'https://binkeeper.us22.list-manage.com/subscribe/post-json?' + params.toString();
       document.body.appendChild(script);
     });
-  }
+  });
 </script>
 
 <script id="mcjs">!function(c,h,i,m,p){m=c.createElement(h),p=c.getElementsByTagName(h)[0],m.async=1,m.src=i,p.parentNode.insertBefore(m,p)}(document,"script","https://chimpstatic.com/mcjs-connected/js/users/f8ae6a7729e84e4b6842d34ba/1c513e3b6d09f9cb3816e550a.js");</script>

@@ -188,7 +188,7 @@
 
 <nav>
   <a class="nav-logo" href="index.html">
-    <img src="assets/icon.png" alt="BinKeeper"/>
+    <img src="assets/adaptive-icon.png" alt="BinKeeper"/>
     BinKeeper
   </a>
   <ul class="nav-links">
@@ -259,7 +259,7 @@
     <form
       id="contact-mc-form"
       class="contact-form"
-      action="https://binkeeper.us22.list-manage.com/subscribe/post?u=f8ae6a7729e84e4b6842d34ba&amp;id=573d8c6773&amp;f_id=00acc2e1f0"
+      action="https://binkeeper.us22.list-manage.com/subscribe/post?u=f8ae6a7729e84e4b6842d34ba&amp;id=573d8c6773&amp;f_id=0052c2e1f0"
       method="post"
       name="mc-embedded-subscribe-form"
     >
@@ -268,13 +268,27 @@
         <input type="text" name="b_f8ae6a7729e84e4b6842d34ba_573d8c6773" tabindex="-1" value=""/>
       </div>
 
-      <div>
-        <label for="mce-FNAME">Your name</label>
-        <input type="text" name="FNAME" id="mce-FNAME" placeholder="Jane Smith"/>
+      <div style="display:grid;grid-template-columns:1fr 1fr;gap:1rem;">
+        <div>
+          <label for="mce-FNAME">First name</label>
+          <input type="text" name="FNAME" id="mce-FNAME" placeholder="Jane"/>
+        </div>
+        <div>
+          <label for="mce-LNAME">Last name</label>
+          <input type="text" name="LNAME" id="mce-LNAME" placeholder="Smith"/>
+        </div>
       </div>
       <div>
         <label for="mce-EMAIL">Email address <span style="color:var(--amber-deep)">*</span></label>
         <input type="email" name="EMAIL" id="mce-EMAIL" placeholder="jane@example.com" required/>
+      </div>
+      <div>
+        <label for="mce-PHONE">Phone number</label>
+        <input type="text" name="PHONE" id="mce-PHONE" placeholder="(optional)"/>
+      </div>
+      <div>
+        <label for="mce-MMERGE7">Message</label>
+        <input type="text" name="MMERGE7" id="mce-MMERGE7" placeholder="What's on your mind?"/>
       </div>
 
       <div id="contact-success" style="display:none; background:var(--amber-light); border:1px solid rgba(245,166,35,0.4); border-radius:12px; padding:1rem 1.25rem; color:var(--brown-dark); font-size:0.93rem; line-height:1.6;">
@@ -310,12 +324,17 @@
     contactForm.addEventListener('submit', function(e) {
       e.preventDefault();
 
+      const phone   = contactForm.querySelector('[name="PHONE"]').value.trim();
+      const message = contactForm.querySelector('[name="MMERGE7"]').value.trim();
       const params = new URLSearchParams({
-        EMAIL: contactForm.querySelector('[name="EMAIL"]').value,
-        FNAME: contactForm.querySelector('[name="FNAME"]').value || '',
+        EMAIL:   contactForm.querySelector('[name="EMAIL"]').value.trim(),
+        FNAME:   contactForm.querySelector('[name="FNAME"]').value.trim(),
+        LNAME:   contactForm.querySelector('[name="LNAME"]').value.trim(),
         'b_f8ae6a7729e84e4b6842d34ba_573d8c6773': '',
         c: 'mcContactCallback'
       });
+      if (phone)   params.set('PHONE',   phone);
+      if (message) params.set('MMERGE7', message);
 
       window.mcContactCallback = function(data) {
         const s = document.getElementById('mc-contact-jsonp');
@@ -331,6 +350,9 @@
         }
       };
 
+      params.set('u',  'f8ae6a7729e84e4b6842d34ba');
+      params.set('id', '573d8c6773');
+      params.set('f_id', '0052c2e1f0');
       const script = document.createElement('script');
       script.id  = 'mc-contact-jsonp';
       script.src = 'https://binkeeper.us22.list-manage.com/subscribe/post-json?' + params.toString();

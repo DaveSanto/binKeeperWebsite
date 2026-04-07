@@ -104,6 +104,24 @@
   .plan-features li::before { content: ''; width: 16px; height: 16px; border-radius: 50%; background: rgba(245,166,35,0.2); flex-shrink: 0; margin-top: 1px; background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.5 8L6.5 11L12.5 5' stroke='%23E8920A' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); background-size: contain; }
   .pricing-card.popular .plan-features li::before { background-color: rgba(245,166,35,0.2); background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.5 8L6.5 11L12.5 5' stroke='%23F5A623' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
 
+  .plan-features li.ai-feature {
+    font-weight: 500; color: var(--brown-dark);
+    background: linear-gradient(135deg, rgba(245,166,35,0.12), rgba(245,166,35,0.04));
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 8px; padding: 0.45rem 0.6rem; margin-top: 0.25rem;
+  }
+  .plan-features li.ai-feature::before {
+    background-color: var(--amber);
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 16 16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M3.5 8L6.5 11L12.5 5' stroke='%234A2800' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+  }
+  .ai-badge {
+    font-family: var(--font-mono); font-size: 0.6rem; font-weight: 500;
+    letter-spacing: 0.08em; text-transform: uppercase;
+    background: var(--amber); color: var(--brown-dark);
+    padding: 0.1rem 0.4rem; border-radius: 4px; margin-left: 0.4rem;
+    vertical-align: middle;
+  }
+
   .plan-cta { display: block; text-align: center; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; padding: 0.85rem 1.5rem; border-radius: 100px; border: 1.5px solid var(--amber); color: var(--amber-deep); background: transparent; transition: all 0.22s; letter-spacing: 0.02em; cursor: pointer; }
   .plan-cta:hover { background: var(--amber); color: var(--brown-dark); transform: translateY(-1px); }
   .pricing-card.popular .plan-cta { background: var(--amber); color: var(--brown-dark); border-color: var(--amber); box-shadow: 0 4px 20px rgba(245,166,35,0.4); }
@@ -158,84 +176,83 @@
 <div class="page-hero">
   <span class="page-hero-tag">Simple pricing</span>
   <h1>Pick your plan. <em>Own your bins.</em></h1>
-  <p>Start free for 14 days. No credit card required. Cancel any time.</p>
+  <p>Start free — no credit card required. Upgrade when you're ready.</p>
 </div>
 
 <section class="pricing">
+
   <div class="pricing-toggle">
     <button class="toggle-btn active" id="toggle-monthly" onclick="setPricing('monthly')">Monthly</button>
     <button class="toggle-btn" id="toggle-annual" onclick="setPricing('annual')">
       Annual
-      <span class="save-badge">Save up to 20%</span>
+      <span class="save-badge">Save up to 15%</span>
     </button>
   </div>
 
   <div class="pricing-grid">
 
     <div class="pricing-card">
-      <p class="plan-name">Starter</p>
-      <p class="plan-bin-count">6 Bins</p>
-      <p class="plan-bin-label">Perfect for getting started</p>
+      <p class="plan-name">Free</p>
+      <p class="plan-bin-count">5 Bins</p>
+      <p class="plan-bin-label">Try it out, no strings attached</p>
       <div class="plan-divider"></div>
       <div class="price-display">
-        <span class="price-dollar">$</span>
-        <span class="price-amount" id="price-starter">1</span>
-        <span class="price-period">&nbsp;/ mo</span>
+        <span class="price-amount" id="price-free" style="font-size:3.2rem">$0</span>
       </div>
-      <p class="price-annual-note" id="note-starter">&nbsp;</p>
+      <p class="price-annual-note" id="note-free">&nbsp;</p>
       <ul class="plan-features">
-        <li>Up to 6 bins</li>
-        <li>AI item identification</li>
-        <li>QR code generation &amp; printing</li>
-        <li>Barcode scanning</li>
+        <li>Up to 5 bins</li>
+        <li>Up to 20 items per bin</li>
+        <li>QR code generation &amp; scanning</li>
+        <li>Manual item entry</li>
         <li>Check in / check out</li>
-        <li>1 household member</li>
       </ul>
-      <a href="index.html#cta" class="plan-cta">Get Started</a>
+      <a href="index.html#cta" class="plan-cta">Get Started Free</a>
     </div>
 
     <div class="pricing-card popular">
       <div class="popular-badge">Most Popular</div>
-      <p class="plan-name">Home</p>
-      <p class="plan-bin-count">20 Bins</p>
+      <p class="plan-name">Keeper</p>
+      <p class="plan-bin-count">25 Bins</p>
       <p class="plan-bin-label">Great for the whole house</p>
       <div class="plan-divider"></div>
       <div class="price-display">
         <span class="price-dollar">$</span>
-        <span class="price-amount" id="price-home">3</span>
+        <span class="price-amount" id="price-keeper">3.99</span>
         <span class="price-period">&nbsp;/ mo</span>
       </div>
-      <p class="price-annual-note" id="note-home">&nbsp;</p>
+      <p class="price-annual-note" id="note-keeper">&nbsp;</p>
       <ul class="plan-features">
-        <li>Up to 20 bins</li>
-        <li>AI item identification</li>
-        <li>QR code generation &amp; printing</li>
-        <li>Barcode scanning</li>
+        <li>Up to 25 bins</li>
+        <li>Up to 40 items per bin</li>
+        <li>QR code generation &amp; scanning</li>
+        <li>Manual item entry</li>
         <li>Check in / check out</li>
-        <li>Unlimited household members</li>
+        <li>Household sharing</li>
         <li>Holiday &amp; seasonal organization</li>
       </ul>
       <a href="index.html#cta" class="plan-cta">Get Started</a>
     </div>
 
     <div class="pricing-card">
-      <p class="plan-name">Unlimited</p>
+      <p class="plan-name">Keeper Pro</p>
       <p class="plan-bin-count">∞ Bins</p>
-      <p class="plan-bin-label">For the truly organized</p>
+      <p class="plan-bin-label">Unlimited storage, plus AI</p>
       <div class="plan-divider"></div>
       <div class="price-display">
         <span class="price-dollar">$</span>
-        <span class="price-amount" id="price-unlimited">10</span>
+        <span class="price-amount" id="price-pro">12</span>
         <span class="price-period">&nbsp;/ mo</span>
       </div>
-      <p class="price-annual-note" id="note-unlimited">&nbsp;</p>
+      <p class="price-annual-note" id="note-pro">&nbsp;</p>
       <ul class="plan-features">
         <li>Unlimited bins</li>
-        <li>AI item identification</li>
-        <li>QR code generation &amp; printing</li>
-        <li>Barcode scanning</li>
+        <li>Unlimited items per bin</li>
+        <li class="ai-feature">AI Item ID — 50 scans/month <span class="ai-badge">AI</span></li>
+        <li>QR code generation &amp; scanning</li>
+        <li>Manual item entry</li>
         <li>Check in / check out</li>
-        <li>Unlimited household members</li>
+        <li>Household sharing</li>
         <li>Holiday &amp; seasonal organization</li>
         <li>Priority support</li>
       </ul>
@@ -244,35 +261,50 @@
 
   </div>
 
-  <p class="pricing-footnote">All plans include a 14-day free trial. No credit card required to start.</p>
+  <p class="pricing-footnote">No credit card required to start. Cancel any time.</p>
 </section>
 
 <section class="faq">
   <h2>Common questions</h2>
 
   <div class="faq-item">
-    <h3>Can I switch plans later?</h3>
-    <p>Yes — upgrade or downgrade any time. Changes take effect at the start of your next billing period.</p>
+    <h3>Is the Free plan really free?</h3>
+    <p>Yes — no credit card, no trial timer, no catch. You get 5 bins and up to 20 items per bin, forever. When you're ready to add more, upgrading takes about 30 seconds.</p>
   </div>
 
   <div class="faq-item">
     <h3>What happens when I hit my bin limit?</h3>
-    <p>You'll be prompted to upgrade before you can add a new bin. Your existing bins and all their contents stay exactly as they are.</p>
+    <p>The app will prompt you to upgrade before you can create a new bin. Your existing bins and everything in them stay exactly as they are.</p>
   </div>
 
   <div class="faq-item">
-    <h3>Is there a free trial?</h3>
-    <p>Yes — every plan starts with a 14-day free trial. No credit card required to get started.</p>
+    <h3>What's the 40-item limit per bin?</h3>
+    <p>Free plan bins hold up to 20 items each. Keeper bumps that to 40. Keeper Pro removes the limit entirely — bins can hold as many items as you actually have.</p>
   </div>
 
   <div class="faq-item">
-    <h3>What does "household member" mean?</h3>
-    <p>Anyone you invite to your BinKeeper account. They can view, add, and edit bins and items. Starter plans are single-user; Home and Unlimited plans support as many people as you want.</p>
+    <h3>How does AI Item ID work?</h3>
+    <p>On Keeper Pro, point your camera at an item and the app identifies it automatically — no typing required. You get 50 AI scans per calendar month. The count resets on the 1st, and you can always see how many scans you have left in the app. Barcode scanning and manual entry are available on all plans.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Why is AI only on Keeper Pro?</h3>
+    <p>AI identification uses real compute to process every photo. Offering it on lower-priced plans would mean cutting corners elsewhere. By keeping it in Keeper Pro, we can do it properly — and keep the other plans genuinely affordable.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>Can I switch plans later?</h3>
+    <p>Yes — upgrade or downgrade any time. Annual plans save you 10% on Keeper and 15% on Keeper Pro. If you downgrade, your existing bins and items are preserved in read-only mode until you're within your new plan's limits.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What does household sharing mean?</h3>
+    <p>Keeper and Keeper Pro let you invite anyone in your household. They can view, add, and edit bins and items — one shared system for the whole house.</p>
   </div>
 
   <div class="faq-item">
     <h3>Can I cancel any time?</h3>
-    <p>Absolutely. Cancel from the app at any time with no penalties. You'll keep access until the end of your current billing period.</p>
+    <p>Absolutely. Cancel from the app with no penalties. You'll keep access until the end of your current billing period.</p>
   </div>
 </section>
 
@@ -289,29 +321,16 @@
 </footer>
 
 <script>
-  const plans = {
-    monthly: {
-      starter:   { price: '1',    note: '' },
-      home:      { price: '3',    note: '' },
-      unlimited: { price: '10',   note: '' },
-    },
-    annual: {
-      starter:   { price: '0.90',  note: '$10.80 / yr — save $1.20' },
-      home:      { price: '2.55',  note: '$30.60 / yr — save $5.40' },
-      unlimited: { price: '8.00',  note: '$96.00 / yr — save $24.00' },
-    }
-  };
-
   function setPricing(period) {
-    const p = plans[period];
-    document.getElementById('price-starter').textContent   = p.starter.price;
-    document.getElementById('price-home').textContent      = p.home.price;
-    document.getElementById('price-unlimited').textContent = p.unlimited.price;
-    document.getElementById('note-starter').textContent    = p.starter.note;
-    document.getElementById('note-home').textContent       = p.home.note;
-    document.getElementById('note-unlimited').textContent  = p.unlimited.note;
-    document.getElementById('toggle-monthly').classList.toggle('active', period === 'monthly');
-    document.getElementById('toggle-annual').classList.toggle('active', period === 'annual');
+    const isAnnual = period === 'annual';
+    document.getElementById('price-free').textContent  = '$0';
+    document.getElementById('note-free').textContent   = '\u00a0';
+    document.getElementById('price-keeper').textContent = isAnnual ? '3.58' : '3.99';
+    document.getElementById('note-keeper').textContent  = isAnnual ? '$43 / yr — save 10%' : '\u00a0';
+    document.getElementById('price-pro').textContent    = isAnnual ? '10.17' : '12';
+    document.getElementById('note-pro').textContent     = isAnnual ? '$122 / yr — save 15%' : '\u00a0';
+    document.getElementById('toggle-monthly').classList.toggle('active', !isAnnual);
+    document.getElementById('toggle-annual').classList.toggle('active', isAnnual);
   }
 </script>
 </body>

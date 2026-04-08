@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Public Hives — BinKeeper Features</title>
+<meta name="description" content="Public Hives let anyone scan a QR code to see what's inside a shared bin — no app required. Perfect for sports teams, churches, Little Free Libraries, and community spaces." />
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root { --amber:#F5A623; --amber-deep:#E8920A; --amber-light:#FDF3E0; --brown-dark:#4A2800; --brown-mid:#8B5E3C; --black:#1A1208; --off-white:#FEFBF5; --gray-warm:#9E8E7A; --gray-light:#F2EDE4; --font-display:'Playfair Display',Georgia,serif; --font-body:'DM Sans',sans-serif; --font-mono:'DM Mono',monospace; }
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+  nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 3rem; background: rgba(254,251,245,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(245,166,35,0.2); }
+  .nav-logo { display: flex; align-items: center; gap: 0.6rem; font-family: var(--font-display); font-weight: 700; font-size: 1.4rem; color: var(--brown-dark); text-decoration: none; }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber-deep); }
+  .nav-cta { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 0.88rem; padding: 0.6rem 1.4rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  /* PAGE HERO */
+  .page-hero { padding: 10rem 3rem 5rem; background: var(--brown-dark); display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; position: relative; overflow: hidden; }
+  .page-hero::before { content: ''; position: absolute; inset: 0; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E"); pointer-events: none; }
+  .hero-text { position: relative; }
+  .breadcrumb { font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 1.25rem; }
+  .breadcrumb a { color: var(--amber); text-decoration: none; }
+  .hero-tag { font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 0.75rem; }
+  .page-hero h1 { font-family: var(--font-display); font-weight: 900; font-size: clamp(2.2rem, 4vw, 3.4rem); color: white; line-height: 1.1; margin-bottom: 1.25rem; }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero > .hero-text p { font-size: 1.05rem; color: rgba(255,255,255,0.65); font-weight: 300; line-height: 1.75; }
+
+  /* HERO VISUAL — simulated public bin view */
+  .hero-visual { position: relative; display: flex; justify-content: center; }
+  .public-hive-mock {
+    background: white; border-radius: 20px; padding: 1.5rem;
+    box-shadow: 0 32px 80px rgba(0,0,0,0.3); width: 260px;
+    display: flex; flex-direction: column; gap: 0.75rem;
+  }
+  .mock-hive-header {
+    display: flex; align-items: center; gap: 0.75rem;
+    padding-bottom: 0.75rem; border-bottom: 1px solid var(--gray-light);
+  }
+  .mock-hive-icon {
+    width: 44px; height: 44px; background: var(--amber-light);
+    border-radius: 10px; display: flex; align-items: center;
+    justify-content: center; font-size: 1.3rem; flex-shrink: 0;
+  }
+  .mock-hive-name { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--brown-dark); }
+  .mock-hive-sub { font-size: 0.7rem; color: var(--gray-warm); margin-top: 2px; font-family: var(--font-mono); }
+  .mock-public-badge {
+    font-family: var(--font-mono); font-size: 0.6rem; letter-spacing: 0.08em; text-transform: uppercase;
+    background: rgba(245,166,35,0.15); color: var(--amber-deep); border: 1px solid rgba(245,166,35,0.35);
+    padding: 0.2rem 0.6rem; border-radius: 100px; display: inline-flex; align-items: center; gap: 0.3rem;
+    width: fit-content;
+  }
+  .mock-public-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--amber); display: block; }
+  .mock-item { display: flex; align-items: center; gap: 0.6rem; padding: 0.5rem 0; border-bottom: 1px solid var(--gray-light); }
+  .mock-item:last-child { border-bottom: none; }
+  .mock-item-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--amber); flex-shrink: 0; }
+  .mock-item-name { font-size: 0.82rem; color: var(--brown-dark); font-weight: 400; }
+  .mock-item-status { font-family: var(--font-mono); font-size: 0.65rem; color: var(--gray-warm); margin-left: auto; }
+  .mock-item-status.out { color: var(--amber-deep); }
+  .mock-scan-hint {
+    font-family: var(--font-mono); font-size: 0.62rem; letter-spacing: 0.06em; text-transform: uppercase;
+    color: var(--gray-warm); text-align: center; padding-top: 0.5rem;
+    border-top: 1px solid var(--gray-light);
+  }
+
+  /* CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 6rem 3rem; }
+  .content-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-bottom: 4rem; }
+  .content-card { background: white; border-radius: 20px; padding: 2rem; border: 1px solid var(--gray-light); }
+  .content-card-icon { width: 48px; height: 48px; background: var(--amber-light); border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 1.25rem; }
+  .content-card-icon svg { width: 24px; height: 24px; }
+  .content-card h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); margin-bottom: 0.6rem; }
+  .content-card p { font-size: 0.93rem; line-height: 1.75; color: var(--brown-mid); font-weight: 300; }
+  .content h2 { font-family: var(--font-display); font-weight: 900; font-size: 2rem; color: var(--brown-dark); margin-bottom: 1rem; }
+  .content > p { font-size: 1rem; line-height: 1.8; color: var(--brown-mid); font-weight: 300; margin-bottom: 3rem; }
+  .back-link { display: inline-flex; align-items: center; gap: 0.4rem; font-size: 0.88rem; font-weight: 500; color: var(--amber-deep); text-decoration: none; margin-bottom: 3rem; transition: gap 0.2s; }
+  .back-link::before { content: '←'; transition: transform 0.2s; }
+  .back-link:hover::before { transform: translateX(-3px); }
+
+  /* USE CASES SECTION */
+  .use-cases-section { background: var(--gray-light); border-radius: 24px; padding: 3rem; margin-bottom: 4rem; }
+  .use-cases-section h2 { font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; color: var(--brown-dark); margin-bottom: 0.5rem; }
+  .use-cases-section > p { font-size: 0.95rem; color: var(--brown-mid); font-weight: 300; line-height: 1.7; margin-bottom: 2rem; }
+  .use-cases-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  .use-case-item { background: white; border-radius: 14px; padding: 1.25rem 1.5rem; border: 1px solid rgba(245,166,35,0.2); display: flex; gap: 1rem; align-items: flex-start; }
+  .use-case-emoji { font-size: 1.5rem; flex-shrink: 0; margin-top: 2px; }
+  .use-case-item h4 { font-family: var(--font-display); font-weight: 700; font-size: 1rem; color: var(--brown-dark); margin-bottom: 0.35rem; }
+  .use-case-item p { font-size: 0.85rem; line-height: 1.65; color: var(--brown-mid); font-weight: 300; }
+
+  /* HOW IT WORKS STEPS */
+  .steps { display: flex; flex-direction: column; gap: 0; margin-bottom: 4rem; }
+  .step { display: flex; gap: 2rem; align-items: flex-start; padding: 1.75rem 0; border-top: 1px solid var(--gray-light); }
+  .step:last-child { border-bottom: 1px solid var(--gray-light); }
+  .step-num { font-family: var(--font-display); font-weight: 900; font-size: 2.5rem; color: var(--amber); opacity: 0.35; line-height: 1; flex-shrink: 0; width: 48px; text-align: center; }
+  .step-body h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.15rem; color: var(--brown-dark); margin-bottom: 0.4rem; }
+  .step-body p { font-size: 0.92rem; line-height: 1.75; color: var(--brown-mid); font-weight: 300; }
+
+  /* CTA */
+  .cta-strip { background: var(--brown-dark); border-radius: 24px; padding: 3rem; text-align: center; margin-top: 4rem; }
+  .cta-strip h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.8rem; color: white; margin-bottom: 0.75rem; }
+  .cta-strip h3 em { color: var(--amber); font-style: italic; }
+  .cta-strip p { color: rgba(255,255,255,0.6); font-size: 0.95rem; margin-bottom: 1.5rem; font-weight: 300; }
+  .btn-amber { background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 2.2rem; border-radius: 100px; border: none; cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 24px rgba(245,166,35,0.4); }
+  .btn-amber:hover { background: #FFB830; transform: translateY(-2px); }
+
+  footer { background: var(--black); padding: 3rem; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 1.5rem; }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--amber); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; } .nav-links { display: none; }
+    .page-hero { grid-template-columns: 1fr; padding: 8rem 1.5rem 4rem; }
+    .hero-visual { display: none; }
+    .content { padding: 4rem 1.5rem; }
+    .content-grid { grid-template-columns: 1fr; }
+    .use-cases-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">
+    <img src="../assets/icon.png" alt="BinKeeper"/>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="../index.html#how">How it Works</a></li>
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../moving.html">Moving</a></li>
+    <li><a href="../index.html#features">Features</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="../index.html#cta">Get Early Access</a>
+</nav>
+
+<div class="page-hero">
+  <div class="hero-text">
+    <div class="breadcrumb"><a href="../index.html#features">Features</a> / Public Hives</div>
+    <span class="hero-tag">Feature</span>
+    <h1>The bin is locked. The contents are <em>open.</em></h1>
+    <p>Turn any shared bin into a Public Hive — a scannable inventory anyone can browse without an account. The physical bin stays secure. The stuff inside is visible to your whole team, community, or congregation.</p>
+  </div>
+  <div class="hero-visual">
+    <div class="public-hive-mock">
+      <div class="mock-hive-header">
+        <div class="mock-hive-icon">⚽</div>
+        <div>
+          <div class="mock-hive-name">Game Day Gear</div>
+          <div class="mock-hive-sub">Riverside Youth Soccer · U10</div>
+        </div>
+      </div>
+      <div class="mock-public-badge">Public Hive — View Only</div>
+      <div class="mock-item">
+        <div class="mock-item-dot"></div>
+        <div class="mock-item-name">Practice cones (12)</div>
+        <div class="mock-item-status">In</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-item-dot"></div>
+        <div class="mock-item-name">Pinnies — Yellow</div>
+        <div class="mock-item-status out">Out — Coach T.</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-item-dot"></div>
+        <div class="mock-item-name">Size 4 match balls (6)</div>
+        <div class="mock-item-status">In</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-item-dot"></div>
+        <div class="mock-item-name">First aid kit</div>
+        <div class="mock-item-status">In</div>
+      </div>
+      <div class="mock-item">
+        <div class="mock-item-dot"></div>
+        <div class="mock-item-name">Score clipboard</div>
+        <div class="mock-item-status out">Out — Ref booth</div>
+      </div>
+      <div class="mock-scan-hint">Scanned via QR · No account needed</div>
+    </div>
+  </div>
+</div>
+
+<div class="content">
+  <a class="back-link" href="../index.html#features">Back to Features</a>
+
+  <h2>Shared inventory, visible to everyone.</h2>
+  <p>A Public Hive is a BinKeeper bin that anyone can view by scanning its QR code — no account, no download required. The contents, photos, and check-in/out status are all visible. Only authorized members can make changes. You manage the bin; your community just needs to see what's inside.</p>
+
+  <div class="content-grid">
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+      </div>
+      <h3>Locked bin, open contents</h3>
+      <p>Your physical storage stays exactly as secure as you make it. The QR code only shares what's inside — not access to the space itself. Public views are read-only.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
+      </div>
+      <h3>No account needed to view</h3>
+      <p>Anyone with a phone camera can scan and see the contents. Parents, players, volunteers, or neighbors — they don't need BinKeeper installed to check the inventory.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      </div>
+      <h3>Live check-in / check-out status</h3>
+      <p>When a team member checks out an item, the public view updates immediately. Everyone can see what's in, what's out, and who has it — no group texts required.</p>
+    </div>
+
+    <div class="content-card">
+      <div class="content-card-icon">
+        <svg viewBox="0 0 24 24" fill="none" stroke="#4A2800" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="3" height="3"/></svg>
+      </div>
+      <h3>Print it, post it, share it</h3>
+      <p>Stick the QR code on the equipment shed, the storage closet door, the pantry shelf. Hang a printed sign that says "Scan to see what's inside." No maintenance — it stays current automatically.</p>
+    </div>
+  </div>
+
+  <div class="use-cases-section">
+    <h2>Where Public Hives live</h2>
+    <p>Any place where stuff belongs to a group and multiple people need visibility — without giving everyone admin access.</p>
+    <div class="use-cases-grid">
+      <div class="use-case-item">
+        <div class="use-case-emoji">⚽</div>
+        <div>
+          <h4>Youth Sports Teams</h4>
+          <p>Coaches, parents, and players all know what's in the gear bag and who checked out the cones before Saturday's game.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">⛪</div>
+        <div>
+          <h4>Churches &amp; Faith Communities</h4>
+          <p>Nursery supplies, AV equipment, event tables and chairs — volunteers can check inventory without tracking down a key holder.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">📚</div>
+        <div>
+          <h4>Little Free Libraries</h4>
+          <p>Let neighbors see what books are available before walking over. A QR code on the door tells the whole story.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">🎲</div>
+        <div>
+          <h4>Game Night &amp; Poker Crews</h4>
+          <p>The poker chips live at someone's house. The whole group can see what's in the box before deciding who hosts.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">🏕️</div>
+        <div>
+          <h4>Scout Troops &amp; Clubs</h4>
+          <p>Camping gear, craft supplies, merit badge materials — organized in bins the troop can check before any meeting or outing.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">🌱</div>
+        <div>
+          <h4>Community Pantries &amp; Seed Libraries</h4>
+          <p>Show what's available this week without anyone having to be on-site to answer questions. The QR code does the talking.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">🏡</div>
+        <div>
+          <h4>Vacation Homes &amp; Airbnbs</h4>
+          <p>Put a QR code on the storage closet. Guests scan to see what linens, beach gear, or kitchen supplies are already there.</p>
+        </div>
+      </div>
+      <div class="use-case-item">
+        <div class="use-case-emoji">🏘️</div>
+        <div>
+          <h4>HOAs &amp; Neighborhood Tool Shares</h4>
+          <p>The neighborhood has a pressure washer and a ladder. A Public Hive shows who has it and when it was last returned.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <h2>How it works</h2>
+  <p>Setting up a Public Hive takes about 30 seconds.</p>
+  <div class="steps">
+    <div class="step">
+      <div class="step-num">01</div>
+      <div class="step-body">
+        <h3>Create a bin in BinKeeper</h3>
+        <p>Add a name, description, and photo for your bin. Log everything inside — manually or with a quick photo entry. A unique QR code is generated automatically.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">02</div>
+      <div class="step-body">
+        <h3>Toggle it to Public</h3>
+        <p>One switch in the bin settings makes it a Public Hive. The contents become viewable by anyone with a phone — no account or app required to browse.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">03</div>
+      <div class="step-body">
+        <h3>Post or share the QR code</h3>
+        <p>Print it and tape it to the bin, the shed door, or a sign by the pantry. Or share the link directly with your group. The QR code is permanent — you never have to reprint it when contents change.</p>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">04</div>
+      <div class="step-body">
+        <h3>Anyone scans, anyone sees</h3>
+        <p>Scan the QR code with any phone camera — no app install required. The public view shows the current contents, photos, and real-time check-in/out status. Only authorized members can make edits.</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="cta-strip">
+    <h3>Make your first <em>Public Hive.</em></h3>
+    <p>Free to start. No account needed to view — just scan and see.</p>
+    <a href="../index.html#cta" class="btn-amber">Get Early Access — Free</a>
+  </div>
+</div>
+
+<footer>
+  <a class="footer-logo" href="../index.html">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="../holidays.html">Holidays</a></li>
+    <li><a href="../moving.html">Moving</a></li>
+    <li><a href="../pricing.html">Pricing</a></li>
+    <li><a href="../contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+</body>
+</html>

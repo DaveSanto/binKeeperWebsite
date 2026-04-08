@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+  <!-- SEO: Primary -->
+  <title>Moving? Stay Organized with BinKeeper | QR Code Box & Bin Tracker</title>
+  <meta name="description" content="BinKeeper makes moving easier. Label every box and bin with a QR code, instantly know what's inside each one, and unpack stress-free. The must-have moving organization app." />
+  <meta name="keywords" content="moving organization app, QR code moving boxes, label boxes when moving, moving box tracker, household inventory moving, packing app, moving checklist app, moving bin organizer" />
+  <link rel="canonical" href="https://www.binkeeperapp.com/moving" />
+
+  <!-- SEO: Open Graph -->
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://www.binkeeperapp.com/moving" />
+  <meta property="og:title" content="Moving? Label Every Box. Find Everything. | BinKeeper" />
+  <meta property="og:description" content="Stop digging through unlabeled boxes. BinKeeper lets you QR-tag every box and bin so you always know what's inside — even at 2am on moving day." />
+  <meta property="og:image" content="https://www.binkeeperapp.com/og-moving.jpg" />
+
+  <!-- SEO: Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="Moving? Label Every Box. Find Everything. | BinKeeper" />
+  <meta name="twitter:description" content="QR-tag every box and bin so you always know what's inside. BinKeeper — the smart moving organization app." />
+
+  <!-- SEO: Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "BinKeeper",
+    "applicationCategory": "LifestyleApplication",
+    "operatingSystem": "iOS, Android",
+    "offers": [
+      { "@type": "Offer", "price": "0", "priceCurrency": "USD", "name": "Free" },
+      { "@type": "Offer", "price": "25", "priceCurrency": "USD", "name": "BinKeeper Move — 30 days" }
+    ],
+    "description": "BinKeeper helps people moving homes label every box and bin with QR codes for instant identification and stress-free unpacking.",
+    "url": "https://www.binkeeperapp.com/moving"
+  }
+  </script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --amber:      #F5A623;
+      --amber-deep: #E8920A;
+      --amber-dk:   #D4861A;
+      --amber-lt:   #FDF3E0;
+      --honey:      #FFCF6E;
+      --gold:       #B8860B;
+      --navy:       #1A2340;
+      --navy-lt:    #263052;
+      --brown-dark: #4A2800;
+      --brown-mid:  #8B5E3C;
+      --off-white:  #FEFBF5;
+      --gray-warm:  #9E8E7A;
+      --gray-light: #F2EDE4;
+      --slate:      #4A5568;
+      --text:       #1C1C1E;
+      --radius:     14px;
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body:    'DM Sans', sans-serif;
+      --font-mono:    'DM Mono', monospace;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: var(--font-body); background: var(--off-white); color: var(--text); overflow-x: hidden; }
+
+    /* ── SITE NAV (matches main site) ─────── */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.1rem 3rem;
+      background: rgba(254,251,245,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(245,166,35,0.2);
+    }
+    .nav-logo {
+      display: flex; align-items: center; gap: 0.6rem;
+      font-family: var(--font-display); font-weight: 700;
+      font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
+    }
+    .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+    .nav-links { display: flex; gap: 2rem; list-style: none; }
+    .nav-links a {
+      font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em;
+      color: var(--brown-mid); text-decoration: none; transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--amber-deep); }
+    .nav-cta {
+      background: var(--amber); color: var(--brown-dark);
+      font-family: var(--font-body); font-weight: 500; font-size: 0.88rem;
+      padding: 0.6rem 1.4rem; border-radius: 100px; border: none;
+      cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+    }
+    .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+    /* ── HERO ──────────────────────────────── */
+    .hero {
+      background: var(--navy);
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+      padding: 130px 6% 80px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E");
+      pointer-events: none;
+    }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(245,166,35,.15); border: 1px solid rgba(245,166,35,.3);
+      color: var(--honey); font-size: .8rem; font-weight: 600;
+      letter-spacing: .08em; text-transform: uppercase;
+      padding: 6px 14px; border-radius: 999px; margin-bottom: 22px;
+    }
+    .hero h1 {
+      font-family: var(--font-display);
+      font-size: clamp(2.2rem, 4.5vw, 3.6rem);
+      line-height: 1.13; color: #fff; margin-bottom: 22px;
+    }
+    .hero h1 em { font-style: italic; color: var(--amber); }
+    .hero-sub {
+      font-size: 1.1rem; line-height: 1.7; color: rgba(255,255,255,.75);
+      margin-bottom: 36px; font-weight: 300;
+    }
+    .hero-actions { display: flex; gap: 14px; flex-wrap: wrap; }
+    .btn-primary {
+      background: var(--amber); color: var(--navy);
+      font-weight: 700; font-size: 1rem; padding: 14px 30px;
+      border-radius: 999px; text-decoration: none;
+      transition: background .2s, transform .15s; display: inline-block;
+    }
+    .btn-primary:hover { background: var(--honey); transform: translateY(-2px); }
+    .btn-outline {
+      border: 2px solid rgba(255,255,255,.3); color: #fff;
+      font-weight: 500; font-size: 1rem; padding: 13px 28px;
+      border-radius: 999px; text-decoration: none;
+      transition: border-color .2s, transform .15s; display: inline-block;
+    }
+    .btn-outline:hover { border-color: var(--amber); transform: translateY(-2px); }
+
+    /* Phone mockup */
+    .hero-visual {
+      position: relative; display: flex;
+      justify-content: center; align-items: center;
+    }
+    .phone-frame {
+      width: 220px; height: 440px;
+      background: var(--navy-lt); border-radius: 36px;
+      border: 3px solid rgba(245,166,35,.4);
+      box-shadow: 0 30px 80px rgba(0,0,0,.5), 0 0 0 1px rgba(255,255,255,.05);
+      position: relative; overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .phone-notch {
+      width: 80px; height: 24px; background: var(--navy);
+      border-radius: 0 0 16px 16px; margin: 0 auto 12px;
+    }
+    .phone-screen { flex: 1; padding: 0 14px 14px; display: flex; flex-direction: column; gap: 8px; }
+    .phone-header { font-family: var(--font-display); color: var(--amber); font-size: .85rem; margin-bottom: 4px; }
+    .phone-box {
+      background: rgba(245,166,35,.12); border: 1px solid rgba(245,166,35,.25);
+      border-radius: 10px; padding: 10px 12px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .phone-box-qr {
+      width: 32px; height: 32px; background: rgba(245,166,35,.3);
+      border-radius: 6px; display: grid; grid-template-columns: 1fr 1fr 1fr;
+      gap: 2px; padding: 4px;
+    }
+    .qr-cell { background: var(--amber); border-radius: 1px; }
+    .qr-cell.empty { background: transparent; }
+    .phone-box-info { flex: 1; }
+    .phone-box-label { font-size: .72rem; font-weight: 600; color: #fff; }
+    .phone-box-sub { font-size: .6rem; color: rgba(255,255,255,.5); margin-top: 2px; }
+    .phone-scan-btn {
+      background: var(--amber); color: var(--navy);
+      font-size: .65rem; font-weight: 700; padding: 10px; border-radius: 10px;
+      text-align: center; margin-top: auto;
+    }
+    .float-badge {
+      position: absolute; background: #fff; border-radius: 10px;
+      padding: 8px 14px; font-size: .78rem; font-weight: 600; color: var(--navy);
+      box-shadow: 0 8px 30px rgba(0,0,0,.3); white-space: nowrap;
+    }
+    .float-badge span { color: var(--amber-dk); }
+    .fb-1 { left: -30px; top: 80px; animation: floatA 3s ease-in-out infinite; }
+    .fb-2 { right: -20px; bottom: 110px; animation: floatB 3.5s ease-in-out infinite; }
+    @keyframes floatA { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+    @keyframes floatB { 0%,100%{transform:translateY(0)} 50%{transform:translateY(8px)} }
+
+    /* ── STATS BAR ─────────────────────────── */
+    .stats-bar {
+      background: var(--amber); display: flex;
+      justify-content: center; flex-wrap: wrap;
+    }
+    .stat-item {
+      padding: 20px 40px; text-align: center;
+      border-right: 1px solid rgba(0,0,0,.1);
+      flex: 1; min-width: 150px;
+    }
+    .stat-item:last-child { border-right: none; }
+    .stat-num { font-family: var(--font-display); font-size: 2rem; font-weight: 900; color: var(--navy); }
+    .stat-label { font-size: .78rem; font-weight: 600; color: rgba(26,35,64,.7); text-transform: uppercase; letter-spacing: .06em; }
+
+    /* ── SECTION SHARED ────────────────────── */
+    section { padding: 80px 6%; }
+    .section-tag {
+      display: inline-block; background: var(--amber-lt); color: var(--gold);
+      font-size: .75rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .1em; padding: 5px 14px; border-radius: 999px; margin-bottom: 14px;
+    }
+    h2.section-title {
+      font-family: var(--font-display);
+      font-size: clamp(1.8rem, 3.5vw, 2.8rem);
+      line-height: 1.2; color: var(--navy); margin-bottom: 16px;
+    }
+    .section-sub {
+      font-size: 1.05rem; color: var(--slate); line-height: 1.7;
+      max-width: 600px; font-weight: 300;
+    }
+
+    /* ── HOW IT WORKS ─────────────────────── */
+    .how-it-works { background: var(--amber-lt); }
+    .steps-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 28px; margin-top: 50px;
+    }
+    .step-card {
+      background: #fff; border-radius: var(--radius); padding: 32px 26px;
+      border: 1px solid rgba(245,166,35,.2); position: relative; transition: box-shadow .2s;
+    }
+    .step-card:hover { box-shadow: 0 12px 40px rgba(245,166,35,.18); }
+    .step-num { font-family: var(--font-display); font-size: 3rem; font-weight: 900; color: var(--amber); opacity: .25; line-height: 1; margin-bottom: 12px; }
+    .step-icon { font-size: 2rem; margin-bottom: 14px; }
+    .step-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--navy); margin-bottom: 10px; }
+    .step-card p { font-size: .92rem; color: var(--slate); line-height: 1.65; }
+
+    /* ── BENEFITS ─────────────────────────── */
+    .benefits-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 24px; margin-top: 50px;
+    }
+    .benefit-card {
+      background: var(--navy); color: #fff; border-radius: var(--radius);
+      padding: 32px 28px; position: relative; overflow: hidden; transition: transform .2s;
+    }
+    .benefit-card::after {
+      content: ''; position: absolute; bottom: -20px; right: -20px;
+      width: 100px; height: 100px; border-radius: 50%; background: rgba(245,166,35,.08);
+    }
+    .benefit-card:hover { transform: translateY(-4px); }
+    .benefit-icon { font-size: 2.2rem; margin-bottom: 16px; }
+    .benefit-card h3 { font-family: var(--font-display); font-size: 1.2rem; color: var(--honey); margin-bottom: 10px; }
+    .benefit-card p { font-size: .92rem; color: rgba(255,255,255,.7); line-height: 1.65; }
+
+    /* ── USE CASES ────────────────────────── */
+    .use-cases { background: var(--amber-lt); }
+    .cases-list {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px; margin-top: 44px;
+    }
+    .case-item {
+      background: #fff; border-left: 4px solid var(--amber);
+      border-radius: 0 var(--radius) var(--radius) 0; padding: 22px 22px 22px 20px;
+    }
+    .case-item h4 { font-family: var(--font-display); font-size: 1.05rem; color: var(--navy); margin-bottom: 8px; }
+    .case-item p { font-size: .88rem; color: var(--slate); line-height: 1.6; }
+
+    /* ── BOXES FOR SALE ───────────────────── */
+    .boxes-section { background: #fff; }
+    .retailers-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 28px; margin-top: 44px;
+    }
+    .retailer-card {
+      border: 2px solid var(--gray-light); border-radius: var(--radius);
+      overflow: hidden; transition: box-shadow .2s, border-color .2s;
+    }
+    .retailer-card:hover { box-shadow: 0 10px 36px rgba(0,0,0,.1); border-color: var(--amber); }
+    .retailer-header { padding: 22px 24px; display: flex; align-items: center; gap: 14px; }
+    .retailer-logo {
+      width: 52px; height: 52px; border-radius: 10px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem; font-weight: 900; font-family: var(--font-display); flex-shrink: 0;
+    }
+    .logo-bjs { background: #003087; color: #fff; }
+    .logo-lowes { background: #004990; color: #fff; }
+    .retailer-name { font-family: var(--font-display); font-size: 1.25rem; color: var(--navy); }
+    .retailer-tagline { font-size: .82rem; color: var(--slate); margin-top: 2px; }
+    .retailer-products { padding: 0 24px 20px; display: flex; flex-direction: column; gap: 10px; }
+    .product-link {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 10px 14px; background: var(--amber-lt); border-radius: 8px;
+      text-decoration: none; color: var(--navy); font-size: .88rem; font-weight: 500;
+      transition: background .15s;
+    }
+    .product-link:hover { background: var(--honey); }
+    .product-link::after { content: '→'; color: var(--amber-dk); font-weight: 700; }
+    .retailer-cta {
+      display: block; margin: 0 24px 22px; background: var(--navy); color: #fff;
+      text-align: center; font-weight: 600; font-size: .9rem; padding: 12px;
+      border-radius: 8px; text-decoration: none; transition: background .2s;
+    }
+    .retailer-cta:hover { background: var(--navy-lt); }
+
+    /* ── PRO TIPS ─────────────────────────── */
+    .tips-section { background: var(--navy); color: #fff; }
+    .tips-section .section-tag { background: rgba(245,166,35,.2); color: var(--honey); }
+    .tips-section h2.section-title { color: #fff; }
+    .tips-section .section-sub { color: rgba(255,255,255,.65); }
+    .tips-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 20px; margin-top: 44px;
+    }
+    .tip-card {
+      background: rgba(255,255,255,.06); border: 1px solid rgba(245,166,35,.2);
+      border-radius: var(--radius); padding: 24px;
+    }
+    .tip-num { color: var(--amber); font-family: var(--font-display); font-size: 1.5rem; font-weight: 900; margin-bottom: 10px; }
+    .tip-card h4 { font-size: 1rem; font-weight: 600; color: #fff; margin-bottom: 8px; }
+    .tip-card p { font-size: .87rem; color: rgba(255,255,255,.6); line-height: 1.6; }
+
+    /* ── CTA STRIP ────────────────────────── */
+    .cta-strip { background: var(--amber); text-align: center; padding: 70px 6%; }
+    .cta-strip h2 { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3rem); color: var(--navy); margin-bottom: 14px; }
+    .cta-strip p { font-size: 1.05rem; color: rgba(26,35,64,.75); margin-bottom: 34px; font-weight: 300; }
+    .btn-navy {
+      background: var(--navy); color: #fff; font-weight: 700; font-size: 1.05rem;
+      padding: 16px 38px; border-radius: 999px; text-decoration: none; display: inline-block;
+      transition: transform .15s, background .2s;
+    }
+    .btn-navy:hover { background: var(--navy-lt); transform: translateY(-2px); }
+
+    /* ── SITE FOOTER (matches main site) ──── */
+    footer {
+      background: #1A1208; padding: 3rem;
+      display: flex; align-items: center; justify-content: space-between;
+      flex-wrap: wrap; gap: 1.5rem;
+    }
+    .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--amber); text-decoration: none; }
+    .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+    .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,.4); text-decoration: none; transition: color .2s; }
+    .footer-links a:hover { color: var(--amber); }
+    .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,.3); font-family: var(--font-mono); letter-spacing: .04em; }
+    .footer-disclaimer { width: 100%; text-align: center; font-size: 0.75rem; color: rgba(255,255,255,.2); font-family: var(--font-mono); padding-top: 0.5rem; border-top: 1px solid rgba(255,255,255,.06); }
+
+    /* ── RESPONSIVE ───────────────────────── */
+    @media (max-width: 900px) {
+      nav { padding: 1rem 1.5rem; }
+      .nav-links { display: none; }
+    }
+    @media (max-width: 768px) {
+      .hero { grid-template-columns: 1fr; padding: 110px 6% 50px; text-align: center; }
+      .hero-actions { justify-content: center; }
+      .hero-visual { display: none; }
+      .stat-item { padding: 18px 20px; }
+      section { padding: 60px 5%; }
+      footer { flex-direction: column; padding: 2rem 1.5rem; }
+    }
+
+    /* ── ANIMATIONS ───────────────────────── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    .hero-content > * { animation: fadeUp .7s ease both; }
+    .hero-content > *:nth-child(2) { animation-delay: .1s; }
+    .hero-content > *:nth-child(3) { animation-delay: .2s; }
+    .hero-content > *:nth-child(4) { animation-delay: .3s; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/icon.png" alt="BinKeeper"/>
+    BinKeeper
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-content">
+    <div class="hero-badge">🚚 For People Who Are Moving</div>
+    <h1>Know What's In<br/><em>Every Box.</em><br/>Before You Open It.</h1>
+    <p class="hero-sub">
+      Moving is chaotic. BinKeeper brings order — QR-tag every box and bin, snap a photo of what goes inside, and find anything instantly on moving day and beyond.
+    </p>
+    <div class="hero-actions">
+      <a href="#get-started" class="btn-primary">Get BinKeeper Free</a>
+      <a href="#how-it-works" class="btn-outline">See How It Works</a>
+    </div>
+  </div>
+  <div class="hero-visual">
+    <div class="float-badge fb-1">📦 Box #14 · <span>Kitchen Items</span></div>
+    <div class="phone-frame">
+      <div class="phone-notch"></div>
+      <div class="phone-screen">
+        <div class="phone-header">🐝 My Move — 23 items</div>
+        <div class="phone-box">
+          <div class="phone-box-qr">
+            <div class="qr-cell"></div><div class="qr-cell empty"></div><div class="qr-cell"></div>
+            <div class="qr-cell empty"></div><div class="qr-cell"></div><div class="qr-cell empty"></div>
+            <div class="qr-cell"></div><div class="qr-cell empty"></div><div class="qr-cell"></div>
+          </div>
+          <div class="phone-box-info">
+            <div class="phone-box-label">📦 Kitchen — Box 3</div>
+            <div class="phone-box-sub">Plates · Mugs · Coffee maker</div>
+          </div>
+        </div>
+        <div class="phone-box">
+          <div class="phone-box-qr">
+            <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell empty"></div>
+            <div class="qr-cell empty"></div><div class="qr-cell"></div><div class="qr-cell"></div>
+            <div class="qr-cell"></div><div class="qr-cell empty"></div><div class="qr-cell"></div>
+          </div>
+          <div class="phone-box-info">
+            <div class="phone-box-label">🛏 Bedroom — Bin A</div>
+            <div class="phone-box-sub">Sheets · Pillows · Lamp</div>
+          </div>
+        </div>
+        <div class="phone-box">
+          <div class="phone-box-qr">
+            <div class="qr-cell empty"></div><div class="qr-cell"></div><div class="qr-cell"></div>
+            <div class="qr-cell"></div><div class="qr-cell empty"></div><div class="qr-cell empty"></div>
+            <div class="qr-cell"></div><div class="qr-cell"></div><div class="qr-cell empty"></div>
+          </div>
+          <div class="phone-box-info">
+            <div class="phone-box-label">📚 Office — Box 1</div>
+            <div class="phone-box-sub">Books · Chargers · Desk stuff</div>
+          </div>
+        </div>
+        <div class="phone-scan-btn">📷 Scan a QR Code</div>
+      </div>
+    </div>
+    <div class="float-badge fb-2">✅ <span>47 boxes</span> logged</div>
+  </div>
+</section>
+
+<!-- STATS BAR -->
+<div class="stats-bar">
+  <div class="stat-item">
+    <div class="stat-num">2 min</div>
+    <div class="stat-label">to tag a box</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">0 sec</div>
+    <div class="stat-label">to find anything</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">∞</div>
+    <div class="stat-label">boxes &amp; bins</div>
+  </div>
+  <div class="stat-item">
+    <div class="stat-num">Free</div>
+    <div class="stat-label">to get started</div>
+  </div>
+</div>
+
+<!-- HOW IT WORKS -->
+<section class="how-it-works" id="how-it-works">
+  <div class="section-tag">How It Works</div>
+  <h2 class="section-title">Pack Smart from Day One</h2>
+  <p class="section-sub">BinKeeper works with any cardboard box, plastic bin, or tote. No special containers required.</p>
+  <div class="steps-grid">
+    <div class="step-card">
+      <div class="step-num">01</div>
+      <div class="step-icon">📲</div>
+      <h3>Download &amp; Create a Move</h3>
+      <p>Set up your move in seconds. Name it, add rooms, and start building your inventory before the first box is packed.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">02</div>
+      <div class="step-icon">🏷️</div>
+      <h3>Generate QR Labels</h3>
+      <p>BinKeeper generates a unique QR code for every box and bin. Print or display them right from your phone — stick them on and start packing.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">03</div>
+      <div class="step-icon">📦</div>
+      <h3>Log What Goes Inside</h3>
+      <p>As you pack, tap the box in the app and add items — with text, photos, or a quick AI scan. Done in seconds per item.</p>
+    </div>
+    <div class="step-card">
+      <div class="step-num">04</div>
+      <div class="step-icon">🔍</div>
+      <h3>Find Anything Instantly</h3>
+      <p>At the new house, scan any QR code with your phone to see exactly what's inside — or search your whole inventory to pinpoint which box holds what.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BENEFITS -->
+<section id="benefits">
+  <div class="section-tag">Why BinKeeper</div>
+  <h2 class="section-title">Moving Doesn't Have<br/>to Be a Guessing Game</h2>
+  <p class="section-sub">From first box to fully unpacked, BinKeeper keeps you in control.</p>
+  <div class="benefits-grid">
+    <div class="benefit-card">
+      <div class="benefit-icon">🔍</div>
+      <h3>No More Excavation</h3>
+      <p>Never open six boxes looking for the coffee maker again. Search your entire inventory and go straight to the right box.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🤖</div>
+      <h3>AI-Powered Item ID</h3>
+      <p>Point your camera at a shelf or pile — BinKeeper's AI identifies and catalogs items for you. Packing a whole room takes minutes. Available on BinKeeper Move (150 scans) and Keeper Pro.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">📋</div>
+      <h3>Room-by-Room Clarity</h3>
+      <p>Organize by room — Kitchen, Bedroom, Garage, Attic. Unpackers and movers know exactly where each box belongs.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">📸</div>
+      <h3>Photo Documentation</h3>
+      <p>Snap photos of your electronics and valuables before boxing them. Great for insurance and peace of mind during transit.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">♻️</div>
+      <h3>Reuse Every Label</h3>
+      <p>Those QR codes don't expire. Reuse your boxes and bins for storage after the move — your inventory travels with you.</p>
+    </div>
+    <div class="benefit-card">
+      <div class="benefit-icon">🏠</div>
+      <h3>Lives On After Moving Day</h3>
+      <p>Once you're settled, BinKeeper becomes your home inventory — attic bins, garage shelves, holiday decorations. Your hive, organized forever.</p>
+    </div>
+  </div>
+</section>
+
+<!-- USE CASES -->
+<section class="use-cases">
+  <div class="section-tag">Real Scenarios</div>
+  <h2 class="section-title">Every Kind of Move, Covered</h2>
+  <p class="section-sub">Whether you're hiring movers or doing it yourself, BinKeeper fits your situation.</p>
+  <div class="cases-list">
+    <div class="case-item">
+      <h4>🏠 Full Household Move</h4>
+      <p>Tag 50+ boxes across every room. Your whole house in your pocket — movers know exactly where to set each one down.</p>
+    </div>
+    <div class="case-item">
+      <h4>🏢 Apartment Relocation</h4>
+      <p>Moving without movers? Log everything yourself over a week of packing. No more mystery boxes by moving day.</p>
+    </div>
+    <div class="case-item">
+      <h4>🎓 College Move-In</h4>
+      <p>Parents and students stay in sync. Know exactly what's in every bin before you get to the dorm.</p>
+    </div>
+    <div class="case-item">
+      <h4>📦 Storage Unit Packing</h4>
+      <p>Moving some things to storage? Tag those bins too. Retrieve anything from storage without the dig-through.</p>
+    </div>
+    <div class="case-item">
+      <h4>🏡 Staging Before a Sale</h4>
+      <p>Pack decluttered items while your house is on the market. Know exactly where everything went for when you close.</p>
+    </div>
+    <div class="case-item">
+      <h4>🔄 Downsizing</h4>
+      <p>Keep, donate, or store — tag each box by category and never second-guess what went where.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BOXES FOR SALE -->
+<section class="boxes-section" id="buy-boxes">
+  <div class="section-tag">Get Supplies</div>
+  <h2 class="section-title">Where to Buy Boxes &amp; Bins</h2>
+  <p class="section-sub">BinKeeper works with any box or bin you already have — but if you need supplies, here's where to stock up.</p>
+  <div class="retailers-grid">
+
+    <div class="retailer-card">
+      <div class="retailer-header">
+        <div class="retailer-logo logo-bjs">BJ's</div>
+        <div>
+          <div class="retailer-name">BJ's Wholesale Club</div>
+          <div class="retailer-tagline">Bulk packs · Members save more</div>
+        </div>
+      </div>
+      <div class="retailer-products">
+        <a class="product-link" href="https://www.bjs.com/product/bankers-box-smoothmove-moving-box-kit-12-pk/3000000000004442319/" target="_blank" rel="noopener">
+          Bankers Box SmoothMove Kit — 12 pk.
+        </a>
+        <a class="product-link" href="https://www.bjs.com/product/bankers-box-filestore-record-storage-boxes-10-pk---white/3000000000001461749/" target="_blank" rel="noopener">
+          Bankers Box Record Storage — 10 pk.
+        </a>
+        <a class="product-link" href="https://www.bjs.com/category/envelopes--shipping-supplies/packing-materials/34555" target="_blank" rel="noopener">
+          All Packing &amp; Moving Supplies
+        </a>
+      </div>
+      <a class="retailer-cta" href="https://www.bjs.com/category/envelopes--shipping-supplies/packing-materials/34555" target="_blank" rel="noopener">
+        Shop All Boxes at BJ's →
+      </a>
+    </div>
+
+    <div class="retailer-card">
+      <div class="retailer-header">
+        <div class="retailer-logo logo-lowes">L</div>
+        <div>
+          <div class="retailer-name">Lowe's</div>
+          <div class="retailer-tagline">Small, medium, large &amp; specialty</div>
+        </div>
+      </div>
+      <div class="retailer-products">
+        <a class="product-link" href="https://www.lowes.com/pl/moving-boxes-supplies/moving-boxes/4294713229" target="_blank" rel="noopener">
+          Moving Boxes — All Sizes
+        </a>
+        <a class="product-link" href="https://www.lowes.com/pl/moving-boxes-supplies/moving-boxes/large/4294713229-4294592814" target="_blank" rel="noopener">
+          Large &amp; XL Moving Boxes
+        </a>
+        <a class="product-link" href="https://www.lowes.com/c/Moving-boxes-supplies-Storage-organization" target="_blank" rel="noopener">
+          Moving Supplies &amp; Accessories
+        </a>
+      </div>
+      <a class="retailer-cta" href="https://www.lowes.com/pl/moving-boxes-supplies/moving-boxes/4294713229" target="_blank" rel="noopener">
+        Shop All Boxes at Lowe's →
+      </a>
+    </div>
+
+  </div>
+
+  <div style="margin-top:32px; background:var(--amber-lt); border:1px solid rgba(245,166,35,.35); border-radius:var(--radius); padding:24px 28px; display:flex; align-items:flex-start; gap:16px;">
+    <span style="font-size:1.8rem; flex-shrink:0;">🐝</span>
+    <div>
+      <strong style="color:var(--navy); font-size:1rem;">BinKeeper Pro Tip</strong>
+      <p style="color:var(--slate); font-size:.92rem; line-height:1.65; margin-top:6px;">
+        Buy a consistent box size when possible — uniform boxes stack better in trucks and storage units. Then use BinKeeper to track the contents so you never have to write on the outside. Your boxes stay reusable, and your inventory stays digital.
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- PRO TIPS -->
+<section class="tips-section">
+  <div class="section-tag">Packing Tips</div>
+  <h2 class="section-title">8 Tips for a Smoother Move</h2>
+  <p class="section-sub">From professional packers and seasoned movers — plus how BinKeeper makes each one easier.</p>
+  <div class="tips-grid">
+    <div class="tip-card">
+      <div class="tip-num">01</div>
+      <h4>Start with one room at a time</h4>
+      <p>Packing room-by-room reduces chaos. BinKeeper's room folders keep your inventory organized the same way.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">02</div>
+      <h4>Heavy items in small boxes</h4>
+      <p>Books and tools go in small boxes — your back will thank you. Log weight notes in BinKeeper so movers handle them right.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">03</div>
+      <h4>Pack an "open first" box</h4>
+      <p>Toilet paper, phone charger, coffee. Tag it in BinKeeper as Priority #1 so it's never lost in the stack.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">04</div>
+      <h4>Photograph valuables before packing</h4>
+      <p>Electronics, art, jewelry — snap a photo before boxing. BinKeeper stores photos with every item for insurance purposes.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">05</div>
+      <h4>Label every side of the box</h4>
+      <p>Or better yet — skip the pen entirely. A BinKeeper QR code on one side tells you everything, no matter which side faces out.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">06</div>
+      <h4>Reuse plastic bins for storage</h4>
+      <p>Plastic totes make better long-term storage than cardboard. BinKeeper QR tags stay attached and the inventory never leaves.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">07</div>
+      <h4>Don't mix rooms in one box</h4>
+      <p>It feels efficient but creates chaos at the other end. BinKeeper's room tags make this easy to enforce as you pack.</p>
+    </div>
+    <div class="tip-card">
+      <div class="tip-num">08</div>
+      <h4>Log as you pack, not after</h4>
+      <p>The hardest thing about moving inventory is remembering what's where. BinKeeper in hand while packing = zero guesswork later.</p>
+    </div>
+  </div>
+</section>
+
+<!-- BINKEEPER MOVE PRICING CALLOUT -->
+<section style="background:var(--brown-dark);padding:60px 6%;text-align:center;">
+  <div style="display:inline-block;font-family:var(--font-mono);font-size:.72rem;letter-spacing:.14em;text-transform:uppercase;color:var(--amber);margin-bottom:1rem;">One-Time Purchase · 30 Days</div>
+  <h2 style="font-family:var(--font-display);font-weight:900;font-size:clamp(2rem,4vw,3rem);color:#fff;margin-bottom:.75rem;">BinKeeper <em style="color:var(--amber);font-style:italic;">Move</em></h2>
+  <p style="font-size:1rem;color:rgba(255,255,255,.65);font-weight:300;max-width:540px;margin:0 auto 2rem;line-height:1.7;">Full Pro access for your move — unlimited boxes, unlimited items, 150 AI scans. Just $25, one time. After 30 days everything stays, readable forever.</p>
+  <div style="display:flex;justify-content:center;align-items:baseline;gap:.4rem;margin-bottom:2rem;">
+    <span style="font-family:var(--font-display);font-size:1.1rem;color:var(--amber);font-weight:700;">$</span>
+    <span style="font-family:var(--font-display);font-size:4rem;color:#fff;font-weight:900;line-height:1;">25</span>
+    <span style="font-size:.9rem;color:rgba(255,255,255,.4);font-weight:300;">/ move</span>
+  </div>
+  <div style="display:flex;flex-wrap:wrap;justify-content:center;gap:.6rem;margin-bottom:2.5rem;">
+    <span style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;padding:.3rem .9rem;border-radius:100px;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:rgba(255,255,255,.8);">Unlimited bins</span>
+    <span style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;padding:.3rem .9rem;border-radius:100px;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:rgba(255,255,255,.8);">Unlimited items</span>
+    <span style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;padding:.3rem .9rem;border-radius:100px;background:rgba(245,166,35,.2);border:1px solid rgba(245,166,35,.5);color:var(--amber);">150 AI scans</span>
+    <span style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;padding:.3rem .9rem;border-radius:100px;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:rgba(255,255,255,.8);">30-day window</span>
+    <span style="font-family:var(--font-mono);font-size:.72rem;letter-spacing:.06em;padding:.3rem .9rem;border-radius:100px;background:rgba(245,166,35,.12);border:1px solid rgba(245,166,35,.3);color:rgba(255,255,255,.8);">Data kept after expiry</span>
+  </div>
+  <a href="pricing.html" style="display:inline-block;background:var(--amber);color:var(--brown-dark);font-family:var(--font-body);font-weight:600;font-size:1rem;padding:14px 36px;border-radius:999px;text-decoration:none;transition:background .2s,transform .15s;box-shadow:0 4px 24px rgba(245,166,35,.35);">See Full Pricing</a>
+</section>
+
+<!-- CTA STRIP -->
+<div class="cta-strip" id="get-started">
+  <h2>Your Move Starts Here</h2>
+  <p>Download BinKeeper free. Tag your first box before the movers arrive.</p>
+  <a href="index.html#cta" class="btn-navy">Get BinKeeper — It's Free</a>
+</div>
+
+<!-- FOOTER -->
+<footer>
+  <a class="footer-logo" href="index.html">BinKeeper</a>
+  <ul class="footer-links">
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="#">Privacy</a></li>
+    <li><a href="#">Terms</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+  <p class="footer-disclaimer">BinKeeper is not affiliated with BJ's Wholesale Club or Lowe's. Retailer links provided for convenience.</p>
+</footer>
+
+</body>
+</html>

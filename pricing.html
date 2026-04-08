@@ -73,6 +73,44 @@
 
   .pricing-grid { max-width: 1000px; margin: 0 auto; display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.25rem; align-items: stretch; }
 
+  /* MOVE CARD */
+  .move-card-wrap { max-width: 1000px; margin: 2rem auto 0; }
+  .move-card {
+    background: linear-gradient(135deg, var(--brown-dark) 0%, #2a1600 100%);
+    border: 1.5px solid var(--amber);
+    border-radius: 24px; padding: 2.5rem 3rem;
+    display: grid; grid-template-columns: 1fr auto;
+    gap: 1.5rem; align-items: center;
+    position: relative; overflow: hidden;
+  }
+  .move-card::before {
+    content: ''; position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.06)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.06)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .move-card-body { position: relative; }
+  .move-tag { font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 0.5rem; }
+  .move-card h3 { font-family: var(--font-display); font-weight: 900; font-size: 1.75rem; color: white; line-height: 1.1; margin-bottom: 0.5rem; }
+  .move-card h3 em { font-style: italic; color: var(--amber); }
+  .move-desc { font-size: 0.9rem; color: rgba(255,255,255,0.6); font-weight: 300; line-height: 1.6; max-width: 520px; margin-bottom: 1.25rem; }
+  .move-features { display: flex; flex-wrap: wrap; gap: 0.6rem; }
+  .move-pill {
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.06em;
+    padding: 0.3rem 0.9rem; border-radius: 100px;
+    background: rgba(245,166,35,0.12); border: 1px solid rgba(245,166,35,0.3);
+    color: rgba(255,255,255,0.8);
+  }
+  .move-pill.ai { background: rgba(245,166,35,0.2); border-color: rgba(245,166,35,0.5); color: var(--amber); }
+  .move-price-col { text-align: center; position: relative; white-space: nowrap; }
+  .move-price-label { font-family: var(--font-mono); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.4); margin-bottom: 0.25rem; }
+  .move-price { font-family: var(--font-display); font-weight: 900; font-size: 3.5rem; color: white; line-height: 1; }
+  .move-price sup { font-size: 1.4rem; vertical-align: super; color: var(--amber); }
+  .move-price-note { font-size: 0.78rem; color: rgba(255,255,255,0.4); margin-top: 0.3rem; font-weight: 300; }
+  .move-cta { display: inline-block; margin-top: 1.25rem; text-align: center; text-decoration: none; font-family: var(--font-body); font-weight: 500; font-size: 0.95rem; padding: 0.85rem 2rem; border-radius: 100px; background: var(--amber); color: var(--brown-dark); border: none; cursor: pointer; transition: background 0.2s, transform 0.15s; box-shadow: 0 4px 24px rgba(245,166,35,0.35); }
+  .move-cta:hover { background: #FFB830; transform: translateY(-2px); }
+
+  @media (max-width: 700px) { .move-card { grid-template-columns: 1fr; } .move-price-col { text-align: left; } }
+
   .pricing-card { background: white; border-radius: 24px; padding: 2.5rem 2rem; border: 1.5px solid var(--gray-light); display: flex; flex-direction: column; transition: transform 0.22s, box-shadow 0.22s, border-color 0.22s; position: relative; overflow: hidden; }
   .pricing-card:hover { transform: translateY(-5px); box-shadow: 0 16px 48px rgba(74,40,0,0.1); border-color: rgba(245,166,35,0.35); }
   .pricing-card.popular { background: var(--brown-dark); border-color: var(--amber); transform: scale(1.035); box-shadow: 0 20px 60px rgba(74,40,0,0.25); }
@@ -166,6 +204,7 @@
   <ul class="nav-links">
     <li><a href="index.html#how">How it Works</a></li>
     <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
     <li><a href="index.html#features">Features</a></li>
     <li><a href="pricing.html" class="active">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
@@ -193,7 +232,7 @@
 
     <div class="pricing-card">
       <p class="plan-name">Free</p>
-      <p class="plan-bin-count">5 Bins</p>
+      <p class="plan-bin-count">2 Bins</p>
       <p class="plan-bin-label">Try it out, no strings attached</p>
       <div class="plan-divider"></div>
       <div class="price-display">
@@ -201,11 +240,13 @@
       </div>
       <p class="price-annual-note" id="note-free">&nbsp;</p>
       <ul class="plan-features">
-        <li>Up to 5 bins</li>
-        <li>Up to 20 items per bin</li>
+        <li>Up to 2 bins</li>
+        <li>Up to 10 items per bin</li>
         <li>QR code generation &amp; scanning</li>
         <li>Manual item entry</li>
         <li>Check in / check out</li>
+        <li>5 AI scans — lifetime taste of the feature</li>
+        <li>Expand any bin +50 items for $0.99</li>
       </ul>
       <a href="index.html#cta" class="plan-cta">Get Started Free</a>
     </div>
@@ -230,6 +271,7 @@
         <li>Check in / check out</li>
         <li>Household sharing</li>
         <li>Holiday &amp; seasonal organization</li>
+        <li>Expand any bin +50 items for $0.99</li>
       </ul>
       <a href="index.html#cta" class="plan-cta">Get Started</a>
     </div>
@@ -262,6 +304,30 @@
   </div>
 
   <p class="pricing-footnote">No credit card required to start. Cancel any time.</p>
+
+  <div class="move-card-wrap">
+    <div class="move-card">
+      <div class="move-card-body">
+        <span class="move-tag">One-time purchase · 30 days</span>
+        <h3>BinKeeper <em>Move</em></h3>
+        <p class="move-desc">Moving? Get full Pro-level access for 30 days — unlimited bins, unlimited items, and 150 AI scans to catalog every box before the truck arrives. After 30 days your account returns to Free with all data preserved.</p>
+        <div class="move-features">
+          <span class="move-pill">Unlimited bins</span>
+          <span class="move-pill">Unlimited items</span>
+          <span class="move-pill ai">150 AI scans</span>
+          <span class="move-pill">30-day window</span>
+          <span class="move-pill">Household sharing</span>
+          <span class="move-pill">All data preserved after expiry</span>
+        </div>
+      </div>
+      <div class="move-price-col">
+        <p class="move-price-label">One-time</p>
+        <p class="move-price"><sup>$</sup>25</p>
+        <p class="move-price-note">per move · no subscription</p>
+        <a href="moving.html" class="move-cta">Learn More</a>
+      </div>
+    </div>
+  </div>
 </section>
 
 <section class="faq">
@@ -269,7 +335,7 @@
 
   <div class="faq-item">
     <h3>Is the Free plan really free?</h3>
-    <p>Yes — no credit card, no trial timer, no catch. You get 5 bins and up to 20 items per bin, forever. When you're ready to add more, upgrading takes about 30 seconds.</p>
+    <p>Yes — no credit card, no trial timer, no catch. You get 2 bins and up to 10 items per bin, forever. You also get 5 lifetime AI scans so you can try that feature before committing. When you're ready to add more, upgrading takes about 30 seconds.</p>
   </div>
 
   <div class="faq-item">
@@ -278,18 +344,23 @@
   </div>
 
   <div class="faq-item">
-    <h3>What's the 40-item limit per bin?</h3>
-    <p>Free plan bins hold up to 20 items each. Keeper bumps that to 40. Keeper Pro removes the limit entirely — bins can hold as many items as you actually have.</p>
+    <h3>What are the item limits per bin?</h3>
+    <p>Free plan bins hold up to 10 items each. Keeper bumps that to 40. Keeper Pro removes the limit entirely. On Free and Keeper, you can also expand any individual bin by 50 items for $0.99 — stackable, per bin, one-time.</p>
   </div>
 
   <div class="faq-item">
     <h3>How does AI Item ID work?</h3>
-    <p>On Keeper Pro, point your camera at an item and the app identifies it automatically — no typing required. You get 50 AI scans per calendar month. The count resets on the 1st, and you can always see how many scans you have left in the app. Barcode scanning and manual entry are available on all plans.</p>
+    <p>Point your camera at an item and the app identifies it automatically — no typing required. Free users get 5 lifetime scans to try the feature. Keeper Pro gets 50 per calendar month, resetting on the 1st. BinKeeper Move includes 150 scans valid for your 30-day window. Your remaining scan count is always visible in the app.</p>
   </div>
 
   <div class="faq-item">
-    <h3>Why is AI only on Keeper Pro?</h3>
-    <p>AI identification uses real compute to process every photo. Offering it on lower-priced plans would mean cutting corners elsewhere. By keeping it in Keeper Pro, we can do it properly — and keep the other plans genuinely affordable.</p>
+    <h3>Why is AI not included on Keeper?</h3>
+    <p>AI identification uses real compute to process every photo. Free gets 5 lifetime scans as a taste of the feature. Keeper Pro gets 50/month as a subscription perk. BinKeeper Move includes 150 scans purpose-built for a single move. Keeping AI out of the Keeper tier lets us price it genuinely affordably — that plan is about capacity and sharing, not AI.</p>
+  </div>
+
+  <div class="faq-item">
+    <h3>What is BinKeeper Move?</h3>
+    <p>BinKeeper Move is a $25 one-time purchase that gives you full Pro-level access for 30 days — unlimited bins, unlimited items, and 150 AI scans. It's designed for moving: catalog every box before the truck arrives, then find anything on the other end. After 30 days your account returns to Free, but all your bins and items are preserved. You can purchase it again for a future move.</p>
   </div>
 
   <div class="faq-item">
@@ -304,7 +375,7 @@
 
   <div class="faq-item">
     <h3>Can I cancel any time?</h3>
-    <p>Absolutely. Cancel from the app with no penalties. You'll keep access until the end of your current billing period.</p>
+    <p>Absolutely. Cancel from your account with no penalties. You'll keep access until the end of your current billing period.</p>
   </div>
 </section>
 
@@ -312,6 +383,7 @@
   <a class="footer-logo" href="index.html">BinKeeper</a>
   <ul class="footer-links">
     <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
     <li><a href="pricing.html">Pricing</a></li>
     <li><a href="contact.html">Contact</a></li>
     <li><a href="#">Privacy</a></li>

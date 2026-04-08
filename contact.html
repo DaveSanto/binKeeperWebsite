@@ -176,9 +176,26 @@
   .footer-links a:hover { color: var(--amber); }
   .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
 
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: background 0.2s; }
+  .nav-burger:hover { background: rgba(245,166,35,0.12); }
+  .nav-burger span { display: block; width: 22px; height: 2px; background: var(--brown-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99; background: var(--off-white); flex-direction: column; padding: 5.5rem 2rem 2rem; overflow-y: auto; }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .mobile-drawer ul li { border-bottom: 1px solid var(--gray-light); }
+  .mobile-drawer ul a { display: block; padding: 1rem 0; font-size: 1.1rem; font-weight: 500; color: var(--brown-dark); text-decoration: none; transition: color 0.2s; }
+  .mobile-drawer ul a:hover, .mobile-drawer ul a.active { color: var(--amber-deep); }
+  .mobile-drawer .drawer-cta { display: block; text-align: center; margin-top: 2rem; background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 1.5rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .mobile-drawer .drawer-cta:hover { background: var(--amber-deep); }
+
   @media (max-width: 900px) {
     nav { padding: 1rem 1.5rem; }
     .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
     .contact-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
     footer { flex-direction: column; padding: 2rem 1.5rem; }
   }
@@ -200,7 +217,22 @@
     <li><a href="contact.html" class="active">Contact</a></li>
   </ul>
   <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
 </nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <ul>
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html" class="active">Contact</a></li>
+  </ul>
+  <a href="index.html#cta" class="drawer-cta">Get Early Access — Free</a>
+</div>
 
 <div class="page-hero">
   <span class="page-hero-tag">Get in touch</span>
@@ -361,6 +393,22 @@
       document.body.appendChild(script);
     });
   }
+</script>
+<script>
+  var burger = document.getElementById('nav-burger');
+  var drawer = document.getElementById('mobile-drawer');
+  burger.addEventListener('click', function() {
+    var open = drawer.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
 </script>
 </body>
 </html>

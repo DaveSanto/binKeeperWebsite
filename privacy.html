@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Privacy Policy — BinKeeper</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:       #F5A623;
+    --amber-deep:  #E8920A;
+    --amber-dark:  #7B4A00;
+    --amber-light: #FDF3E0;
+    --brown-dark:  #4A2800;
+    --brown-mid:   #8B5E3C;
+    --black:       #1A1208;
+    --off-white:   #FEFBF5;
+    --gray-warm:   #9E8E7A;
+    --gray-light:  #F2EDE4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(254,251,245,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
+  }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber-deep); }
+  .nav-cta {
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 500; font-size: 0.88rem;
+    padding: 0.6rem 1.4rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 10rem 3rem 5rem;
+    background: var(--brown-dark);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .page-hero-tag {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 1rem;
+    position: relative;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: white; line-height: 1.1; margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.6); font-weight: 300;
+    max-width: 580px; margin: 0 auto; line-height: 1.75; position: relative;
+  }
+  .page-hero .effective {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35); margin-top: 1.5rem; display: block; position: relative;
+  }
+
+  /* PRIVACY CONTENT */
+  .privacy-wrap {
+    max-width: 760px; margin: 0 auto;
+    padding: 6rem 3rem 8rem;
+  }
+
+  .privacy-intro {
+    background: var(--amber-light);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 4rem;
+  }
+  .privacy-intro p {
+    font-size: 0.97rem; line-height: 1.8; color: var(--brown-dark); font-weight: 400;
+  }
+  .privacy-intro strong { font-weight: 600; }
+
+  .privacy-section {
+    margin-bottom: 3.5rem;
+  }
+
+  .privacy-section h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+    color: var(--brown-dark); margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--gray-light);
+  }
+
+  .privacy-section h3 {
+    font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+    color: var(--brown-dark); margin: 1.75rem 0 0.6rem;
+    text-transform: uppercase; letter-spacing: 0.05em; font-size: 0.82rem;
+    color: var(--amber-deep);
+  }
+
+  .privacy-section p {
+    font-size: 0.97rem; line-height: 1.8; color: var(--brown-mid);
+    font-weight: 300; margin-bottom: 1rem;
+  }
+
+  .privacy-section ul {
+    margin: 0.75rem 0 1rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .privacy-section ul li {
+    font-size: 0.97rem; line-height: 1.7; color: var(--brown-mid); font-weight: 300;
+  }
+
+  .third-party-card {
+    background: white; border: 1.5px solid var(--gray-light);
+    border-radius: 14px; padding: 1.5rem 1.75rem;
+    margin-bottom: 1.25rem;
+  }
+  .third-party-card h3 {
+    font-family: var(--font-body); font-weight: 600; font-size: 1rem;
+    color: var(--brown-dark); margin: 0 0 0.6rem; text-transform: none;
+    letter-spacing: 0; font-size: 1rem; color: var(--brown-dark);
+  }
+  .third-party-card p {
+    margin-bottom: 0.5rem;
+  }
+  .third-party-card a {
+    font-family: var(--font-mono); font-size: 0.78rem; color: var(--amber-deep);
+    text-decoration: none; letter-spacing: 0.04em;
+  }
+  .third-party-card a:hover { color: var(--brown-dark); }
+
+  .warning-box {
+    background: rgba(245,166,35,0.1); border-left: 3px solid var(--amber);
+    border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .warning-box p { color: var(--brown-dark); font-weight: 400; margin: 0; }
+
+  .privacy-footer-note {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--gray-light);
+    font-size: 0.85rem; color: var(--gray-warm);
+    font-family: var(--font-mono); letter-spacing: 0.04em;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover, .footer-links a.active { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: background 0.2s; }
+  .nav-burger:hover { background: rgba(245,166,35,0.12); }
+  .nav-burger span { display: block; width: 22px; height: 2px; background: var(--brown-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99; background: var(--off-white); flex-direction: column; padding: 5.5rem 2rem 2rem; overflow-y: auto; }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .mobile-drawer ul li { border-bottom: 1px solid var(--gray-light); }
+  .mobile-drawer ul a { display: block; padding: 1rem 0; font-size: 1.1rem; font-weight: 500; color: var(--brown-dark); text-decoration: none; transition: color 0.2s; }
+  .mobile-drawer ul a:hover { color: var(--amber-deep); }
+  .mobile-drawer .drawer-cta { display: block; text-align: center; margin-top: 2rem; background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 1.5rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .mobile-drawer .drawer-cta:hover { background: var(--amber-deep); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+    .privacy-wrap { padding: 4rem 1.5rem 6rem; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/adaptive-icon.png" alt="BinKeeper"/><span><span>Bin</span><span style="color:var(--amber)">Keeper</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <ul>
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="index.html#cta" class="drawer-cta">Get Early Access — Free</a>
+</div>
+
+<div class="page-hero">
+  <span class="page-hero-tag">Legal</span>
+  <h1>Privacy <em>Policy</em></h1>
+  <p>We built BinKeeper to help you organize the physical stuff in your life. This policy explains what we collect, why, and what we do with it — in plain language.</p>
+  <span class="effective">Effective date: April 2026</span>
+</div>
+
+<div class="privacy-wrap">
+
+  <div class="privacy-intro">
+    <p><strong>Short version:</strong> we collect what we need to run the app. We don't sell your data. We don't share it with advertisers. We use a small number of trusted third-party services to make the app work, and we've listed them below.</p>
+  </div>
+
+  <!-- 1 -->
+  <div class="privacy-section">
+    <h2>1. What we collect and why</h2>
+
+    <h3>Your account information</h3>
+    <p>When you create a BinKeeper account, we collect your email address and a password (stored as a secure hash — we never see your actual password). We use this to identify you, let you log in, and send you important notices about your account.</p>
+
+    <h3>Your bin and item data</h3>
+    <p>Everything you add to BinKeeper — bin names, item names, descriptions, photos, tags, and check-in/check-out logs — is stored in your account. This is your data. We store it so the app works and so you can access it across devices.</p>
+
+    <h3>Photos</h3>
+    <p>If you use the AI Scanning feature, photos you take are sent to Anthropic (the company that makes Claude AI) to identify what's in the image. The photo is used to generate a name, description, and tags for your item. See Section 3 for more on this.</p>
+    <p>Photos you manually attach to items are stored in your account like any other item data.</p>
+
+    <h3>Payment information</h3>
+    <p>We don't store your credit card number or payment details. All payments are handled by Stripe, a payment processor. We receive confirmation that a payment was made and what was purchased — that's it. See Section 3 for more on Stripe.</p>
+
+    <h3>Usage data</h3>
+    <p>We collect basic information about how you use the app — things like how many bins you've created, how many AI scans you've used, and when your subscription renews. We use this to run the app correctly (for example, enforcing plan limits) and to understand whether the product is working well.</p>
+    <p>We do not build advertising profiles or sell usage data.</p>
+
+    <h3>Device information</h3>
+    <p>Like most apps, we receive some basic device information when you use BinKeeper — your operating system version and app version. We use this for debugging and compatibility. We do not track your location.</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="privacy-section">
+    <h2>2. Public bins</h2>
+    <p>BinKeeper lets you make any bin "public," which means anyone who scans the QR code can view that bin's contents — without a BinKeeper account. This is a feature, not a bug, but it comes with an important implication:</p>
+    <div class="warning-box">
+      <p>If you make a bin public, its contents are visible to the entire world.</p>
+    </div>
+    <p>We show you a clear confirmation before a bin goes public. Once it's public, treat it like a public webpage — assume anyone could see it. Private bins are visible only to you and people you've explicitly shared them with.</p>
+    <p>You can toggle a bin back to private at any time.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="privacy-section">
+    <h2>3. Third-party services we use</h2>
+    <p>We use a small set of trusted services to run BinKeeper. Here's who they are and what they do:</p>
+
+    <div class="third-party-card">
+      <h3>Firebase (Google)</h3>
+      <p>Firebase is the foundation of BinKeeper's backend. It handles user authentication (your login), stores your bin and item data, and runs the server-side logic that keeps everything working. Your data lives in Google's cloud infrastructure.</p>
+      <a href="https://firebase.google.com/support/privacy" target="_blank" rel="noopener">firebase.google.com/support/privacy</a>
+    </div>
+
+    <div class="third-party-card">
+      <h3>Stripe</h3>
+      <p>Stripe processes all payments for BinKeeper subscriptions and one-time purchases. When you pay for a plan, you're entering your payment information directly into Stripe's secure payment page — it never passes through our systems. We receive a notification that your payment was successful and what you purchased.</p>
+      <a href="https://stripe.com/privacy" target="_blank" rel="noopener">stripe.com/privacy</a>
+    </div>
+
+    <div class="third-party-card">
+      <h3>Anthropic (Claude AI)</h3>
+      <p>When you use AI Scanning, photos you take are sent to Anthropic's API to identify what's in the image. Anthropic is bound by their own privacy policy and data use terms.</p>
+      <p>What this means practically: your photos are transmitted to and processed by Anthropic's servers when you use this feature. If you'd prefer not to share photos with a third party, don't use AI Scanning — manual item entry is always available and works just as well.</p>
+      <a href="https://anthropic.com/privacy" target="_blank" rel="noopener">anthropic.com/privacy</a>
+    </div>
+
+    <p style="margin-top:1.25rem;">We have no relationship with advertisers. None of these services are used to serve you ads or build advertising profiles.</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="privacy-section">
+    <h2>4. Sharing and group access</h2>
+    <p>BinKeeper lets you share bins with other users — household members, teammates, or anyone you invite. When you share a bin:</p>
+    <ul>
+      <li>Everyone with access can view, add, and edit items in that bin</li>
+      <li>You control who has access and can remove people at any time</li>
+      <li>We don't verify the identity of people you invite — that's your call</li>
+    </ul>
+    <p>Be thoughtful about who you give access to. Once someone has access to a bin, they can see everything in it until you remove them.</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="privacy-section">
+    <h2>5. Your data is yours</h2>
+
+    <h3>Access and correction</h3>
+    <p>You can view and edit all of your data inside the BinKeeper app at any time.</p>
+
+    <h3>Deletion</h3>
+    <p>You can delete individual items, bins, or your entire account. When you delete your account, your data is removed from our systems. Deletion from Firebase's infrastructure follows Google's standard data lifecycle — we don't have a separate backup system that retains your data after deletion.</p>
+
+    <h3>Data portability</h3>
+    <p>We're working on an export feature that will let you download all of your bin and item data as a file. This is on our roadmap. In the meantime, if you need your data exported, contact us and we'll work something out manually.</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="privacy-section">
+    <h2>6. Security</h2>
+    <p>We take reasonable steps to protect your data:</p>
+    <ul>
+      <li>Passwords are hashed — we never store or see your actual password</li>
+      <li>Data in Firebase is protected by security rules that prevent one user from accessing another user's data</li>
+      <li>All data in transit is encrypted via HTTPS</li>
+      <li>Payment data never passes through our systems</li>
+    </ul>
+    <p>No system is perfectly secure. If you discover a security issue, please contact us immediately at <a href="mailto:privacy@binkeeperapp.com" style="color:var(--amber-deep);text-decoration:none;">privacy@binkeeperapp.com</a> and we'll address it as fast as we can.</p>
+    <p>What we won't promise: we can't guarantee that a determined, sophisticated attacker could never access your data. No app can honestly make that promise. What we can promise is that we take this seriously and will notify you if we become aware of a breach that affects your account.</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="privacy-section">
+    <h2>7. Children</h2>
+    <p>BinKeeper is not directed at children under 13 and we do not knowingly collect information from children under 13. If you believe a child has created an account, please contact us and we'll remove it.</p>
+  </div>
+
+  <!-- 8 -->
+  <div class="privacy-section">
+    <h2>8. Changes to this policy</h2>
+    <p>If we make significant changes to this policy — meaning changes that affect what data we collect or how we use it — we'll notify you by email before the changes take effect. Minor clarifications or corrections may be made without notice.</p>
+    <p>The current version of this policy is always available at binkeeperapp.com/privacy.</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="privacy-section">
+    <h2>9. Contact us</h2>
+    <p>Questions, concerns, or requests about your data:</p>
+    <p><a href="mailto:admin@binkeeperapp.com" style="color:var(--amber-deep);text-decoration:none;font-weight:500;">admin@binkeeperapp.com</a></p>
+    <p>We're a small team and we read every email. You'll hear back from a real person.</p>
+  </div>
+
+  <div class="privacy-footer-note">
+    BinKeeper is operated by Santtro LLC. This policy applies to the BinKeeper mobile app and binkeeperapp.com.<br/>
+    Last updated: April 2026
+  </div>
+
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html"><span>Bin</span><span style="color:var(--amber)">Keeper</span></a>
+  <ul class="footer-links">
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="privacy.html" class="active">Privacy</a></li>
+    <li><a href="terms.html">Terms of Service</a></li>
+    <li><a href="refunds.html">Refund Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+
+<script>
+  var burger = document.getElementById('nav-burger');
+  var drawer = document.getElementById('mobile-drawer');
+  burger.addEventListener('click', function() {
+    var open = drawer.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>

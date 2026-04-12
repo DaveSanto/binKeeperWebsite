@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Refund Policy — BinKeeper</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:       #F5A623;
+    --amber-deep:  #E8920A;
+    --amber-dark:  #7B4A00;
+    --amber-light: #FDF3E0;
+    --brown-dark:  #4A2800;
+    --brown-mid:   #8B5E3C;
+    --black:       #1A1208;
+    --off-white:   #FEFBF5;
+    --gray-warm:   #9E8E7A;
+    --gray-light:  #F2EDE4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(254,251,245,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
+  }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber-deep); }
+  .nav-cta {
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 500; font-size: 0.88rem;
+    padding: 0.6rem 1.4rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 10rem 3rem 5rem;
+    background: var(--brown-dark);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .page-hero-tag {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 1rem;
+    position: relative;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: white; line-height: 1.1; margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.6); font-weight: 300;
+    max-width: 580px; margin: 0 auto; line-height: 1.75; position: relative;
+  }
+  .page-hero .effective {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35); margin-top: 1.5rem; display: block; position: relative;
+  }
+
+  /* CONTENT */
+  .legal-wrap {
+    max-width: 760px; margin: 0 auto;
+    padding: 6rem 3rem 8rem;
+  }
+
+  .legal-intro {
+    background: var(--amber-light);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 4rem;
+  }
+  .legal-intro p {
+    font-size: 0.97rem; line-height: 1.8; color: var(--brown-dark); font-weight: 400;
+  }
+  .legal-intro strong { font-weight: 600; }
+
+  .legal-section { margin-bottom: 3.5rem; }
+
+  .legal-section h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+    color: var(--brown-dark); margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--gray-light);
+  }
+
+  .legal-section h3 {
+    font-weight: 600; font-size: 0.82rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--amber-deep); margin: 1.75rem 0 0.6rem;
+  }
+
+  .legal-section p {
+    font-size: 0.97rem; line-height: 1.8; color: var(--brown-mid);
+    font-weight: 300; margin-bottom: 1rem;
+  }
+
+  .legal-section ul {
+    margin: 0.75rem 0 1rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .legal-section ul li {
+    font-size: 0.97rem; line-height: 1.7; color: var(--brown-mid); font-weight: 300;
+  }
+
+  .legal-section a {
+    color: var(--amber-deep); text-decoration: none;
+  }
+  .legal-section a:hover { color: var(--brown-dark); }
+
+  .policy-table {
+    width: 100%; border-collapse: collapse; margin: 1.5rem 0;
+    font-size: 0.93rem;
+  }
+  .policy-table th {
+    text-align: left; padding: 0.75rem 1rem;
+    background: var(--gray-light); color: var(--brown-dark);
+    font-weight: 600; font-size: 0.8rem; text-transform: uppercase; letter-spacing: 0.05em;
+  }
+  .policy-table td {
+    padding: 0.85rem 1rem; color: var(--brown-mid); font-weight: 300; line-height: 1.6;
+    border-bottom: 1px solid var(--gray-light);
+  }
+  .policy-table tr:last-child td { border-bottom: none; }
+  .policy-table th:first-child, .policy-table td:first-child { border-radius: 0; }
+
+  .highlight-box {
+    background: var(--amber-light); border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 12px; padding: 1.25rem 1.5rem; margin: 1.25rem 0;
+  }
+  .highlight-box p { color: var(--brown-dark); font-weight: 400; margin: 0; }
+
+  .legal-footer-note {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--gray-light);
+    font-size: 0.85rem; color: var(--gray-warm);
+    font-family: var(--font-mono); letter-spacing: 0.04em;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover, .footer-links a.active { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: background 0.2s; }
+  .nav-burger:hover { background: rgba(245,166,35,0.12); }
+  .nav-burger span { display: block; width: 22px; height: 2px; background: var(--brown-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99; background: var(--off-white); flex-direction: column; padding: 5.5rem 2rem 2rem; overflow-y: auto; }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .mobile-drawer ul li { border-bottom: 1px solid var(--gray-light); }
+  .mobile-drawer ul a { display: block; padding: 1rem 0; font-size: 1.1rem; font-weight: 500; color: var(--brown-dark); text-decoration: none; transition: color 0.2s; }
+  .mobile-drawer ul a:hover { color: var(--amber-deep); }
+  .mobile-drawer .drawer-cta { display: block; text-align: center; margin-top: 2rem; background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 1.5rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .mobile-drawer .drawer-cta:hover { background: var(--amber-deep); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+    .legal-wrap { padding: 4rem 1.5rem 6rem; }
+    .policy-table { font-size: 0.85rem; }
+    .policy-table th, .policy-table td { padding: 0.65rem 0.75rem; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/adaptive-icon.png" alt="BinKeeper"/><span><span>Bin</span><span style="color:var(--amber)">Keeper</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <ul>
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="index.html#cta" class="drawer-cta">Get Early Access — Free</a>
+</div>
+
+<div class="page-hero">
+  <span class="page-hero-tag">Legal</span>
+  <h1>Refund <em>Policy</em></h1>
+  <p>We want BinKeeper to be worth every penny. If something goes wrong, here's exactly what we'll do about it.</p>
+  <span class="effective">Effective date: April 2026</span>
+</div>
+
+<div class="legal-wrap">
+
+  <div class="legal-intro">
+    <p><strong>Short version:</strong> subscriptions can be cancelled anytime and you keep access until the period ends. If the service failed to work as described and we can't fix it, we'll refund your most recent charge within 7 days. One-time purchases (BinKeeper Move, item add-ons) are non-refundable once the features have been used. If you're unsure, just email us — we'll work something out.</p>
+  </div>
+
+  <!-- 1 -->
+  <div class="legal-section">
+    <h2>1. Subscriptions (Keeper and Keeper Pro)</h2>
+
+    <h3>Cancellation</h3>
+    <p>You can cancel your subscription at any time from your account settings. When you cancel:</p>
+    <ul>
+      <li>Your subscription will not renew at the end of the current billing period</li>
+      <li>You keep full access to your plan features until the period ends</li>
+      <li>We do not prorate partial months — there are no partial refunds for unused days</li>
+    </ul>
+
+    <h3>Refunds on subscription charges</h3>
+    <p>We will issue a full refund of your most recent subscription charge if:</p>
+    <ul>
+      <li>You contact us within 7 days of the charge, and</li>
+      <li>You experienced a material failure — the app was down, a core feature didn't work as described, or we made a billing error</li>
+    </ul>
+    <p>We will not issue refunds for:</p>
+    <ul>
+      <li>Simply changing your mind after using the service</li>
+      <li>Forgetting to cancel before a renewal date</li>
+      <li>Requests made more than 7 days after the charge</li>
+    </ul>
+
+    <div class="highlight-box">
+      <p>If you forgot to cancel and were charged for a renewal, email us promptly. We'll review it. We're a small company and we'd rather keep a happy customer than argue over one month.</p>
+    </div>
+  </div>
+
+  <!-- 2 -->
+  <div class="legal-section">
+    <h2>2. One-time purchases</h2>
+
+    <table class="policy-table">
+      <thead>
+        <tr>
+          <th>Purchase</th>
+          <th>Refundable?</th>
+          <th>Conditions</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td><strong>BinKeeper Move</strong> ($25)</td>
+          <td>Within 24 hours of purchase if no AI scans have been used</td>
+          <td>Once AI scanning has been used or the 30-day period has begun and more than 24 hours have passed, no refund is available</td>
+        </tr>
+        <tr>
+          <td><strong>Item capacity add-on</strong> ($0.99/bin)</td>
+          <td>Not refundable after purchase</td>
+          <td>The additional item capacity is applied immediately and permanently to your bin</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <p>If you purchased BinKeeper Move and the service failed to function at all — for example, you couldn't log in or the app crashed immediately — contact us and we'll refund you regardless of the above.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="legal-section">
+    <h2>3. Billing errors</h2>
+    <p>If you were charged incorrectly — wrong amount, duplicate charge, charge after cancellation — we will always fix it. Contact us at <a href="mailto:admin@binkeeperapp.com">admin@binkeeperapp.com</a> with your account email and a description of the issue. We'll investigate and issue a correction within 5 business days.</p>
+    <p>We use Stripe for all payment processing. If you believe a charge is fraudulent, you may also contact your bank or card issuer directly.</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="legal-section">
+    <h2>4. Free plan</h2>
+    <p>BinKeeper's Free plan has no charge. There is nothing to refund. If you're on the Free plan and something isn't working, just contact us and we'll help.</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="legal-section">
+    <h2>5. How to request a refund</h2>
+    <p>Email us at <a href="mailto:admin@binkeeperapp.com" style="font-weight:500;">admin@binkeeperapp.com</a> with:</p>
+    <ul>
+      <li>The email address on your BinKeeper account</li>
+      <li>The date and amount of the charge</li>
+      <li>A brief description of the issue</li>
+    </ul>
+    <p>We'll respond within 2 business days. If a refund is approved, it will be processed through Stripe back to your original payment method. Refunds typically appear within 5–10 business days depending on your bank.</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="legal-section">
+    <h2>6. Our commitment</h2>
+    <p>We built BinKeeper because we needed it ourselves. We're not trying to trap anyone with confusing terms or make it hard to get money back when something goes wrong. If you have a problem, just talk to us. We'll do right by you.</p>
+  </div>
+
+  <div class="legal-footer-note">
+    BinKeeper is operated by Santtro LLC. This policy applies to all purchases made on binkeeperapp.com.<br/>
+    Last updated: April 2026
+  </div>
+
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html"><span>Bin</span><span style="color:var(--amber)">Keeper</span></a>
+  <ul class="footer-links">
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="terms.html">Terms of Service</a></li>
+    <li><a href="refunds.html" class="active">Refund Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+
+<script>
+  var burger = document.getElementById('nav-burger');
+  var drawer = document.getElementById('mobile-drawer');
+  burger.addEventListener('click', function() {
+    var open = drawer.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>

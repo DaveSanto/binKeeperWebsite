@@ -1,0 +1,426 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Terms of Service — BinKeeper</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:       #F5A623;
+    --amber-deep:  #E8920A;
+    --amber-dark:  #7B4A00;
+    --amber-light: #FDF3E0;
+    --brown-dark:  #4A2800;
+    --brown-mid:   #8B5E3C;
+    --black:       #1A1208;
+    --off-white:   #FEFBF5;
+    --gray-warm:   #9E8E7A;
+    --gray-light:  #F2EDE4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(254,251,245,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
+  }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--amber-deep); }
+  .nav-cta {
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 500; font-size: 0.88rem;
+    padding: 0.6rem 1.4rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 10rem 3rem 5rem;
+    background: var(--brown-dark);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .page-hero-tag {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 1rem;
+    position: relative;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: white; line-height: 1.1; margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero p {
+    font-size: 1.05rem; color: rgba(255,255,255,0.6); font-weight: 300;
+    max-width: 580px; margin: 0 auto; line-height: 1.75; position: relative;
+  }
+  .page-hero .effective {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.08em;
+    color: rgba(255,255,255,0.35); margin-top: 1.5rem; display: block; position: relative;
+  }
+
+  /* CONTENT */
+  .legal-wrap {
+    max-width: 760px; margin: 0 auto;
+    padding: 6rem 3rem 8rem;
+  }
+
+  .legal-intro {
+    background: var(--amber-light);
+    border: 1px solid rgba(245,166,35,0.3);
+    border-radius: 16px;
+    padding: 2rem 2.25rem;
+    margin-bottom: 4rem;
+  }
+  .legal-intro p {
+    font-size: 0.97rem; line-height: 1.8; color: var(--brown-dark); font-weight: 400;
+  }
+  .legal-intro strong { font-weight: 600; }
+
+  .legal-section { margin-bottom: 3.5rem; }
+
+  .legal-section h2 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.5rem;
+    color: var(--brown-dark); margin-bottom: 1.5rem;
+    padding-bottom: 0.75rem;
+    border-bottom: 2px solid var(--gray-light);
+  }
+
+  .legal-section h3 {
+    font-weight: 600; font-size: 0.82rem;
+    text-transform: uppercase; letter-spacing: 0.05em;
+    color: var(--amber-deep); margin: 1.75rem 0 0.6rem;
+  }
+
+  .legal-section p {
+    font-size: 0.97rem; line-height: 1.8; color: var(--brown-mid);
+    font-weight: 300; margin-bottom: 1rem;
+  }
+
+  .legal-section ul {
+    margin: 0.75rem 0 1rem 1.25rem;
+    display: flex; flex-direction: column; gap: 0.5rem;
+  }
+  .legal-section ul li {
+    font-size: 0.97rem; line-height: 1.7; color: var(--brown-mid); font-weight: 300;
+  }
+
+  .legal-section a {
+    color: var(--amber-deep); text-decoration: none;
+  }
+  .legal-section a:hover { color: var(--brown-dark); }
+
+  .warning-box {
+    background: rgba(245,166,35,0.1); border-left: 3px solid var(--amber);
+    border-radius: 0 10px 10px 0; padding: 1rem 1.25rem;
+    margin: 1rem 0;
+  }
+  .warning-box p { color: var(--brown-dark); font-weight: 400; margin: 0; }
+
+  .legal-footer-note {
+    margin-top: 5rem;
+    padding-top: 2rem;
+    border-top: 1px solid var(--gray-light);
+    font-size: 0.85rem; color: var(--gray-warm);
+    font-family: var(--font-mono); letter-spacing: 0.04em;
+    line-height: 1.8;
+  }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover, .footer-links a.active { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: background 0.2s; }
+  .nav-burger:hover { background: rgba(245,166,35,0.12); }
+  .nav-burger span { display: block; width: 22px; height: 2px; background: var(--brown-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99; background: var(--off-white); flex-direction: column; padding: 5.5rem 2rem 2rem; overflow-y: auto; }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .mobile-drawer ul li { border-bottom: 1px solid var(--gray-light); }
+  .mobile-drawer ul a { display: block; padding: 1rem 0; font-size: 1.1rem; font-weight: 500; color: var(--brown-dark); text-decoration: none; transition: color 0.2s; }
+  .mobile-drawer ul a:hover { color: var(--amber-deep); }
+  .mobile-drawer .drawer-cta { display: block; text-align: center; margin-top: 2rem; background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 1.5rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .mobile-drawer .drawer-cta:hover { background: var(--amber-deep); }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+    .legal-wrap { padding: 4rem 1.5rem 6rem; }
+    footer { flex-direction: column; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/adaptive-icon.png" alt="BinKeeper"/><span><span>Bin</span><span style="color:var(--amber)">Keeper</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <ul>
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="index.html#cta" class="drawer-cta">Get Early Access — Free</a>
+</div>
+
+<div class="page-hero">
+  <span class="page-hero-tag">Legal</span>
+  <h1>Terms of <em>Service</em></h1>
+  <p>These are the rules for using BinKeeper. We've written them in plain language because we think that's the decent thing to do.</p>
+  <span class="effective">Effective date: April 2026</span>
+</div>
+
+<div class="legal-wrap">
+
+  <div class="legal-intro">
+    <p><strong>Short version:</strong> use BinKeeper for its intended purpose, don't abuse it, and treat other users with respect. We'll keep the service running, be honest about changes, and give you control over your data. If something goes wrong, our liability is limited. Questions? Email us.</p>
+  </div>
+
+  <!-- 1 -->
+  <div class="legal-section">
+    <h2>1. Who we are and what this is</h2>
+    <p>BinKeeper is a mobile app and web service that helps you organize the physical contents of bins and boxes using QR codes, photos, and AI. It is operated by <strong>Santtro LLC</strong> ("we," "us," or "our").</p>
+    <p>By creating an account or using BinKeeper — the app, binkeeperapp.com, or any related service — you agree to these Terms of Service. If you don't agree, don't use the service.</p>
+    <p>If you're using BinKeeper on behalf of a business or organization, you represent that you have authority to bind that entity to these terms.</p>
+  </div>
+
+  <!-- 2 -->
+  <div class="legal-section">
+    <h2>2. Your account</h2>
+    <h3>Creating an account</h3>
+    <p>You need an account to use BinKeeper. You must provide a valid email address and create a password. You're responsible for keeping your login credentials secure. We'll treat any action taken under your account as your action.</p>
+
+    <h3>Age requirement</h3>
+    <p>You must be at least 13 years old to use BinKeeper. If you're under 18, you should have a parent or guardian's permission. We do not knowingly allow children under 13 to create accounts.</p>
+
+    <h3>Accurate information</h3>
+    <p>Keep your account information accurate and up to date, especially your email address — that's how we reach you about important account and billing matters.</p>
+
+    <h3>One account per person</h3>
+    <p>Accounts are for individual use. You may not create accounts on behalf of other people without their knowledge, or create multiple accounts to circumvent limits or restrictions.</p>
+  </div>
+
+  <!-- 3 -->
+  <div class="legal-section">
+    <h2>3. Plans and payments</h2>
+    <h3>Available plans</h3>
+    <p>BinKeeper offers the following plans:</p>
+    <ul>
+      <li><strong>Free</strong> — no charge, limited to 2 bins, 10 items per bin, and 5 lifetime AI scans</li>
+      <li><strong>Keeper</strong> — $3.99/month, billed monthly, 25 bins and 40 items per bin</li>
+      <li><strong>Keeper Pro</strong> — $12/month, billed monthly, unlimited bins and items, 50 AI scans per month</li>
+      <li><strong>BinKeeper Move</strong> — $25 one-time purchase, 30-day access with unlimited bins, items, and 150 AI scans</li>
+      <li><strong>Item capacity add-on</strong> — $0.99 per bin for +50 additional item slots (available on Free and Keeper plans, stackable)</li>
+    </ul>
+    <p>Prices may change. We'll give you at least 30 days' notice before changing the price of a plan you're currently subscribed to.</p>
+
+    <h3>Billing</h3>
+    <p>All payments are processed by Stripe. Your payment details go directly to Stripe — we never see or store your credit card number. By subscribing, you authorize Stripe to charge your payment method on a recurring basis until you cancel.</p>
+    <p>Subscriptions renew automatically at the end of each billing period. You can cancel anytime from your account settings.</p>
+
+    <h3>Cancellation</h3>
+    <p>You can cancel a subscription at any time. Cancellation takes effect at the end of the current billing period — you won't be charged again, but you'll continue to have access until the period ends. We do not prorate partial months.</p>
+    <p>BinKeeper Move and item add-ons are one-time purchases and do not auto-renew.</p>
+
+    <h3>Refunds</h3>
+    <p>See our <a href="refunds.html">Refund Policy</a> for full details. The short version: we offer refunds within 7 days of a charge if the service didn't work as described and we can't fix it. One-time purchases are non-refundable after use.</p>
+  </div>
+
+  <!-- 4 -->
+  <div class="legal-section">
+    <h2>4. What you can and can't do</h2>
+    <h3>What you can do</h3>
+    <p>You may use BinKeeper to organize your own physical belongings, share bins with people you choose, make bins public for legitimate community or group purposes, and access your data at any time.</p>
+
+    <h3>What you can't do</h3>
+    <p>You may not:</p>
+    <ul>
+      <li>Use BinKeeper to store, share, or promote illegal content</li>
+      <li>Attempt to access another user's account or data without permission</li>
+      <li>Reverse engineer, decompile, or attempt to extract our source code</li>
+      <li>Use BinKeeper to scrape, spam, or send unsolicited communications to other users</li>
+      <li>Overload or attack our infrastructure (no DoS, no automated abuse)</li>
+      <li>Resell or sublicense access to BinKeeper without our written permission</li>
+      <li>Use BinKeeper in any way that violates applicable law</li>
+    </ul>
+
+    <h3>Public bins</h3>
+    <p>If you make a bin public, its contents are visible to anyone with the QR code — no account required. You are solely responsible for what you choose to make public. Don't put private, sensitive, or personal information in a public bin.</p>
+  </div>
+
+  <!-- 5 -->
+  <div class="legal-section">
+    <h2>5. Your content</h2>
+    <h3>You own your data</h3>
+    <p>Everything you add to BinKeeper — bin names, item names, descriptions, photos, tags — belongs to you. We don't claim ownership of your content.</p>
+
+    <h3>License to operate the service</h3>
+    <p>By storing content in BinKeeper, you grant us a limited license to store, display, and process that content for the sole purpose of providing you with the service. We don't use your content to train AI models or for advertising.</p>
+
+    <h3>Your responsibility</h3>
+    <p>You're responsible for the content you add to BinKeeper. Don't upload content that is illegal, infringes on someone else's rights, or that you don't have permission to share.</p>
+  </div>
+
+  <!-- 6 -->
+  <div class="legal-section">
+    <h2>6. AI features</h2>
+    <p>BinKeeper's AI Scanning feature uses Anthropic's Claude AI to identify items from photos. When you use this feature, your photo is sent to Anthropic's servers for processing. The result — a suggested item name, description, and tags — is returned to your account.</p>
+    <p>AI identification is a suggestion, not a guarantee. You always confirm or edit what the AI finds before it's saved. We're not responsible for misidentifications — always review the result before accepting it.</p>
+    <p>AI scan limits apply per plan. Unused scans do not roll over to the next period.</p>
+  </div>
+
+  <!-- 7 -->
+  <div class="legal-section">
+    <h2>7. Shared bins and group access</h2>
+    <p>When you share a bin with another user, they can view, add, and edit items in that bin. You control who has access and can remove users at any time. You are responsible for who you invite to your bins — we don't verify the identity of users you add.</p>
+    <p>If a shared user causes damage or misuses access you granted, that is between you and that user. We are not responsible for the actions of users you've given bin access to.</p>
+  </div>
+
+  <!-- 8 -->
+  <div class="legal-section">
+    <h2>8. Service availability</h2>
+    <p>We aim to keep BinKeeper available and reliable, but we don't guarantee uninterrupted access. The service may occasionally be unavailable due to maintenance, updates, or circumstances outside our control.</p>
+    <p>We reserve the right to modify or discontinue features of BinKeeper with reasonable notice. If we ever shut down the service entirely, we'll give you at least 30 days' notice and a way to export your data.</p>
+  </div>
+
+  <!-- 9 -->
+  <div class="legal-section">
+    <h2>9. Account termination</h2>
+    <h3>You can leave anytime</h3>
+    <p>You can delete your account at any time from within the app. When you delete your account, your data is removed from our systems. This action is permanent — we cannot recover a deleted account.</p>
+
+    <h3>We may suspend or terminate accounts</h3>
+    <p>We reserve the right to suspend or terminate accounts that violate these terms, engage in abuse or fraud, or are inactive for an extended period (we'll give notice before deleting inactive accounts). If we terminate your account for a reason other than a terms violation, we'll refund any unused prepaid subscription time.</p>
+  </div>
+
+  <!-- 10 -->
+  <div class="legal-section">
+    <h2>10. Disclaimers and limitation of liability</h2>
+    <div class="warning-box">
+      <p>BinKeeper is provided "as is." We make no warranties — express or implied — about reliability, fitness for a particular purpose, or that the service will be error-free.</p>
+    </div>
+    <p>To the fullest extent permitted by law, Santtro LLC's total liability to you for any claim arising from your use of BinKeeper is limited to the amount you paid us in the 12 months preceding the claim, or $25, whichever is greater.</p>
+    <p>We are not liable for indirect, incidental, consequential, or punitive damages — including lost data, lost profits, or service interruptions — even if we were advised of the possibility.</p>
+    <p>Some jurisdictions don't allow limitations on implied warranties or liability, so some of the above may not apply to you.</p>
+  </div>
+
+  <!-- 11 -->
+  <div class="legal-section">
+    <h2>11. Governing law and disputes</h2>
+    <p>These terms are governed by the laws of the State of Florida, without regard to conflict of law principles. Any dispute arising from these terms or your use of BinKeeper will be resolved in the state or federal courts located in Florida, and you consent to personal jurisdiction there.</p>
+    <p>Before filing any legal claim, please contact us at <a href="mailto:admin@binkeeperapp.com">admin@binkeeperapp.com</a>. We'll make a genuine effort to resolve issues informally first.</p>
+  </div>
+
+  <!-- 12 -->
+  <div class="legal-section">
+    <h2>12. Changes to these terms</h2>
+    <p>We may update these terms from time to time. If we make significant changes — meaning changes that affect your rights or obligations — we'll notify you by email at least 14 days before they take effect. Continued use of BinKeeper after that date constitutes acceptance of the updated terms.</p>
+    <p>Minor clarifications or corrections may be made without notice. The current version of these terms is always available at binkeeperapp.com/terms.</p>
+  </div>
+
+  <!-- 13 -->
+  <div class="legal-section">
+    <h2>13. Contact</h2>
+    <p>Questions about these terms:</p>
+    <p><a href="mailto:admin@binkeeperapp.com" style="font-weight:500;">admin@binkeeperapp.com</a></p>
+    <p>We're a small team and we read every email.</p>
+  </div>
+
+  <div class="legal-footer-note">
+    BinKeeper is operated by Santtro LLC. These terms apply to the BinKeeper mobile app and binkeeperapp.com.<br/>
+    Last updated: April 2026
+  </div>
+
+</div>
+
+<footer>
+  <a class="footer-logo" href="index.html"><span>Bin</span><span style="color:var(--amber)">Keeper</span></a>
+  <ul class="footer-links">
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="terms.html" class="active">Terms of Service</a></li>
+    <li><a href="refunds.html">Refund Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+
+<script>
+  var burger = document.getElementById('nav-burger');
+  var drawer = document.getElementById('mobile-drawer');
+  burger.addEventListener('click', function() {
+    var open = drawer.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>

@@ -304,7 +304,7 @@
         <li>Holiday &amp; seasonal organization</li>
         <li>Expand any bin +50 items for $0.99</li>
       </ul>
-      <a href="https://binkeeperapp.com" class="plan-cta">Get Started</a>
+      <a href="https://binkeeperapp.com/signup?plan=keeper&interval=monthly" id="cta-keeper" class="plan-cta">Get Started</a>
     </div>
 
     <div class="pricing-card">
@@ -329,7 +329,7 @@
         <li>Holiday &amp; seasonal organization</li>
         <li>Priority support</li>
       </ul>
-      <a href="https://binkeeperapp.com" class="plan-cta">Get Started</a>
+      <a href="https://binkeeperapp.com/signup?plan=keeper-pro&interval=monthly" id="cta-pro" class="plan-cta">Get Started</a>
     </div>
 
   </div>
@@ -355,7 +355,7 @@
         <p class="move-price-label">One-time</p>
         <p class="move-price"><sup>$</sup>25</p>
         <p class="move-price-note">per move · no subscription</p>
-        <a href="https://binkeeperapp.com" class="move-cta">Get BinKeeper Move</a>
+        <a href="https://binkeeperapp.com/signup?plan=move" class="move-cta">Get BinKeeper Move</a>
       </div>
     </div>
   </div>
@@ -436,6 +436,12 @@
     document.getElementById('note-pro').textContent     = isAnnual ? '$122 / yr — save 15%' : '\u00a0';
     document.getElementById('toggle-monthly').classList.toggle('active', !isAnnual);
     document.getElementById('toggle-annual').classList.toggle('active', isAnnual);
+    document.getElementById('cta-keeper').href = isAnnual
+      ? 'https://binkeeperapp.com/signup?plan=keeper&interval=annual'
+      : 'https://binkeeperapp.com/signup?plan=keeper&interval=monthly';
+    document.getElementById('cta-pro').href = isAnnual
+      ? 'https://binkeeperapp.com/signup?plan=keeper-pro&interval=annual'
+      : 'https://binkeeperapp.com/signup?plan=keeper-pro&interval=monthly';
   }
 </script>
 <script>

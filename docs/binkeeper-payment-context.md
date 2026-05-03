@@ -52,6 +52,7 @@ Each user document in Firestore contains the following fields that control featu
 - `moveAiScansUsed` — integer (0–150), resets only on new Move purchase
 - `movePurchaseDate` — timestamp of Move purchase, used to calculate 30-day expiry
 - `stripeCustomerId` — Stripe customer ID
+- `referralCode` — the partner coupon code used at purchase, if any (for referral tracking)
 
 ### Per-bin fields (stored on each bin document):
 - `itemLimit` — base limit per tier, overridden by add-on purchases
@@ -70,11 +71,13 @@ Each user document in Firestore contains the following fields that control featu
 | Keeper Annual | Recurring | $43.00/year |
 | Keeper Pro Monthly | Recurring | $12.00/month |
 | Keeper Pro Annual | Recurring | $122.00/year |
-| BinKeeper Move | One-time | $25.00 |
+| BinKeeper Move | One-time | $30.00 |
 | Item Capacity Add-On | One-time | $0.99 |
 
 ### Stripe Coupons
 Manage all promotional discounts via Stripe's built-in coupon system. Do not implement custom discount logic in the app or backend. See the Pricing & Tier document for coupon policy.
+
+Each referral partner (moving company, storage facility, etc.) gets their own unique Stripe coupon code. This allows per-partner conversion tracking.
 
 ### Stripe Checkout Flow (Website)
 - User selects a plan or product on binkeeperapp.com
@@ -106,7 +109,7 @@ Enable Stripe's Customer Portal for self-managed subscriptions (upgrade, downgra
 | `customer.subscription.created` | Set `tier` (1 or 2) and `tierExpiry` |
 | `customer.subscription.updated` | Update `tier` and `tierExpiry` |
 | `customer.subscription.deleted` | Set `tier` to `0`, clear `tierExpiry` |
-| `payment_intent.succeeded` (Move) | Set `tier` to `3`, set `movePurchaseDate`, reset `moveAiScansUsed` to `0` |
+| `payment_intent.succeeded` (Move) | Set `tier` to `3`, set `movePurchaseDate`, reset `moveAiScansUsed` to `0`, store `referralCode` if present |
 | `payment_intent.succeeded` (Add-on) | Increment `itemLimitAddOns` on the specified bin document |
 
 ### 3. `resetAiScans` (scheduled)
@@ -173,10 +176,11 @@ Do not build toward IAP now.
 - Test the Add-On flow specifically — ensure `binId` metadata passes correctly through checkout to the webhook
 - Test Move purchase: verify `tier: 3` sets correctly, 30-day expiry triggers correctly
 - Test all subscription events: create, update, downgrade, cancel
+- Test referral coupon codes: verify code is stored in `referralCode` field on user document
 - Firebase emulator suite for local Cloud Function testing
 - Verify webhook signature verification before going live
 
 ---
 
-*Last updated: April 2026*
+*Last updated: May 2026*
 *See also: BinKeeper Pricing & Tier System document, BinKeeper Features document*

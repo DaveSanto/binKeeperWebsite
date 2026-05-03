@@ -20,7 +20,7 @@
 | Monthly price | $0 | $3.99/mo | $12/mo | N/A |
 | Annual price | — | $43/year (~$3.58/mo) | $122/year (~$10.17/mo) | N/A |
 | Annual savings | — | 10% | 15% | N/A |
-| One-time price | — | — | — | $25 |
+| One-time price | — | — | — | $30 |
 
 ---
 
@@ -58,7 +58,7 @@
 - **Annual discount:** 15% off monthly rate
 - **Intent:** Power users, large households, heavy AI users.
 
-### BinKeeper Move — $25 one-time
+### BinKeeper Move — $30 one-time
 - **Bins:** Unlimited
 - **Items per bin:** Unlimited
 - **AI scanning:** 150 scans (one-time allotment, valid for 30 days)
@@ -98,6 +98,25 @@ Available on Free and Keeper tiers. Not needed on Pro or Move (both have unlimit
 
 ---
 
+## Referral Partner Program
+
+BinKeeper supports a referral code system for partner businesses (moving companies, storage facilities, etc.).
+
+- Partners are issued a unique discount code tied to their business name
+- Customers who purchase using the code receive a discount off BinKeeper Move
+- For every customer who converts using a partner's code, the partner receives a **$5 finder's fee**
+- All coupons managed via Stripe's built-in coupon system
+- Partner finder's fees tracked manually at launch; automate if volume justifies it
+- Partners must have demonstrated at least one converted customer before fees are paid out
+
+**Net margin on a referred BinKeeper Move sale at $30:**
+- Finder's fee: -$5.00
+- Stripe fee (~3.3%): -$0.99
+- Anthropic API (150 scans): -$1.20
+- **Net: ~$22.81**
+
+---
+
 ## Promotional Pricing & Coupons
 
 Coupon and promo codes exist as a separate lever. Used sparingly and intentionally to avoid eroding perceived value.
@@ -107,6 +126,7 @@ Coupon and promo codes exist as a separate lever. Used sparingly and intentional
 - App launch PR push (limited time, limited quantity)
 - Win-back campaigns for churned subscribers
 - Strategic partnership or cross-promotion deals
+- Referral partner codes (moving companies, storage facilities)
 
 **Rules:**
 - All coupons must have an expiration date — no open-ended codes
@@ -125,9 +145,10 @@ Coupon and promo codes exist as a separate lever. Used sparingly and intentional
 | Keeper annual | ~$0.15 | ~$3.43/mo effective (~96%) |
 | Pro monthly | ~$0.55–$0.85 | ~$11.15–$11.45 (~93%) |
 | Pro annual | ~$0.55–$0.85 | ~$9.32–$9.62/mo effective (~92%) |
-| Move (one-time) | ~$2.25 | ~$22.75 (~91%) |
+| Move (one-time, no referral) | ~$2.19 | ~$27.81 (~93%) |
+| Move (one-time, with $5 referral fee) | ~$7.19 | ~$22.81 (~76%) |
 
-Move COGS breakdown: Anthropic API at 150 scans × $0.008 = $1.20 + Stripe fee ~$1.03 + negligible Firebase.
+Move COGS breakdown: Anthropic API at 150 scans × $0.008 = $1.20 + Stripe fee ~$0.99 + negligible Firebase.
 
 ---
 
@@ -143,5 +164,5 @@ Move COGS breakdown: Anthropic API at 150 scans × $0.008 = $1.20 + Stripe fee ~
 
 ---
 
-*Last updated: April 2026*
+*Last updated: May 2026*
 *See also: BinKeeper Payment & Entitlement document, BinKeeper Features document*

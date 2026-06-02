@@ -1,0 +1,435 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>About — BinKeeper</title>
+<link rel="icon" type="image/png" href="assets/favicon.png"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet"/>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --amber:       #F5A623;
+    --amber-deep:  #E8920A;
+    --amber-dark:  #7B4A00;
+    --amber-light: #FDF3E0;
+    --brown-dark:  #4A2800;
+    --brown-mid:   #8B5E3C;
+    --black:       #1A1208;
+    --off-white:   #FEFBF5;
+    --gray-warm:   #9E8E7A;
+    --gray-light:  #F2EDE4;
+    --font-display: 'Playfair Display', Georgia, serif;
+    --font-body:    'DM Sans', sans-serif;
+    --font-mono:    'DM Mono', monospace;
+  }
+
+  html { scroll-behavior: smooth; }
+  body { font-family: var(--font-body); background: var(--off-white); color: var(--black); overflow-x: hidden; }
+
+  /* NAV */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1.1rem 3rem;
+    background: rgba(254,251,245,0.92); backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(245,166,35,0.2);
+  }
+  .nav-logo {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: var(--font-display); font-weight: 700;
+    font-size: 1.4rem; color: var(--brown-dark); text-decoration: none;
+  }
+  .nav-logo img { width: 36px; height: 36px; border-radius: 8px; }
+  .nav-links { display: flex; gap: 2rem; list-style: none; }
+  .nav-links a { font-size: 0.88rem; font-weight: 500; letter-spacing: 0.03em; color: var(--brown-mid); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover, .nav-links a.active { color: var(--amber-deep); }
+  .nav-cta {
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-body); font-weight: 500; font-size: 0.88rem;
+    padding: 0.6rem 1.4rem; border-radius: 100px; border: none;
+    cursor: pointer; text-decoration: none; transition: background 0.2s, transform 0.15s;
+  }
+  .nav-cta:hover { background: var(--amber-deep); transform: translateY(-1px); }
+
+  .nav-burger { display: none; flex-direction: column; justify-content: center; gap: 5px; width: 36px; height: 36px; background: none; border: none; cursor: pointer; padding: 4px; border-radius: 8px; transition: background 0.2s; }
+  .nav-burger:hover { background: rgba(245,166,35,0.12); }
+  .nav-burger span { display: block; width: 22px; height: 2px; background: var(--brown-dark); border-radius: 2px; transition: transform 0.25s, opacity 0.2s; transform-origin: center; }
+  .nav-burger.open span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+  .nav-burger.open span:nth-child(2) { opacity: 0; }
+  .nav-burger.open span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+  .mobile-drawer { display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0; z-index: 99; background: var(--off-white); flex-direction: column; padding: 5.5rem 2rem 2rem; overflow-y: auto; }
+  .mobile-drawer.open { display: flex; }
+  .mobile-drawer ul { list-style: none; display: flex; flex-direction: column; gap: 0; }
+  .mobile-drawer ul li { border-bottom: 1px solid var(--gray-light); }
+  .mobile-drawer ul a { display: block; padding: 1rem 0; font-size: 1.1rem; font-weight: 500; color: var(--brown-dark); text-decoration: none; transition: color 0.2s; }
+  .mobile-drawer ul a:hover, .mobile-drawer ul a.active { color: var(--amber-deep); }
+  .mobile-drawer .drawer-cta { display: block; text-align: center; margin-top: 2rem; background: var(--amber); color: var(--brown-dark); font-family: var(--font-body); font-weight: 500; font-size: 1rem; padding: 0.9rem 1.5rem; border-radius: 100px; text-decoration: none; transition: background 0.2s; }
+  .mobile-drawer .drawer-cta:hover { background: var(--amber-deep); }
+
+  /* PAGE HERO */
+  .page-hero {
+    padding: 10rem 3rem 5rem;
+    background: var(--brown-dark);
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .page-hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.08)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+  .page-hero-tag {
+    font-family: var(--font-mono); font-size: 0.75rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber); display: block; margin-bottom: 1rem;
+    position: relative;
+  }
+  .page-hero h1 {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    color: white; line-height: 1.1; margin-bottom: 1.25rem;
+    position: relative;
+  }
+  .page-hero h1 em { font-style: italic; color: var(--amber); }
+  .page-hero p {
+    font-size: 1.1rem; color: rgba(255,255,255,0.6); font-weight: 300;
+    max-width: 520px; margin: 0 auto; line-height: 1.7; position: relative;
+  }
+
+  /* STORY SECTION */
+  .story-section {
+    padding: 7rem 3rem;
+    max-width: 1100px; margin: 0 auto;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 6rem;
+    align-items: center;
+  }
+
+  .story-photo {
+    position: relative;
+  }
+
+  .story-photo img {
+    width: 100%; border-radius: 24px;
+    object-fit: cover; aspect-ratio: 4/5;
+    box-shadow: 0 24px 64px rgba(74,40,0,0.18);
+  }
+
+  .story-photo-placeholder {
+    width: 100%; aspect-ratio: 4/5;
+    border-radius: 24px;
+    background: linear-gradient(145deg, var(--amber-light) 0%, #f0e0c0 50%, var(--gray-light) 100%);
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    gap: 1rem;
+    box-shadow: 0 24px 64px rgba(74,40,0,0.12);
+    border: 2px dashed rgba(245,166,35,0.4);
+    color: var(--brown-mid);
+  }
+
+  .story-photo-placeholder svg { opacity: 0.5; }
+
+  .story-photo-placeholder span {
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.1em;
+    text-transform: uppercase; opacity: 0.6;
+  }
+
+  .story-badge {
+    position: absolute; bottom: -1rem; right: -1rem;
+    background: var(--amber); color: var(--brown-dark);
+    font-family: var(--font-mono); font-size: 0.7rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    padding: 0.6rem 1rem; border-radius: 100px;
+    box-shadow: 0 4px 16px rgba(245,166,35,0.4);
+  }
+
+  .story-text h2 {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(1.8rem, 3vw, 2.6rem);
+    color: var(--brown-dark); line-height: 1.15; margin-bottom: 1.5rem;
+  }
+  .story-text h2 em { font-style: italic; color: var(--amber-deep); }
+
+  .story-text p {
+    font-size: 1rem; line-height: 1.8; color: var(--brown-mid);
+    font-weight: 300; margin-bottom: 1.25rem;
+  }
+  .story-text p strong { color: var(--black); font-weight: 500; }
+
+  .story-text p:last-child { margin-bottom: 0; }
+
+  /* TRUST SECTION */
+  .trust-section {
+    background: var(--brown-dark);
+    padding: 7rem 3rem;
+    position: relative; overflow: hidden;
+  }
+
+  .trust-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='56' height='100'%3E%3Cpath d='M28 66L0 50V17L28 1l28 16v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.06)' stroke-width='1'/%3E%3Cpath d='M28 100L0 84V51l28-17 28 17v33z' fill='none' stroke='rgba(245%2C166%2C35%2C0.06)' stroke-width='1'/%3E%3C/svg%3E");
+    pointer-events: none;
+  }
+
+  .trust-inner {
+    max-width: 900px; margin: 0 auto; position: relative;
+    display: grid; grid-template-columns: 1fr 1.4fr; gap: 5rem; align-items: start;
+  }
+
+  .trust-heading {
+    position: sticky; top: 8rem;
+  }
+
+  .trust-tag {
+    font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.14em;
+    text-transform: uppercase; color: var(--amber);
+    display: block; margin-bottom: 1rem;
+  }
+
+  .trust-heading h2 {
+    font-family: var(--font-display); font-weight: 900;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: white; line-height: 1.15;
+  }
+  .trust-heading h2 em { font-style: italic; color: var(--amber); }
+
+  .trust-heading p {
+    font-size: 0.97rem; color: rgba(255,255,255,0.5);
+    line-height: 1.75; font-weight: 300; margin-top: 1.25rem;
+  }
+
+  .trust-items { display: flex; flex-direction: column; gap: 2rem; }
+
+  .trust-item {
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(245,166,35,0.15);
+    border-radius: 16px; padding: 1.75rem;
+    transition: border-color 0.2s, background 0.2s;
+  }
+  .trust-item:hover { border-color: rgba(245,166,35,0.35); background: rgba(255,255,255,0.08); }
+
+  .trust-item-header {
+    display: flex; align-items: center; gap: 1rem; margin-bottom: 0.85rem;
+  }
+
+  .trust-icon {
+    width: 44px; height: 44px; flex-shrink: 0;
+    background: rgba(245,166,35,0.15); border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+  }
+  .trust-icon svg { width: 22px; height: 22px; }
+
+  .trust-item h3 {
+    font-family: var(--font-display); font-weight: 700; font-size: 1.15rem;
+    color: white;
+  }
+
+  .trust-item p {
+    font-size: 0.95rem; line-height: 1.75; color: rgba(255,255,255,0.55);
+    font-weight: 300;
+  }
+  .trust-item p strong { color: rgba(255,255,255,0.85); font-weight: 500; }
+
+  /* FOOTER */
+  footer {
+    background: var(--black); padding: 3rem;
+    display: flex; align-items: center; justify-content: space-between;
+    flex-wrap: wrap; gap: 1.5rem;
+  }
+  .footer-logo { font-family: var(--font-display); font-weight: 700; font-size: 1.2rem; color: var(--brown-dark); text-decoration: none; }
+  .footer-links { display: flex; gap: 1.5rem; list-style: none; flex-wrap: wrap; }
+  .footer-links a { font-size: 0.82rem; color: rgba(255,255,255,0.4); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--amber); }
+  .footer-copy { font-size: 0.82rem; color: rgba(255,255,255,0.3); font-family: var(--font-mono); letter-spacing: 0.04em; }
+
+  @media (max-width: 900px) {
+    nav { padding: 1rem 1.5rem; }
+    .nav-links { display: none; }
+    .nav-cta { display: none; }
+    .nav-burger { display: flex; }
+    .story-section { grid-template-columns: 1fr; gap: 3rem; padding: 4rem 1.5rem; }
+    .story-badge { bottom: 0.5rem; right: 0.5rem; }
+    .trust-section { padding: 5rem 1.5rem; }
+    .trust-inner { grid-template-columns: 1fr; gap: 3rem; }
+    .trust-heading { position: static; }
+    footer { flex-direction: column; align-items: flex-start; padding: 2rem 1.5rem; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">
+    <img src="assets/adaptive-icon.png" alt="BinKeeper"/><span><span>Bin</span><span style="color:var(--amber)">Keeper</span></span>
+  </a>
+  <ul class="nav-links">
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a class="nav-cta" href="index.html#cta">Get Early Access</a>
+  <button class="nav-burger" id="nav-burger" aria-label="Open menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-drawer" id="mobile-drawer">
+  <ul>
+    <li><a href="index.html#how">How it Works</a></li>
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="index.html#features">Features</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html" class="active">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+  </ul>
+  <a href="index.html#cta" class="drawer-cta">Get Early Access — Free</a>
+</div>
+
+<div class="page-hero">
+  <span class="page-hero-tag">Our story</span>
+  <h1>He couldn't find anything. <em>She needed order.</em> We get it.</h1>
+  <p>We built the app we couldn't find — because our attic, and our couch, were driving us absolutely crazy.</p>
+</div>
+
+<!-- ─── STORY ─── -->
+<div class="story-section">
+
+  <div class="story-photo">
+    <img src="assets/aboutUs/BinKeeperFounders1.png" alt="David and Amy, founders of BinKeeper"/>
+    <span class="story-badge">David &amp; Amy</span>
+  </div>
+
+  <div class="story-text">
+    <h2>We just wanted to find <em>our stuff.</em></h2>
+
+    <p>
+      BinKeeper started with a pull-down staircase to our attic and a lot of frustration. Every time we needed something up there, we'd haul ourselves up, dig through bin after bin, and come down empty-handed — or worse, come down with half the attic just to find one thing. There had to be a better way.
+    </p>
+
+    <p>
+      Then there's our couch. It's one of those storage couches that holds a surprising amount of stuff. Convenient — until you actually need to find something. The whole living room gets rearranged and half an hour later you're still not sure where that thing went.
+    </p>
+
+    <p>
+      <strong>The feature we wanted more than anything: just a photo of what was in the box.</strong> That's it. Not a spreadsheet. Not a label maker. Just pull out your phone, look at the photo, know what's inside.
+    </p>
+
+    <p>
+      We searched around and couldn't find an app that did exactly that in a way that felt right. We didn't really want to build our own — and then Claude changed everything. It made it genuinely possible for a non-developer and a couple with limited free time to bring an idea like this to life. <strong>David built it, Amy shaped it</strong> — contributing ideas, copy editing, and marketing strategy along the way.
+    </p>
+
+    <p>
+      Once AI scanning got involved and we realized we could photograph an item and have it inventoried instantly, we were sold on our own idea. We hope you will be too.
+    </p>
+  </div>
+
+</div>
+
+<!-- ─── TRUST ─── -->
+<section class="trust-section">
+  <div class="trust-inner">
+
+    <div class="trust-heading">
+      <span class="trust-tag">About trust</span>
+      <h2>We take your <em>privacy seriously.</em></h2>
+      <p>We've been on the wrong side of identity theft ourselves. We get it — and we built BinKeeper with that experience in mind.</p>
+    </div>
+
+    <div class="trust-items">
+
+      <div class="trust-item">
+        <div class="trust-item-header">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+              <polyline points="9 12 11 14 15 10"/>
+            </svg>
+          </div>
+          <h3>We've been there</h3>
+        </div>
+        <p>Amy and David have been victims of identity theft. We understand firsthand how violating it feels, which is exactly why protecting your information isn't a checkbox for us — it's personal.</p>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item-header">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="1" y="4" width="22" height="16" rx="2" ry="2"/>
+              <line x1="1" y1="10" x2="23" y2="10"/>
+            </svg>
+          </div>
+          <h3>Payments via Stripe</h3>
+        </div>
+        <p>We use <strong>Stripe</strong> for all payment processing — a trusted, industry-standard third party. We never see, handle, or store your credit card number or any financial information. Full stop.</p>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item-header">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="3" y="11" width="18" height="11" rx="2" ry="2"/>
+              <path d="M7 11V7a5 5 0 0 1 10 0v4"/>
+            </svg>
+          </div>
+          <h3>Only you can see your bins</h3>
+        </div>
+        <p>Our storage rules are locked tight. <strong>Only the owner of a bin — and the specific users that owner chooses to share with — can ever see what's inside.</strong> No one else. Not even us.</p>
+      </div>
+
+      <div class="trust-item">
+        <div class="trust-item-header">
+          <div class="trust-icon">
+            <svg viewBox="0 0 24 24" fill="none" stroke="var(--amber)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
+              <polyline points="17 8 12 3 7 8"/>
+              <line x1="12" y1="3" x2="12" y2="15"/>
+            </svg>
+          </div>
+          <h3>Share only what you want</h3>
+        </div>
+        <p>No images are required to be stored on our servers. You stay in control of what you upload. <strong>Only share what you're comfortable with</strong> — BinKeeper works just as well either way.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<footer>
+  <a class="footer-logo" href="index.html"><span>Bin</span><span style="color:var(--amber)">Keeper</span></a>
+  <ul class="footer-links">
+    <li><a href="holidays.html">Holidays</a></li>
+    <li><a href="moving.html">Moving</a></li>
+    <li><a href="pricing.html">Pricing</a></li>
+    <li><a href="about.html">About</a></li>
+    <li><a href="contact.html">Contact</a></li>
+    <li><a href="privacy.html">Privacy Policy</a></li>
+    <li><a href="terms.html">Terms of Service</a></li>
+    <li><a href="refunds.html">Refund Policy</a></li>
+  </ul>
+  <p class="footer-copy">© 2026 BinKeeper. All rights reserved.</p>
+</footer>
+
+<script>
+  var burger = document.getElementById('nav-burger');
+  var drawer = document.getElementById('mobile-drawer');
+  burger.addEventListener('click', function() {
+    var open = drawer.classList.toggle('open');
+    burger.classList.toggle('open', open);
+    document.body.style.overflow = open ? 'hidden' : '';
+  });
+  drawer.querySelectorAll('a').forEach(function(link) {
+    link.addEventListener('click', function() {
+      drawer.classList.remove('open');
+      burger.classList.remove('open');
+      document.body.style.overflow = '';
+    });
+  });
+</script>
+</body>
+</html>
